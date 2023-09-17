@@ -1,0 +1,15 @@
+package cc.wordview.api.service;
+
+import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.exception.IncorrectCredentialsException;
+
+public class ExceptionTemplate {
+        public static <T> NoSuchEntryException noSuchEntry(String entryName, T entryValue) {
+                return new NoSuchEntryException(
+                                "No entries found with " + entryName + ": " + entryValue);
+        }
+
+        public static <T> IncorrectCredentialsException incorrectCredentials() {
+                return new IncorrectCredentialsException("Credentials did not match");
+        }
+}
