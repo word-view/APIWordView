@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Settings;
-import cc.wordview.api.controller.resentity.Catcher;
+import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.request.lesson.CreateRequest;
 import cc.wordview.api.response.lesson.LessonWithWordsResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
@@ -21,12 +21,11 @@ import cc.wordview.api.database.entity.User;
 import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.database.entity.Word;
 
+import static cc.wordview.api.controller.response.Response.*;
+import static cc.wordview.api.controller.response.ResponseTemplate.*;
 import static java.util.Objects.isNull;
 
 import java.util.List;
-
-import static cc.wordview.api.controller.resentity.Response.*;
-import static cc.wordview.api.controller.resentity.ResponseTemplate.*;
 
 @RestController
 @RequestMapping(path = Settings.REQUEST_PATH + "/lesson")
@@ -43,7 +42,7 @@ public class LessonController {
         // CREATE
         @PostMapping(consumes = "application/json")
         public ResponseEntity<?> create(@RequestBody CreateRequest request) {
-                return Catcher.returner(() -> {
+                return ExceptionHandler.response(() -> {
                         User user = userService.getByToken(request.authorization);
 
                         if (!user.isAdmin())
@@ -57,7 +56,7 @@ public class LessonController {
         // READ
         @GetMapping("/{id}")
         public ResponseEntity<?> getById(@PathVariable Long id) {
-                return Catcher.returner(() -> {
+                return ExceptionHandler.response(() -> {
                         Lesson lesson = service.getById(id);
                         List<Word> words = wordService.getByIdLesson(id);
 
@@ -83,11 +82,11 @@ public class LessonController {
         }
 
         private ResponseEntity<?> getByTitle(String title) {
-                return Catcher.ok(() -> service.getByTitle(title));
+                return ExceptionHandler.okResponse(() -> service.getByTitle(title));
         }
 
         private ResponseEntity<?> getByDifficulty(String diffi) {
-                return Catcher.ok(() -> service.getByDifficulty(diffi));
+                return ExceptionHandler.okResponse(() -> service.getByDifficulty(diffi));
         }
 
         // UPDATE

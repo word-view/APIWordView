@@ -1,4 +1,6 @@
-package cc.wordview.api.controller.resentity;
+package cc.wordview.api.controller.response;
+
+import static cc.wordview.api.controller.response.Response.*;
 
 import java.util.concurrent.Callable;
 
@@ -6,13 +8,12 @@ import org.springframework.http.ResponseEntity;
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.exception.RequestValidationException;
-import static cc.wordview.api.controller.resentity.Response.*;
 
 /**
- * Abstracts away exception handling from the controllers
+ * Globally handles exceptions for API responses
  */
-public class Catcher {
-        public static <T> ResponseEntity<?> ok(Callable<T> callable) {
+public class ExceptionHandler {
+        public static <T> ResponseEntity<?> okResponse(Callable<T> callable) {
                 try {
                         return Response.ok(callable.call());
                 }
@@ -30,7 +31,7 @@ public class Catcher {
                 }
         }
 
-        public static <T> ResponseEntity<?> created(Callable<T> callable) {
+        public static <T> ResponseEntity<?> createdResponse(Callable<T> callable) {
                 try {
                         return Response.created(callable.call());
                 }
@@ -49,10 +50,10 @@ public class Catcher {
         }
 
         /**
-         * Returns the callable instead of wrapping it in a
-         * ResponseEntity
+         * In this method the return value is not incapsulated in a 
+         * existing response
          */
-        public static <T> ResponseEntity<?> returner(Callable<T> callable) {
+        public static <T> ResponseEntity<?> response(Callable<T> callable) {
                 try {
                         return (ResponseEntity<?>) callable.call();
                 }

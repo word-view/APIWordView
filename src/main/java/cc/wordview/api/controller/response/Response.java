@@ -1,4 +1,4 @@
-package cc.wordview.api.controller.resentity;
+package cc.wordview.api.controller.response;
 
 import javax.annotation.Nullable;
 
