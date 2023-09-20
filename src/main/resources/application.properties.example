@@ -4,7 +4,7 @@ spring.jpa.hibernate.ddl-auto=none
 
 spring.datasource.initialization-mode=always
 spring.datasource.platform=postgres
-spring.datasource.url=jdbc:postgresql://localhost:5432/newplans
+spring.datasource.url=jdbc:postgresql://localhost:5432/wordview
 spring.datasource.username=
 spring.datasource.password=
 
