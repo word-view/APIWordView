@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.test.api.controller.mockentity.MockWord;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +29,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        "{ \"nameId\": \"car\", \"idLesson\": 1, \"authorization\": \"4e9394b4d2876b8741b10a\" }",
+                        new MockWord("car", "1", "4e9394b4d2876b8741b10a").toJson(),
                         status().isCreated()
                 );
         }
@@ -38,7 +39,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        "{ \"nameId\": \"car\", \"idLesson\": 1, \"authorization\": \"4e9394b42d8741b10a\" }",
+                        new MockWord("car", "1", "4e9394b42d8741b10a").toJson(),
                         status().isForbidden()
                 );
         }
@@ -48,7 +49,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        "{ \"nameId\": \"car\", \"idLesson\": 1, \"authorization\": \"4e9394b4b10a\" }",
+                        new MockWord("car", "1", "4e9394b4b10a").toJson(),
                         status().isNotFound()
                 );
         }

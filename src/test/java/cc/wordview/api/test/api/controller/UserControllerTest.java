@@ -1,6 +1,8 @@
 package cc.wordview.api.test.api.controller;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.test.api.controller.mockentity.MockUser;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +30,7 @@ public class UserControllerTest {
                 TestRequest.post(
                         request,
                         "/users/", 
-                        "{ \"username\": \"arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
+                        new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64").toJson(),
                         status().isCreated()        
                 );
         }
@@ -49,7 +51,7 @@ public class UserControllerTest {
                 TestRequest.post(
                         request,
                         "/users/login", 
-                        "{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\" }", 
+                        new MockUser("arthur.araujo@gmail.com", "S_enha64").toJson(), 
                         status().isOk()       
                 );
         }
@@ -59,7 +61,7 @@ public class UserControllerTest {
                 TestRequest.post(
                         request,
                         "/users/login", 
-                        "{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"senha\" }", 
+                        new MockUser("arthur.araujo@gmail.com", "senha").toJson(), 
                         status().isUnauthorized()       
                 );
         }
