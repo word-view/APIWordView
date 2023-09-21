@@ -3,10 +3,14 @@ package cc.wordview.api.request.user;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.security.RequestValidation;
+import lombok.Getter;
+import lombok.Setter;
 
 import static java.util.Objects.isNull;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
+@Getter
+@Setter
 public class CreateRequest {
         public String username;
         public String email;

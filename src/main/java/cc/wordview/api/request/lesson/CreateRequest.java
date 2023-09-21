@@ -1,11 +1,15 @@
 package cc.wordview.api.request.lesson;
 
 import cc.wordview.api.exception.RequestValidationException;
+import lombok.Getter;
+import lombok.Setter;
 import cc.wordview.api.database.entity.Lesson;
 
 import static java.util.Objects.isNull;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
+@Getter
+@Setter
 public class CreateRequest {
         public String title;
         public String difficulty;

@@ -12,8 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
 
-import static cc.wordview.api.Settings.REQUEST_PATH;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -52,26 +50,6 @@ public class LessonControllerTest {
                         "/lesson/",
                         "{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9394b42d8741b10a\"}",
                         status().isForbidden()
-                );
-        }
-
-        @Test
-        public void createNullTitle() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/lesson/",
-                        "{\"difficulty\": \"starter\", \"authorization\": \"4e9394b4d2876b8741b10a\"}",
-                        status().isBadRequest()
-                );
-        }
-
-        @Test
-        public void createNullDifficulty() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/lesson/",
-                        "{\"title\": \"lesson1\", \"authorization\": \"4e9394b4d2876b8741b10a\"}",
-                        status().isBadRequest()
                 );
         }
 

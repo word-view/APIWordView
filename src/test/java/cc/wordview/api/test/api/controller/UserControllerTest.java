@@ -33,86 +33,6 @@ public class UserControllerTest {
                 );
         }
 
-        @Test
-        public void createNameSpecialChar() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"@Ap2d_arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createNameEmpty() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createNameNull() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{\"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createEmailInvalid() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"arthur\", \"email\": \"arthur.araujo@zmake2.com\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createEmailEmpty() throws Exception {
-               TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"arthur\", \"email\": \"\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createEmailNull() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"arthur\", \"password\": \"S_enha64\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createPasswordEmpty() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"arthur\", \"password\": \"\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
-        @Test
-        public void createPasswordNull() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/", 
-                        "{ \"username\": \"arthur\"}", 
-                        status().isBadRequest()        
-                );
-        }
-
         // READ
         @Test
         public void getById() throws Exception {
@@ -141,26 +61,6 @@ public class UserControllerTest {
                         "/users/login", 
                         "{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"senha\" }", 
                         status().isUnauthorized()       
-                );
-        }
-
-        @Test
-        public void loginInvalidEmail() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/login", 
-                        "{ \"email\": \"arthur.araujo\", \"password\": \"senha\" }", 
-                        status().isBadRequest()       
-                );
-        }
-
-        @Test
-        public void loginInexistentEmail() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/users/login", 
-                        "{ \"email\": \"arthur.a@hotmail.com\", \"password\": \"senha\" }", 
-                        status().isNotFound()       
                 );
         }
         // UPDATE

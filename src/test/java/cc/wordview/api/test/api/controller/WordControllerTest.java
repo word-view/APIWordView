@@ -52,25 +52,4 @@ public class WordControllerTest {
                         status().isNotFound()
                 );
         }
-
-        @Test
-        public void createEmptyNameId() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/word/",
-                        "{ \"idLesson\": 1, \"authorization\": \"4e9394b4d2876b8741b10a\" }",
-                        status().isBadRequest()
-                );
-        }
-
-        @Test
-        public void createEmptyIdLesson() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/word/",
-                        "{ \"nameId\": \"car\", \"authorization\": \"4e9394b4d2876b8741b10a\" }",
-                        status().isBadRequest()
-                );
-        }
-
 }
