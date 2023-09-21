@@ -11,10 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static cc.wordview.api.Settings.REQUEST_PATH;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 // import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
@@ -29,112 +25,143 @@ public class UserControllerTest {
         // CREATE
         @Test
         public void create() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isCreated());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
+                        status().isCreated()        
+                );
         }
 
         @Test
         public void createNameSpecialChar() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"@Ap2d_arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"@Ap2d_arthur\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createNameEmpty() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"\", \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createNameNull() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{\"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{\"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createEmailInvalid() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\", \"email\": \"arthur.araujo@zmake2.com\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\", \"email\": \"arthur.araujo@zmake2.com\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createEmailEmpty() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\", \"email\": \"\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+               TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\", \"email\": \"\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createEmailNull() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\", \"password\": \"S_enha64\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\", \"password\": \"S_enha64\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createPasswordEmpty() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\", \"password\": \"\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\", \"password\": \"\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         @Test
         public void createPasswordNull() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/").contentType("application/json")
-                                .content("{ \"username\": \"arthur\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/", 
+                        "{ \"username\": \"arthur\"}", 
+                        status().isBadRequest()        
+                );
         }
 
         // READ
         @Test
         public void getById() throws Exception {
-                request.perform(get(REQUEST_PATH + "/users/1")).andExpect(status().isOk())
-                                .andExpect(content().json(
-                                                "{\"id\":1,\"username\":\"Arthur\",\"email\":\"arthur.araujo@tutanota.com\"}"))
-                                .andReturn();
+                TestRequest.get(request, "/users/1", status().isOk());
         }
 
         @Test
         public void getByInexistentId() throws Exception {
-                request.perform(get(REQUEST_PATH + "/users/64"))
-                                .andExpect(status().isNotFound()).andReturn();
+                TestRequest.get(request, "/users/64", status().isNotFound());
         }
 
         @Test
         public void login() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/login")
-                                .contentType("application/json")
-                                .content("{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\" }"))
-                                .andExpect(status().isOk());
+                TestRequest.post(
+                        request,
+                        "/users/login", 
+                        "{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"S_enha64\" }", 
+                        status().isOk()       
+                );
         }
 
         @Test
-        public void loginIncorrectCredntials() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/login")
-                                .contentType("application/json")
-                                .content("{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"senha\" }"))
-                                .andExpect(status().isUnauthorized());
+        public void loginIncorrectCredentials() throws Exception {
+                TestRequest.post(
+                        request,
+                        "/users/login", 
+                        "{ \"email\": \"arthur.araujo@gmail.com\", \"password\": \"senha\" }", 
+                        status().isUnauthorized()       
+                );
         }
 
         @Test
         public void loginInvalidEmail() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/login")
-                                .contentType("application/json")
-                                .content("{ \"email\": \"arthur.araujo\", \"password\": \"senha\" }"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/users/login", 
+                        "{ \"email\": \"arthur.araujo\", \"password\": \"senha\" }", 
+                        status().isBadRequest()       
+                );
         }
 
         @Test
         public void loginInexistentEmail() throws Exception {
-                request.perform(post(REQUEST_PATH + "/users/login")
-                                .contentType("application/json")
-                                .content("{ \"email\": \"arthur.a@hotmail.com\", \"password\": \"senha\" }"))
-                                .andExpect(status().isNotFound());
+                TestRequest.post(
+                        request,
+                        "/users/login", 
+                        "{ \"email\": \"arthur.a@hotmail.com\", \"password\": \"senha\" }", 
+                        status().isNotFound()       
+                );
         }
         // UPDATE
         // DELETE

@@ -14,7 +14,6 @@ import cc.wordview.api.Application;
 
 import static cc.wordview.api.Settings.REQUEST_PATH;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -28,62 +27,73 @@ public class LessonControllerTest {
         // CREATE
         @Test
         public void create() throws Exception {
-                request.perform(post(REQUEST_PATH + "/lesson/").contentType("application/json")
-                                .content("{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9394b4d2876b8741b10a\"}"))
-                                .andExpect(status().isCreated());
+                TestRequest.post(
+                        request,
+                        "/lesson/",
+                        "{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9394b4d2876b8741b10a\"}",
+                        status().isCreated()
+                );
         }
 
         @Test
         public void createByNonExistentUser() throws Exception {
-                request.perform(post(REQUEST_PATH + "/lesson/").contentType("application/json")
-                                .content("{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9741b10a\"}"))
-                                .andExpect(status().isNotFound());
+                TestRequest.post(
+                        request,
+                        "/lesson/",
+                        "{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9741b10a\"}",
+                        status().isNotFound()
+                );
         }
 
         @Test
         public void createByNonAdmin() throws Exception {
-                request.perform(post(REQUEST_PATH + "/lesson/").contentType("application/json")
-                                .content("{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9394b42d8741b10a\"}"))
-                                .andExpect(status().isForbidden());
+                TestRequest.post(
+                        request,
+                        "/lesson/",
+                        "{\"title\": \"lesson1\", \"difficulty\": \"starter\", \"authorization\": \"4e9394b42d8741b10a\"}",
+                        status().isForbidden()
+                );
         }
 
         @Test
         public void createNullTitle() throws Exception {
-                request.perform(post(REQUEST_PATH + "/lesson/").contentType("application/json")
-                                .content("{\"difficulty\": \"starter\", \"authorization\": \"4e9394b4d2876b8741b10a\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/lesson/",
+                        "{\"difficulty\": \"starter\", \"authorization\": \"4e9394b4d2876b8741b10a\"}",
+                        status().isBadRequest()
+                );
         }
 
         @Test
         public void createNullDifficulty() throws Exception {
-                request.perform(post(REQUEST_PATH + "/lesson/").contentType("application/json")
-                                .content("{\"title\": \"lesson1\", \"authorization\": \"4e9394b4d2876b8741b10a\"}"))
-                                .andExpect(status().isBadRequest());
+                TestRequest.post(
+                        request,
+                        "/lesson/",
+                        "{\"title\": \"lesson1\", \"authorization\": \"4e9394b4d2876b8741b10a\"}",
+                        status().isBadRequest()
+                );
         }
 
         // READ
         @Test
         public void getByTitle() throws Exception {
-                request.perform(get(REQUEST_PATH + "/lesson/search?title=lesson"))
-                                .andExpect(status().isOk());
+                TestRequest.get(request, "/lesson/search?title=lesson", status().isOk());
         }
 
         @Test
         public void getByNonExistentTitle() throws Exception {
-                request.perform(get(REQUEST_PATH + "/lesson/search?title=sd"))
-                                .andExpect(status().isNotFound());
+                TestRequest.get(request, "/lesson/search?title=sd", status().isNotFound());
         }
 
         @Test
         public void getByDifficulty() throws Exception {
-                request.perform(get(REQUEST_PATH + "/lesson/search?diffi=starter"))
-                                .andExpect(status().isOk());
+                TestRequest.get(request, "/lesson/search?diffi=starter", status().isOk());
         }
 
         @Test
         public void getByNonExistentDifficulty() throws Exception {
-                request.perform(get(REQUEST_PATH + "/lesson/search?diffi=sd"))
-                                .andExpect(status().isNotFound());
+                TestRequest.get(request, "/lesson/search?diffi=sd", status().isNotFound());
         }
 
 }
