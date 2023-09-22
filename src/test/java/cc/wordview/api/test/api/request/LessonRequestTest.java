@@ -5,6 +5,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import cc.wordview.api.database.types.LessonDifficulty;
 import cc.wordview.api.request.lesson.CreateRequest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -20,7 +21,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("Lesson 1");
-                        request.setDifficulty("starter");
+                        request.setDifficulty(LessonDifficulty.STARTER);
                         request.setAuthorization("4e9394b4d2876b8741b10a");
 
                         request.toEntity();
@@ -33,7 +34,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("");
-                        request.setDifficulty("starter");
+                        request.setDifficulty(LessonDifficulty.STARTER);
                         request.setAuthorization("4e9394b4d2876b8741b10a");
 
                         request.toEntity();
@@ -45,7 +46,7 @@ public class LessonRequestTest {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setDifficulty("starter");
+                        request.setDifficulty(LessonDifficulty.STARTER);
                         request.setAuthorization("4e9394b4d2876b8741b10a");
 
                         request.toEntity();
@@ -58,7 +59,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("Lesson 1");
-                        request.setDifficulty("");
+                        // request.setDifficulty(""); cannot be empty when it is a enum
                         request.setAuthorization("4e9394b4d2876b8741b10a");
 
                         request.toEntity();
@@ -83,7 +84,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("Lesson 1");
-                        request.setDifficulty("starter");
+                        request.setDifficulty(LessonDifficulty.STARTER);
                         request.setAuthorization("");
 
                         request.toEntity();
@@ -97,7 +98,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("Lesson 1");
-                        request.setDifficulty("starter");
+                        request.setDifficulty(LessonDifficulty.STARTER);
 
                         request.toEntity();
                 }, emptyOrNull("'authorization'").getMessage());
