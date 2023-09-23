@@ -1,13 +1,13 @@
 package cc.wordview.api.test.api.controller.mockentity;
 
-import com.google.gson.Gson;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class MockUser {
+public class MockUser extends MockEntity {
         private String username;
         private String email;
         private String password;
@@ -15,9 +15,5 @@ public class MockUser {
         public MockUser(String email, String password) {
                 setEmail(email);
                 setPassword(password);
-        }
-
-        public String toJson() {
-                return new Gson().toJson(this);
         }
 }

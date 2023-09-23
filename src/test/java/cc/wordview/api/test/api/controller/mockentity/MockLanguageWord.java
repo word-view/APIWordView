@@ -7,8 +7,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class MockWord extends MockEntity {
-        private String nameId;
-        private String idLesson;
+public class MockLanguageWord extends MockEntity {
+        private String localizedWord;
+        private String lang;
+        private Long idWord;
         private String authorization;
 }

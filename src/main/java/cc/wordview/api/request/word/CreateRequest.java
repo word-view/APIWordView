@@ -28,19 +28,19 @@ public class CreateRequest {
 
         private void validate() throws RequestValidationException {
                 if (isNull(idLesson)) {
-                        throw emptyOrNull("'idLesson'");
+                        throw emptyOrNull("idLesson");
                 }
 
                 if (isNull(nameId) || nameId.isEmpty()) {
-                        throw emptyOrNull("'nameId'");
+                        throw emptyOrNull("nameId");
                 }
 
                 if (isNull(idLesson)) {
-                        throw emptyOrNull("'difficulty'");
+                        throw emptyOrNull("difficulty");
                 }
 
                 if (isNull(authorization) || authorization.isEmpty()) {
-                        throw emptyOrNull("'authorization'");
+                        throw emptyOrNull("authorization");
                 }
 
         }

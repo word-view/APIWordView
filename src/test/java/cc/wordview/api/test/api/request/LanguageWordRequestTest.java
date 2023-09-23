@@ -1,12 +1,10 @@
 package cc.wordview.api.test.api.request;
 
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import cc.wordview.api.database.types.LessonDifficulty;
-import cc.wordview.api.request.lesson.CreateRequest;
+import cc.wordview.api.request.langword.CreateRequest;
 import cc.wordview.api.test.api.MockValues;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -14,15 +12,15 @@ import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LessonRequestTest {
-
+public class LanguageWordRequestTest {
         @Test
         public void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
+                        request.setLocalizedWord("Carro");
+                        request.setIdWord(1L);
+                        request.setLang("pt_BR");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
@@ -30,76 +28,95 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void titleEmpty() throws Exception {
+        public void localizedWordEmpty() throws Exception {
                 assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+                       CreateRequest request = new CreateRequest();
 
-                        request.setTitle("");
-                        request.setDifficulty(LessonDifficulty.STARTER);
+                        request.setLocalizedWord("");
+                        request.setIdWord(1L);
+                        request.setLang("pt_BR");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("title").getMessage());
+                }, emptyOrNull("localizedWord").getMessage());
         }
 
         @Test
-        public void titleNull() throws Exception {
+        public void localizedWordNull() throws Exception {
                 assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+                       CreateRequest request = new CreateRequest();
 
-                        request.setDifficulty(LessonDifficulty.STARTER);
+                        request.setIdWord(1L);
+                        request.setLang("pt_BR");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("title").getMessage());
+                }, emptyOrNull("localizedWord").getMessage());
         }
 
         @Test
-        public void difficultyEmpty() throws Exception {
+        public void idWordNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        // request.setDifficulty(""); cannot be empty when it is a enum
+                        request.setLocalizedWord("Carro");
+                        request.setLang("pt_BR");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("difficulty").getMessage());
+                }, emptyOrNull("idWord").getMessage());
         }
 
         @Test
-        public void difficultyNull() throws Exception {
+        public void langEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
+                        request.setLocalizedWord("Carro");
+                        request.setIdWord(1L);
+                        request.setLang("");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("difficulty").getMessage());
+                }, emptyOrNull("lang").getMessage());
         }
+
+        @Test
+        public void langNull() throws Exception {
+                assertThrows(() -> {
+                        CreateRequest request = new CreateRequest();
+
+                        request.setLocalizedWord("Carro");
+                        request.setIdWord(1L);
+                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+
+                        request.toEntity();
+                }, emptyOrNull("lang").getMessage());
+        }
+
 
         @Test
         public void authorizationEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
+                        request.setLocalizedWord("Carro");
+                        request.setIdWord(1L);
+                        request.setLang("pt_BR");
                         request.setAuthorization("");
 
                         request.toEntity();
                 }, emptyOrNull("authorization").getMessage());
         }
 
-
         @Test
         public void authorizationNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
+                        request.setLocalizedWord("Carro");
+                        request.setIdWord(1L);
+                        request.setLang("pt_BR");
 
                         request.toEntity();
                 }, emptyOrNull("authorization").getMessage());

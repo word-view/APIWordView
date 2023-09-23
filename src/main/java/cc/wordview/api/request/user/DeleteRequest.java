@@ -29,15 +29,15 @@ public class DeleteRequest {
 
         private void validate() throws RequestValidationException {
                 if (isNull(token) || token.isEmpty()) {
-                        throw emptyOrNull("'token'");
+                        throw emptyOrNull("token");
                 }
 
                 if (isNull(email) || email.isEmpty()) {
-                        throw emptyOrNull("'email'");
+                        throw emptyOrNull("email");
                 }
 
                 if (isNull(password) || password.isEmpty()) {
-                        throw emptyOrNull("'password'");
+                        throw emptyOrNull("password");
                 }
         }
 }

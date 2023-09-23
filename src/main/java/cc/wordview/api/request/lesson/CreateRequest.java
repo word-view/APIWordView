@@ -28,15 +28,15 @@ public class CreateRequest {
 
         private void validate() throws RequestValidationException {
                 if (isNull(title) || title.isEmpty()) {
-                        throw emptyOrNull("'title'");
+                        throw emptyOrNull("title");
                 }
 
                 if (isNull(difficulty) || difficulty.isEmpty()) {
-                        throw emptyOrNull("'difficulty'");
+                        throw emptyOrNull("difficulty");
                 }
 
                 if (isNull(authorization) || authorization.isEmpty()) {
-                        throw emptyOrNull("'authorization'");
+                        throw emptyOrNull("authorization");
                 }
 
         }

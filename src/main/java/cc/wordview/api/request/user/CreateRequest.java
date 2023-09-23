@@ -30,21 +30,21 @@ public class CreateRequest {
 
         private void validate() throws RequestValidationException {
                 if (isNull(username) || username.isEmpty()) {
-                        throw emptyOrNull("'name'");
+                        throw emptyOrNull("name");
                 }
                 if (RequestValidation.hasSpecialCharacters(username)) {
-                        throw specialChars("'name'");
+                        throw specialChars("name");
                 }
 
                 if (isNull(email) || email.isEmpty()) {
-                        throw emptyOrNull("'email'");
+                        throw emptyOrNull("email");
                 }
                 if (RequestValidation.invalidEmail(email)) {
-                        throw invalid("'email'");
+                        throw invalid("email");
                 }
 
                 if (isNull(password) || password.isEmpty()) {
-                        throw emptyOrNull("'password'");
+                        throw emptyOrNull("password");
                 }
 
         }

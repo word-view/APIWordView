@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.test.api.MockValues;
-import cc.wordview.api.test.api.controller.mockentity.MockWord;
+import cc.wordview.api.test.api.controller.mockentity.MockLanguageWord;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,28 +20,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @AutoConfigureMockMvc
-public class WordControllerTest {
+public class LanguageWordControllerTest {
         @Autowired
         private MockMvc request;
 
-        // CREATE
         @Test
         public void create() throws Exception {
                 TestRequest.post(
                         request,
-                        "/word/",
-                        new MockWord("car", "1", MockValues.ADMIN_TOKEN).toJson(),
+                        "/language-word/",
+                        new MockLanguageWord(
+                                "Carro", "pt_BR", 1L,
+                                MockValues.ADMIN_TOKEN
+                        ).toJson(),
                         status().isCreated()
-                );
-        }
-
-        @Test
-        public void createByNonAdmin() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/word/",
-                        new MockWord("car", "1", MockValues.NON_ADMIN_TOKEN).toJson(),
-                        status().isForbidden()
                 );
         }
 
@@ -49,9 +41,25 @@ public class WordControllerTest {
         public void createByNonExistentUser() throws Exception {
                 TestRequest.post(
                         request,
-                        "/word/",
-                        new MockWord("car", "1", "4e9394b4b10a").toJson(),
+                        "/language-word/",
+                        new MockLanguageWord(
+                                "Carro", "pt_BR", 1L,
+                                MockValues.INEXISTENT_TOKEN
+                        ).toJson(),
                         status().isNotFound()
+                );
+        }
+
+        @Test
+        public void createByNonAdmin() throws Exception {
+                TestRequest.post(
+                        request,
+                        "/language-word/",
+                        new MockLanguageWord(
+                                "Carro", "pt_BR", 1L,
+                                MockValues.NON_ADMIN_TOKEN
+                        ).toJson(),
+                        status().isForbidden()
                 );
         }
 }

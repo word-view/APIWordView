@@ -3,6 +3,7 @@ package cc.wordview.api.test.api.request;
 import org.junit.Test;
 
 import cc.wordview.api.request.word.CreateRequest;
+import cc.wordview.api.test.api.MockValues;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
@@ -16,7 +17,7 @@ public class WordRequestTest {
 
                         request.setIdLesson(1L);
                         request.setNameId("car");
-                        request.setAuthorization("4e9394b4d2876b8741b10a");
+                        request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
                 });
@@ -28,10 +29,10 @@ public class WordRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setNameId("car");
-                        request.setAuthorization("4e9394b4d2876b8741b10a");
+                        request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("'idLesson'").getMessage());
+                }, emptyOrNull("idLesson").getMessage());
         }
 
         @Test
@@ -41,10 +42,10 @@ public class WordRequestTest {
 
                         request.setIdLesson(1L);
                         request.setNameId("");
-                        request.setAuthorization("4e9394b4d2876b8741b10a");
+                        request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("'nameId'").getMessage());
+                }, emptyOrNull("nameId").getMessage());
         }
 
         @Test
@@ -53,10 +54,10 @@ public class WordRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setIdLesson(1L);
-                        request.setAuthorization("4e9394b4d2876b8741b10a");
+                        request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();
-                }, emptyOrNull("'nameId'").getMessage());
+                }, emptyOrNull("nameId").getMessage());
         }
 
         @Test
@@ -69,7 +70,7 @@ public class WordRequestTest {
                         request.setAuthorization("");
 
                         request.toEntity();
-                }, emptyOrNull("'authorization'").getMessage());
+                }, emptyOrNull("authorization").getMessage());
         }
 
         @Test
@@ -81,6 +82,6 @@ public class WordRequestTest {
                         request.setNameId("car");
 
                         request.toEntity();
-                }, emptyOrNull("'authorization'").getMessage());
+                }, emptyOrNull("authorization").getMessage());
         }
 }

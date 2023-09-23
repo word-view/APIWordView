@@ -36,7 +36,7 @@ public class UserRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, specialChars("'name'").getMessage());
+                }, specialChars("name").getMessage());
         }
 
         @Test
@@ -49,7 +49,7 @@ public class UserRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'name'").getMessage());
+                }, emptyOrNull("name").getMessage());
         }
 
         @Test
@@ -61,7 +61,7 @@ public class UserRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'name'").getMessage());
+                }, emptyOrNull("name").getMessage());
         }
 
         @Test
@@ -74,7 +74,7 @@ public class UserRequestTest {
                         request.setEmail("arthur@cmake.com");
 
                         request.toEntity();
-                }, invalid("'email'").getMessage());
+                }, invalid("email").getMessage());
         }
 
         @Test
@@ -87,7 +87,7 @@ public class UserRequestTest {
                         request.setEmail("");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
 
         @Test
@@ -99,9 +99,9 @@ public class UserRequestTest {
                         request.setPassword("senha23213");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
-        
+
         @Test
         public void passwordEmpty() throws Exception {
                 assertThrows(() -> {
@@ -112,7 +112,7 @@ public class UserRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 
         @Test
@@ -124,6 +124,6 @@ public class UserRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 }

@@ -35,7 +35,7 @@ public class LoginRequestTest {
                         request.setEmail("arthur@cmake.com");
 
                         request.toEntity();
-                }, invalid("'email'").getMessage());
+                }, invalid("email").getMessage());
         }
 
         @Test
@@ -48,7 +48,7 @@ public class LoginRequestTest {
                         request.setEmail("");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
 
         @Test
@@ -60,9 +60,9 @@ public class LoginRequestTest {
                         request.setPassword("senha23213");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
-        
+
         @Test
         public void passwordEmpty() throws Exception {
                 assertThrows(() -> {
@@ -73,7 +73,7 @@ public class LoginRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 
         @Test
@@ -85,7 +85,7 @@ public class LoginRequestTest {
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 
 }

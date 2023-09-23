@@ -50,7 +50,7 @@ public class ExceptionHandler {
         }
 
         /**
-         * In this method the return value is not incapsulated in a 
+         * In this method the return value is not incapsulated in a
          * existing response
          */
         public static <T> ResponseEntity<?> response(Callable<T> callable) {
@@ -67,7 +67,7 @@ public class ExceptionHandler {
                         return notFound(e.getMessage());
                 }
                 catch (Exception e) {
-                        return internalServerError(e.getStackTrace());
+                        return internalServerError(e.getCause());
                 }
         }
 }

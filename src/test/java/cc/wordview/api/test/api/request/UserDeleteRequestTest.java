@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import cc.wordview.api.request.user.DeleteRequest;
+import cc.wordview.api.test.api.MockValues;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class UserDeleteRequestTest {
                 assertDoesNotThrow(() -> {
                         DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("4e9394b4d2876b8741b10a");
+                        request.setToken(MockValues.ADMIN_TOKEN);
                         request.setEmail("arthur@gmail.com");
                         request.setPassword("senha");
 
@@ -43,7 +44,7 @@ public class UserDeleteRequestTest {
                         request.setPassword("senha");
 
                         request.toEntity();
-                }, emptyOrNull("'token'").getMessage());
+                }, emptyOrNull("token").getMessage());
         }
 
         @Test
@@ -55,7 +56,7 @@ public class UserDeleteRequestTest {
                         request.setPassword("senha");
 
                         request.toEntity();
-                }, emptyOrNull("'token'").getMessage());
+                }, emptyOrNull("token").getMessage());
         }
 
 
@@ -64,12 +65,12 @@ public class UserDeleteRequestTest {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("4e9394b4d2876b8741b10a");
+                        request.setToken(MockValues.ADMIN_TOKEN);
                         request.setEmail("");
                         request.setPassword("senha");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
 
 
@@ -78,11 +79,11 @@ public class UserDeleteRequestTest {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("4e9394b4d2876b8741b10a");
+                        request.setToken(MockValues.ADMIN_TOKEN);
                         request.setPassword("senha");
 
                         request.toEntity();
-                }, emptyOrNull("'email'").getMessage());
+                }, emptyOrNull("email").getMessage());
         }
 
         @Test
@@ -90,12 +91,12 @@ public class UserDeleteRequestTest {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("4e9394b4d2876b8741b10a");
+                        request.setToken(MockValues.ADMIN_TOKEN);
                         request.setEmail("arthur@gmail.com");
                         request.setPassword("");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 
         @Test
@@ -103,10 +104,10 @@ public class UserDeleteRequestTest {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("4e9394b4d2876b8741b10a");
+                        request.setToken(MockValues.ADMIN_TOKEN);
                         request.setEmail("arthur@gmail.com");
 
                         request.toEntity();
-                }, emptyOrNull("'password'").getMessage());
+                }, emptyOrNull("password").getMessage());
         }
 }

@@ -29,14 +29,14 @@ public class LoginRequest {
 
         private void validate() throws RequestValidationException {
                 if (isNull(email) || email.isEmpty()) {
-                        throw emptyOrNull("'email'");
+                        throw emptyOrNull("email");
                 }
                 if (RequestValidation.invalidEmail(email)) {
-                        throw invalid("'email'");
+                        throw invalid("email");
                 }
 
                 if (isNull(password) || password.isEmpty()) {
-                        throw emptyOrNull("'password'");
+                        throw emptyOrNull("password");
                 }
         }
 }
