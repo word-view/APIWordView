@@ -13,12 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static cc.wordview.api.service.ExceptionTemplate.*;
 
 @Service
-public class UserService implements UserServiceInterface {
+public class UserService extends Servicer implements UserServiceInterface {
         @Autowired
         private UserRepository repository;
 
@@ -26,12 +25,7 @@ public class UserService implements UserServiceInterface {
 
         @Override
         public User getById(Long id) throws NoSuchEntryException {
-                Optional<User> user = repository.findById(id);
-
-                if (!user.isPresent())
-                        throw noSuchEntry("id", id);
-
-                return user.get();
+                return evaluatePresenceAndReturn(repository.findById(id), "id", id);
         }
 
         public NoCredentialsResponse getByIdWithoutCredentials(Long id)
@@ -41,22 +35,18 @@ public class UserService implements UserServiceInterface {
 
         @Override
         public User getByEmail(String email) throws NoSuchEntryException {
-                Optional<User> user = repository.findByEmail(email);
-
-                if (!user.isPresent())
-                        throw noSuchEntry("email", email);
-
-                return user.get();
+                return evaluatePresenceAndReturn(
+                        repository.findByEmail(email),
+                        "email", email
+                );
         }
 
         @Override
         public User getByToken(String token) throws NoSuchEntryException {
-                Optional<User> user = repository.findByToken(token);
-
-                if (!user.isPresent())
-                        throw noSuchEntry("token", token);
-
-                return user.get();
+                return evaluatePresenceAndReturn(
+                        repository.findByToken(token),
+                        "token", token
+                );
         }
 
         @Override

@@ -2,7 +2,6 @@ package cc.wordview.api.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +13,13 @@ import cc.wordview.api.repository.LessonRepository;
 import static cc.wordview.api.service.ExceptionTemplate.*;
 
 @Service
-public class LessonService implements LessonServiceInterface {
+public class LessonService extends Servicer implements LessonServiceInterface {
         @Autowired
         private LessonRepository repository;
 
         @Override
         public Lesson getById(Long id) throws NoSuchEntryException {
-                Optional<Lesson> lesson = repository.findById(id);
-
-                if (!lesson.isPresent())
-                        throw noSuchEntry("id", id);
-
-                return lesson.get();
+                return evaluatePresenceAndReturn(repository.findById(id), "id", id);
         }
 
         @Override
@@ -48,12 +42,10 @@ public class LessonService implements LessonServiceInterface {
 
         @Override
         public List<Lesson> getByDifficulty(String difficulty) throws NoSuchEntryException {
-                Optional<List<Lesson>> lesson = repository.findByDifficulty(difficulty);
-
-                if (!lesson.isPresent())
-                        throw noSuchEntry("difficulty", difficulty);
-
-                return lesson.get();
+                return evaluatePresenceAndReturn(
+                        repository.findByDifficulty(difficulty),
+                        "difficulty", difficulty
+                );
         }
 
 }

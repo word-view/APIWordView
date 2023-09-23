@@ -60,7 +60,7 @@ public class LessonRequestTest {
                         CreateRequest request = new CreateRequest();
 
                         request.setTitle("Lesson 1");
-                        // request.setDifficulty(""); cannot be empty when it is a enum
+                        request.setDifficulty("");
                         request.setAuthorization(MockValues.ADMIN_TOKEN);
 
                         request.toEntity();

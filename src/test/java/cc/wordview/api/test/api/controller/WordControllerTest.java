@@ -50,7 +50,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        new MockWord("car", "1", "4e9394b4b10a").toJson(),
+                        new MockWord("car", "1", MockValues.INEXISTENT_TOKEN).toJson(),
                         status().isNotFound()
                 );
         }
