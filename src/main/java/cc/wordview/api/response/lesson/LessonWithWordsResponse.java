@@ -31,6 +31,10 @@ public class LessonWithWordsResponse {
 @Setter
 class WordWithoutIDS {
         public String nameId;
+        public String imageURL;
 
-        public WordWithoutIDS(Word word) { setNameId(word.getNameId()); }
+        public WordWithoutIDS(Word word) { 
+                setNameId(word.getNameId()); 
+                setImageURL("https://localhost:8443/img/" + nameId + ".png");
+        }
 }
