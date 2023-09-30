@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = Settings.CORS_ORIGIN_METRO_DEV)
 @RequestMapping(path = Settings.REQUEST_PATH + "/language-word")
 public class LanguageWordController {
         @Autowired

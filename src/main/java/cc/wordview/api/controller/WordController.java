@@ -5,6 +5,7 @@ import static cc.wordview.api.controller.response.ResponseTemplate.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.database.entity.User;
 
 @RestController
+@CrossOrigin(origins = Settings.CORS_ORIGIN_METRO_DEV)
 @RequestMapping(path = Settings.REQUEST_PATH + "/word")
 public class WordController {
         @Autowired
