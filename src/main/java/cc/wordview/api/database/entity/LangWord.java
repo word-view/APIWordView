@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "language_word")
-public class LanguageWord implements Serializable {
+public class LangWord implements Serializable {
         private static final long serialVersionUID = 2235567849326126355L;
 
         @Id

@@ -12,7 +12,7 @@ import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LanguageWordRequestTest {
+public class LangWordRequestTest {
         @Test
         public void noException() throws Exception {
                 assertDoesNotThrow(() -> {

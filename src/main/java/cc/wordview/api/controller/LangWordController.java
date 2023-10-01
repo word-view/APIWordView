@@ -4,7 +4,7 @@ import cc.wordview.api.Settings;
 import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.langword.CreateRequest;
-import cc.wordview.api.service.specification.LanguageWordServiceInterface;
+import cc.wordview.api.service.specification.LangWordServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
 
 import static cc.wordview.api.controller.response.Response.*;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = Settings.CORS_ORIGIN_METRO_DEV)
-@RequestMapping(path = Settings.REQUEST_PATH + "/language-word")
-public class LanguageWordController {
+@RequestMapping(path = Settings.REQUEST_PATH + "/langword")
+public class LangWordController {
         @Autowired
-        private LanguageWordServiceInterface service;
+        private LangWordServiceInterface service;
 
         @Autowired
         private UserServiceInterface userService;

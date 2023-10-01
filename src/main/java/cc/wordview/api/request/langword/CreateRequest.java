@@ -1,6 +1,6 @@
 package cc.wordview.api.request.langword;
 
-import cc.wordview.api.database.entity.LanguageWord;
+import cc.wordview.api.database.entity.LangWord;
 import cc.wordview.api.exception.RequestValidationException;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,10 +16,10 @@ public class CreateRequest {
         public Long idWord;
         public String authorization;
 
-        public LanguageWord toEntity() throws RequestValidationException {
+        public LangWord toEntity() throws RequestValidationException {
                 this.validate();
 
-                LanguageWord langWord = new LanguageWord();
+                LangWord langWord = new LangWord();
 
                 langWord.setLocalizedWord(localizedWord);
                 langWord.setLang(lang);

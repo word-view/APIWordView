@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.test.api.MockValues;
-import cc.wordview.api.test.api.controller.mockentity.MockLanguageWord;
+import cc.wordview.api.test.api.controller.mockentity.MockLangWord;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @AutoConfigureMockMvc
-public class LanguageWordControllerTest {
+public class LangWordControllerTest {
         @Autowired
         private MockMvc request;
 
@@ -28,8 +28,8 @@ public class LanguageWordControllerTest {
         public void create() throws Exception {
                 TestRequest.post(
                         request,
-                        "/language-word/",
-                        new MockLanguageWord(
+                        "/langword/",
+                        new MockLangWord(
                                 "Carro", "pt_BR", 1L,
                                 MockValues.ADMIN_TOKEN
                         ).toJson(),
@@ -41,8 +41,8 @@ public class LanguageWordControllerTest {
         public void createByNonExistentUser() throws Exception {
                 TestRequest.post(
                         request,
-                        "/language-word/",
-                        new MockLanguageWord(
+                        "/langword/",
+                        new MockLangWord(
                                 "Carro", "pt_BR", 1L,
                                 MockValues.INEXISTENT_TOKEN
                         ).toJson(),
@@ -54,8 +54,8 @@ public class LanguageWordControllerTest {
         public void createByNonAdmin() throws Exception {
                 TestRequest.post(
                         request,
-                        "/language-word/",
-                        new MockLanguageWord(
+                        "/langword/",
+                        new MockLangWord(
                                 "Carro", "pt_BR", 1L,
                                 MockValues.NON_ADMIN_TOKEN
                         ).toJson(),
