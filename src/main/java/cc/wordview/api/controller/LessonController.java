@@ -21,11 +21,13 @@ import cc.wordview.api.service.specification.WordServiceInterface;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.database.entity.Word;
+import cc.wordview.api.exception.NoSuchEntryException;
 
 import static cc.wordview.api.controller.response.Response.*;
 import static cc.wordview.api.controller.response.ResponseTemplate.*;
 import static java.util.Objects.isNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -88,7 +90,24 @@ public class LessonController {
         }
 
         private ResponseEntity<?> getByDifficulty(String diffi) {
-                return ExceptionHandler.okResponse(() -> service.getByDifficulty(diffi));
+                return ExceptionHandler.response(() -> {
+                        List<LessonWithWordsResponse> lessonsWithWords = new ArrayList<>();
+                        List<Lesson> lessons = service.getByDifficulty(diffi);
+
+                        for (Lesson lesson : lessons) {
+                                List<Word> words = new ArrayList<>();
+
+                                try {
+                                        words = wordService.getByIdLesson(lesson.getId());
+                                } catch (NoSuchEntryException e) {}
+
+                                if (words.isEmpty()) continue;
+
+                                lessonsWithWords.add(new LessonWithWordsResponse(lesson, words));
+                        }
+
+                        return ok(lessonsWithWords);
+                });
         }
 
         // UPDATE
