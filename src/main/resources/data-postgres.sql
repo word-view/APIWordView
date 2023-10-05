@@ -14,3 +14,6 @@ VALUES ('lesson3', 'starter');
 
 INSERT INTO word (name_id, id_lesson)
 VALUES ('phone', 1);
+
+INSERT INTO language_word (localized_word, lang, id_word)
+VALUES ('Telefone', 'pt-br', 1);

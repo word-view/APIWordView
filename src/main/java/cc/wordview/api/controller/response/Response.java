@@ -38,6 +38,10 @@ public class Response {
                 return new ResponseEntity<>(body, HttpStatus.OK);
         }
 
+        public static <T> ResponseEntity<?> ok() {
+                return new ResponseEntity<>(HttpStatus.OK);
+        }
+
         public static ResponseEntity<?> created() {
                 return new ResponseEntity<>(HttpStatus.CREATED);
         }

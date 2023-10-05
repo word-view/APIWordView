@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.test.api.MockValues;
+import cc.wordview.api.test.api.controller.mockentity.MockAuthorizationBody;
 import cc.wordview.api.test.api.controller.mockentity.MockLangWord;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +44,7 @@ public class LangWordControllerTest {
                         request,
                         "/langword/",
                         new MockLangWord(
-                                "Carro", "pt_BR", 1L,
+                                "Carro", "pt_BR", 2L,
                                 MockValues.INEXISTENT_TOKEN
                         ).toJson(),
                         status().isNotFound()
@@ -56,10 +57,20 @@ public class LangWordControllerTest {
                         request,
                         "/langword/",
                         new MockLangWord(
-                                "Carro", "pt_BR", 1L,
+                                "Carro", "pt_BR", 2L,
                                 MockValues.NON_ADMIN_TOKEN
                         ).toJson(),
                         status().isForbidden()
+                );
+        }
+
+        @Test
+        public void getByIdLesson() throws Exception {
+                TestRequest.post(
+                        request,
+                        "/langword/search?lessonid=1&lang=pt-br",
+                        new MockAuthorizationBody(MockValues.NON_ADMIN_TOKEN).toJson(),
+                        status().isOk()
                 );
         }
 }

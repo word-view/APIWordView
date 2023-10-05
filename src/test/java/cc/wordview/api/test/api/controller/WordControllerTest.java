@@ -30,7 +30,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        new MockWord("car", "1", MockValues.ADMIN_TOKEN).toJson(),
+                        new MockWord("car", "2", MockValues.ADMIN_TOKEN).toJson(),
                         status().isCreated()
                 );
         }
@@ -40,7 +40,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        new MockWord("car", "1", MockValues.NON_ADMIN_TOKEN).toJson(),
+                        new MockWord("car", "2", MockValues.NON_ADMIN_TOKEN).toJson(),
                         status().isForbidden()
                 );
         }
@@ -50,7 +50,7 @@ public class WordControllerTest {
                 TestRequest.post(
                         request,
                         "/word/",
-                        new MockWord("car", "1", MockValues.INEXISTENT_TOKEN).toJson(),
+                        new MockWord("car", "2", MockValues.INEXISTENT_TOKEN).toJson(),
                         status().isNotFound()
                 );
         }
