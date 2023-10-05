@@ -39,7 +39,7 @@ public class WordService extends Servicer implements WordServiceInterface {
                 List<Word> words = repository.findByIdLesson(idLesson);
 
                 if (words.isEmpty())
-                        throw noSuchEntry("idLessons", idLesson);
+                        throw noSuchEntry("idLesson", idLesson);
 
                 return words;
         }
