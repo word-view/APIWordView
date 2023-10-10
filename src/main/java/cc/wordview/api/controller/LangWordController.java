@@ -2,6 +2,7 @@ package cc.wordview.api.controller;
 
 import cc.wordview.api.Settings;
 import cc.wordview.api.controller.response.ExceptionHandler;
+import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.database.entity.LangWord;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.database.entity.Word;
@@ -11,8 +12,6 @@ import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.service.specification.WordServiceInterface;
 
 import static cc.wordview.api.controller.response.Response.*;
-import static cc.wordview.api.controller.response.ResponseTemplate.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class LangWordController {
                         User user = userService.getByToken(request.authorization);
 
                         if (!user.isAdmin())
-                                return notAdmin();
+                                return forbidden(ResponseTemplate.NOT_ADMIN_MESSAGE);
 
                         service.insert(request.toEntity());
                         return created();

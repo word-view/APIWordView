@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Settings;
 import cc.wordview.api.controller.response.ExceptionHandler;
+import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.request.lesson.CreateRequest;
 import cc.wordview.api.response.lesson.LessonWithWordsResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
@@ -23,7 +24,6 @@ import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.database.entity.Word;
 
 import static cc.wordview.api.controller.response.Response.*;
-import static cc.wordview.api.controller.response.ResponseTemplate.*;
 import static java.util.Objects.isNull;
 
 import java.util.List;
@@ -48,7 +48,7 @@ public class LessonController {
                         User user = userService.getByToken(request.authorization);
 
                         if (!user.isAdmin())
-                                return notAdmin();
+                                return forbidden(ResponseTemplate.NOT_ADMIN_MESSAGE);
 
                         service.insert(request.toEntity());
                         return created();
