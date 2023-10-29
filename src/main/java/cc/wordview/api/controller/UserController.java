@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN_METRO_DEV)
+@CrossOrigin(origins = Settings.CORS_ORIGIN_ALL)
 @RequestMapping(path = Settings.REQUEST_PATH + "/users")
 public class UserController {
         @Autowired

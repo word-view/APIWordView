@@ -29,7 +29,7 @@ import static java.util.Objects.isNull;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN_METRO_DEV)
+@CrossOrigin(origins = Settings.CORS_ORIGIN_ALL)
 @RequestMapping(path = Settings.REQUEST_PATH + "/lesson")
 public class LessonController {
         @Autowired
