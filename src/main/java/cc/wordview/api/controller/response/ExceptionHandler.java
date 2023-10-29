@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.exception.ValueTakenException;
 
 /**
  * Globally handles exceptions for API responses
@@ -65,6 +66,9 @@ public class ExceptionHandler {
                 }
                 catch (NoSuchEntryException e) {
                         return notFound(e.getMessage());
+                }
+                catch (ValueTakenException e) {
+                        return forbidden(e.getMessage());
                 }
                 catch (Exception e) {
                         return internalServerError(e.getCause());

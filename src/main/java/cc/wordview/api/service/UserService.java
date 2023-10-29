@@ -7,12 +7,14 @@ import cc.wordview.api.security.Token;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.exception.ValueTakenException;
 import cc.wordview.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static cc.wordview.api.service.ExceptionTemplate.*;
 
@@ -50,13 +52,22 @@ public class UserService extends Servicer implements UserServiceInterface {
         }
 
         @Override
-        public User insert(User entity) {
+        public User insert(User entity) throws ValueTakenException {
                 String hashedPasswd = new HashedPassword(entity).getValue();
 
                 entity.setPassword(hashedPasswd);
                 entity.setToken(new Token(20).getValue());
 
-                return repository.save(entity);
+
+                // Check email is taken;
+                Optional<User> user = repository.findByEmail(entity.getEmail());
+
+                if (user.isPresent()) {
+                        throw valueTaken(entity.getEmail());
+                } else {
+                        return repository.save(entity);
+                }
+
         }
 
         public String login(User entity)

@@ -29,9 +29,19 @@ public class UserControllerTest {
         public void create() throws Exception {
                 TestRequest.post(
                         request,
-                        "/users/", 
+                        "/users/",
                         new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64").toJson(),
-                        status().isCreated()        
+                        status().isCreated()
+                );
+        }
+
+        @Test
+        public void createUserExistingEmail() throws Exception {
+                TestRequest.post(
+                        request,
+                        "/users/",
+                        new MockUser("aaaaaaaa", "arthur.araujo@tutanota.com", "S_enha64").toJson(),
+                        status().isForbidden()
                 );
         }
 
@@ -50,9 +60,9 @@ public class UserControllerTest {
         public void login() throws Exception {
                 TestRequest.post(
                         request,
-                        "/users/login", 
-                        new MockUser("arthur.araujo@gmail.com", "S_enha64").toJson(), 
-                        status().isOk()       
+                        "/users/login",
+                        new MockUser("arthur.araujo@gmail.com", "S_enha64").toJson(),
+                        status().isOk()
                 );
         }
 
@@ -60,9 +70,9 @@ public class UserControllerTest {
         public void loginIncorrectCredentials() throws Exception {
                 TestRequest.post(
                         request,
-                        "/users/login", 
-                        new MockUser("arthur.araujo@gmail.com", "senha").toJson(), 
-                        status().isUnauthorized()       
+                        "/users/login",
+                        new MockUser("arthur.araujo@gmail.com", "senha").toJson(),
+                        status().isUnauthorized()
                 );
         }
         // UPDATE
