@@ -56,7 +56,7 @@ public class UserService extends Servicer implements UserServiceInterface {
                 String hashedPasswd = new HashedPassword(entity).getValue();
 
                 entity.setPassword(hashedPasswd);
-                entity.setToken(new Token(20).getValue());
+                entity.setToken(new Token(128).getValue());
 
 
                 // Check email is taken;
