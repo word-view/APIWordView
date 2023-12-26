@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN_ALL)
+@CrossOrigin(origins = Settings.CORS_ORIGIN)
 @RequestMapping(path = Settings.REQUEST_PATH + "/users")
 public class UserController {
         @Autowired
@@ -39,11 +39,14 @@ public class UserController {
 
         @GetMapping("/{id}")
         public ResponseEntity<?> getById(@PathVariable Long id) {
-                return ExceptionHandler.okResponse(() -> service.getByIdWithoutCredentials(id));
+                return ExceptionHandler
+                                .okResponse(() -> service.getByIdWithoutCredentials(id));
         }
 
         @GetMapping
-        public ResponseEntity<?> getAll() { return ExceptionHandler.okResponse(() -> service.getAllUsers()); }
+        public ResponseEntity<?> getAll() {
+                return ExceptionHandler.okResponse(() -> service.getAllUsers());
+        }
 
         @PatchMapping
         public ResponseEntity<?> update(@RequestBody LoginRequest request) {

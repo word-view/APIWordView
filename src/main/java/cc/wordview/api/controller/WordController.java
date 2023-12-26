@@ -18,7 +18,7 @@ import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.database.entity.User;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN_ALL)
+@CrossOrigin(origins = Settings.CORS_ORIGIN)
 @RequestMapping(path = Settings.REQUEST_PATH + "/word")
 public class WordController {
         @Autowired

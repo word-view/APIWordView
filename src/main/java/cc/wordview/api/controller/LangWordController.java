@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN_ALL)
+@CrossOrigin(origins = Settings.CORS_ORIGIN)
 @RequestMapping(path = Settings.REQUEST_PATH + "/langword")
 public class LangWordController {
         @Autowired
@@ -45,9 +45,9 @@ public class LangWordController {
                 });
         }
 
-
         @PostMapping("/search")
-        private ResponseEntity<?> searchByLessonId(@RequestParam Long lessonid, @RequestParam String lang) {
+        private ResponseEntity<?> searchByLessonId(@RequestParam Long lessonid,
+                        @RequestParam String lang) {
                 return ExceptionHandler.response(() -> {
                         List<Word> words = wordService.getByIdLesson(lessonid);
                         List<LangWord> langWords = new ArrayList<>();
