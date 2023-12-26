@@ -13,4 +13,6 @@ public interface LessonServiceInterface extends ServiceInterface<Lesson, Lesson>
         List<Lesson> getByTitle(String title) throws NoSuchEntryException;
 
         List<Lesson> getByDifficulty(String difficulty) throws NoSuchEntryException;
+
+        List<Lesson> getByCategoryId(Long id) throws NoSuchEntryException;
 }

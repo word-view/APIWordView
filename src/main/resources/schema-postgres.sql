@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS member        CASCADE;
 DROP TABLE IF EXISTS member_events CASCADE;
+DROP TABLE IF EXISTS category      CASCADE;
 DROP TABLE IF EXISTS lesson        CASCADE;
 DROP TABLE IF EXISTS word          CASCADE;
 DROP TABLE IF EXISTS language_word CASCADE;
@@ -27,12 +28,19 @@ CREATE TABLE member_events (
     CONSTRAINT fk_id_member FOREIGN KEY (id_member) REFERENCES member(id) ON DELETE CASCADE
 );
 
+CREATE TABLE category (
+    id bigint GENERATED ALWAYS AS IDENTITY,
+    title varchar(255),
+    PRIMARY KEY (id)
+);
 
 CREATE TABLE lesson (
     id bigint GENERATED ALWAYS AS IDENTITY,
+    id_category bigint,
     title varchar(255),
     difficulty varchar(255),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT fk_id_category FOREIGN KEY (id_category) REFERENCES category(id) ON DELETE SET NULL
 );
 
 CREATE TABLE word (

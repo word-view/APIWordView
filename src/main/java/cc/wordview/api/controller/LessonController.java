@@ -41,7 +41,6 @@ public class LessonController {
         @Autowired
         private WordServiceInterface wordService;
 
-        // CREATE
         @PostMapping(consumes = "application/json")
         public ResponseEntity<?> create(@RequestBody CreateRequest request) {
                 return ExceptionHandler.response(() -> {
@@ -55,7 +54,6 @@ public class LessonController {
                 });
         }
 
-        // READ
         @GetMapping("/{id}")
         public ResponseEntity<?> getById(@PathVariable Long id) {
                 return ExceptionHandler.response(() -> {
@@ -68,9 +66,11 @@ public class LessonController {
 
         @GetMapping("/search")
         public ResponseEntity<?> search(@RequestParam(required = false) String title,
-                        @RequestParam(required = false) String diffi) {
+                        @RequestParam(required = false) String diffi,
+                        @RequestParam(required = false) Long category) {
 
-                if (isRequestParamEmpty(title) && isRequestParamEmpty(diffi)) {
+                if (isRequestParamEmpty(title) && isRequestParamEmpty(diffi)
+                                && isRequestParamEmpty(category)) {
                         return badRequest("At least 1 request parameter is necessary");
                 }
 
@@ -79,6 +79,9 @@ public class LessonController {
 
                 if (!isRequestParamEmpty(diffi))
                         return getByDifficulty(diffi);
+
+                if (!isRequestParamEmpty(category))
+                        return getByCategory(category);
 
                 return badRequest("Cannot process two request parameters at the same time");
         }
@@ -91,11 +94,13 @@ public class LessonController {
                 return ExceptionHandler.okResponse(() -> service.getByDifficulty(diffi));
         }
 
-        // UPDATE
-
-        // DELETE
+        private ResponseEntity<?> getByCategory(Long category) {
+                return ExceptionHandler.okResponse(() -> service.getByCategoryId(category));
+        }
 
         private boolean isRequestParamEmpty(String param) {
                 return isNull(param) || param.isEmpty();
         }
+
+        private boolean isRequestParamEmpty(Long param) { return isNull(param) || param == 0; }
 }

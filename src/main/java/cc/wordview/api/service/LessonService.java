@@ -42,10 +42,24 @@ public class LessonService extends Servicer implements LessonServiceInterface {
 
         @Override
         public List<Lesson> getByDifficulty(String difficulty) throws NoSuchEntryException {
-                return evaluatePresenceAndReturn(
-                        repository.findByDifficulty(difficulty),
-                        "difficulty", difficulty
-                );
+                return evaluatePresenceAndReturn(repository.findByDifficulty(difficulty),
+                                "difficulty", difficulty);
+        }
+
+        @Override
+        public List<Lesson> getByCategoryId(Long id) throws NoSuchEntryException {
+                List<Lesson> lessons = new ArrayList<>();
+
+                for (Lesson entry : repository.findAll()) {
+                        if (entry.getIdCategory() == id) {
+                                lessons.add(entry);
+                        }
+                }
+
+                if (lessons.isEmpty())
+                        throw noSuchEntry("category", id);
+
+                return lessons;
         }
 
 }

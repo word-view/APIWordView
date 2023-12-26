@@ -28,32 +28,26 @@ public class LessonControllerTest {
         // CREATE
         @Test
         public void create() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/lesson/",
-                        new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.ADMIN_TOKEN).toJson(),
-                        status().isCreated()
-                );
+                TestRequest.post(request, "/lesson/",
+                                new MockLesson("lesson1", LessonDifficulty.STARTER,
+                                                MockValues.ADMIN_TOKEN).toJson(),
+                                status().isCreated());
         }
 
         @Test
         public void createByNonExistentUser() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/lesson/",
-                        new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.INEXISTENT_TOKEN).toJson(),
-                        status().isNotFound()
-                );
+                TestRequest.post(request, "/lesson/",
+                                new MockLesson("lesson1", LessonDifficulty.STARTER,
+                                                MockValues.INEXISTENT_TOKEN).toJson(),
+                                status().isNotFound());
         }
 
         @Test
         public void createByNonAdmin() throws Exception {
-                TestRequest.post(
-                        request,
-                        "/lesson/",
-                        new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.NON_ADMIN_TOKEN).toJson(),
-                        status().isForbidden()
-                );
+                TestRequest.post(request, "/lesson/",
+                                new MockLesson("lesson1", LessonDifficulty.STARTER,
+                                                MockValues.NON_ADMIN_TOKEN).toJson(),
+                                status().isForbidden());
         }
 
         // READ
@@ -77,4 +71,18 @@ public class LessonControllerTest {
                 TestRequest.get(request, "/lesson/search?diffi=sd", status().isNotFound());
         }
 
+        @Test
+        public void getByCategory() throws Exception {
+                TestRequest.get(request, "/lesson/search?category=1", status().isOk());
+        }
+
+        @Test
+        public void getByZeroCategory() throws Exception {
+                TestRequest.get(request, "/lesson/search?category=0", status().isBadRequest());
+        }
+
+        @Test
+        public void getByNonExistentCategory() throws Exception {
+                TestRequest.get(request, "/lesson/search?category=2", status().isNotFound());
+        }
 }

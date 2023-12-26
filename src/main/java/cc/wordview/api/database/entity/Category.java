@@ -8,8 +8,8 @@ import java.io.Serializable;
 @Entity
 @Data
 @Table(name = "lesson")
-public class Lesson implements Serializable {
-        private static final long serialVersionUID = 4555915241326436355L;
+public class Category implements Serializable {
+        private static final long serialVersionUID = 2555915241326436355L;
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,4 @@ public class Lesson implements Serializable {
         @Column(name = "title")
         private String title;
 
-        @Column(name = "difficulty")
-        private String difficulty;
-
-        @Column(name = "id_category")
-        private Long idCategory;
 }
