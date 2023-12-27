@@ -17,14 +17,14 @@
 
 package cc.wordview.api;
 
-import static cc.wordview.api.Settings.CORS_ORIGIN;
-import static cc.wordview.api.Settings.CORS_ORIGIN_ALL;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import static cc.wordview.api.Settings.CORS_ORIGIN;
+import static cc.wordview.api.Settings.CORS_ORIGIN_ALL;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "cc.wordview.api" })
