@@ -17,24 +17,32 @@
 
 package cc.wordview.api;
 
+import static cc.wordview.api.Settings.CORS_ORIGIN;
+import static cc.wordview.api.Settings.CORS_ORIGIN_ALL;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
-import static cc.wordview.api.Settings.CORS_ORIGIN;
-import static cc.wordview.api.Settings.CORS_ORIGIN_ALL;
-
 @SpringBootApplication
 @ComponentScan(basePackages = { "cc.wordview.api" })
-public class Application {
-        private static final Logger Logger = LoggerFactory.getLogger(Application.class);
+public class Application implements ApplicationRunner {
 
-        public static void main(String[] args) {
-                if (SpringApplication.run(Application.class).isActive()) {
+        private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+        public static void main(String... args) throws Exception {
+                SpringApplication.run(Application.class, args);
+        }
+
+        @Override
+        public void run(ApplicationArguments args) throws Exception {
+                if (args.containsOption("production")) {
                         if (CORS_ORIGIN == CORS_ORIGIN_ALL)
-                                Logger.warn("Allowing CORS_ORIGIN from all sources");
+                                logger.error("CORS_ORIGIN all is not allowed in production");
                 }
         }
 }
