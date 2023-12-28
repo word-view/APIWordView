@@ -17,8 +17,8 @@
 
 package cc.wordview.api;
 
-import static cc.wordview.api.Settings.CORS_ORIGIN;
-import static cc.wordview.api.Settings.CORS_ORIGIN_ALL;
+import static cc.wordview.api.Constants.CORS_ORIGIN;
+import static cc.wordview.api.Constants.CORS_ORIGIN_ALL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

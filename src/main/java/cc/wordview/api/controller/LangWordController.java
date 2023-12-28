@@ -1,6 +1,6 @@
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Settings;
+import cc.wordview.api.Constants;
 import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.database.entity.LangWord;
@@ -20,8 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN)
-@RequestMapping(path = Settings.REQUEST_PATH + "/langword")
+@CrossOrigin(origins = Constants.CORS_ORIGIN)
+@RequestMapping(path = Constants.REQUEST_PATH + "/langword")
 public class LangWordController {
         @Autowired
         private LangWordServiceInterface service;

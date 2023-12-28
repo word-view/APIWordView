@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.wordview.api.Settings;
+import cc.wordview.api.Constants;
 import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.request.lesson.CreateRequest;
@@ -29,8 +29,8 @@ import static java.util.Objects.isNull;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = Settings.CORS_ORIGIN)
-@RequestMapping(path = Settings.REQUEST_PATH + "/lesson")
+@CrossOrigin(origins = Constants.CORS_ORIGIN)
+@RequestMapping(path = Constants.REQUEST_PATH + "/lesson")
 public class LessonController {
         @Autowired
         private LessonServiceInterface service;
