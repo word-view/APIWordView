@@ -42,7 +42,7 @@ public class Application implements ApplicationRunner {
         public void run(ApplicationArguments args) throws Exception {
                 if (args.containsOption("production")) {
                         if (CORS_ORIGIN == CORS_ORIGIN_ALL)
-                                logger.error("CORS_ORIGIN all is not allowed in production");
+                                logger.warn("CORS_ORIGIN is set to all.");
                 }
         }
 }
