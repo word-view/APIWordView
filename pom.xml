@@ -92,7 +92,7 @@
                 <version>2.22.2</version>
                 <configuration>
                     <includes>
-                        <!-- <include>**/*RequestTest.java</include> -->
+                        <include>**/*RequestTest.java</include>
                     </includes>
                 </configuration>
             </plugin>
