@@ -1,8 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.langword.CreateRequest;
 import cc.wordview.api.test.api.MockValues;
@@ -11,10 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LangWordRequestTest {
+class LangWordRequestTest {
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -28,9 +25,9 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void localizedWordEmpty() throws Exception {
+        void localizedWordEmpty() throws Exception {
                 assertThrows(() -> {
-                       CreateRequest request = new CreateRequest();
+                        CreateRequest request = new CreateRequest();
 
                         request.setLocalizedWord("");
                         request.setIdWord(1L);
@@ -42,9 +39,9 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void localizedWordNull() throws Exception {
+        void localizedWordNull() throws Exception {
                 assertThrows(() -> {
-                       CreateRequest request = new CreateRequest();
+                        CreateRequest request = new CreateRequest();
 
                         request.setIdWord(1L);
                         request.setLang("pt_BR");
@@ -55,7 +52,7 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void idWordNull() throws Exception {
+        void idWordNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -68,7 +65,7 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void langEmpty() throws Exception {
+        void langEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -82,7 +79,7 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void langNull() throws Exception {
+        void langNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -94,9 +91,8 @@ public class LangWordRequestTest {
                 }, emptyOrNull("lang").getMessage());
         }
 
-
         @Test
-        public void authorizationEmpty() throws Exception {
+        void authorizationEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -110,7 +106,7 @@ public class LangWordRequestTest {
         }
 
         @Test
-        public void authorizationNull() throws Exception {
+        void authorizationNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

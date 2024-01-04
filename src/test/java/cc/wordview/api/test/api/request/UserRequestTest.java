@@ -1,8 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.CreateRequest;
 
@@ -10,11 +8,10 @@ import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserRequestTest {
+class UserRequestTest {
 
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -27,7 +24,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void usernameWithSpecialChars() throws Exception {
+        void usernameWithSpecialChars() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -40,7 +37,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void usernameEmpty() throws Exception {
+        void usernameEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -53,7 +50,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void usernameNull() throws Exception {
+        void usernameNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -65,7 +62,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void emailInvalid() throws Exception {
+        void emailInvalid() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -78,7 +75,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void emailEmpty() throws Exception {
+        void emailEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -91,7 +88,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void emailNull() throws Exception {
+        void emailNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -103,7 +100,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void passwordEmpty() throws Exception {
+        void passwordEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -116,7 +113,7 @@ public class UserRequestTest {
         }
 
         @Test
-        public void passwordNull() throws Exception {
+        void passwordNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

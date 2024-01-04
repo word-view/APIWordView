@@ -37,18 +37,14 @@ public class UserService extends Servicer implements UserServiceInterface {
 
         @Override
         public User getByEmail(String email) throws NoSuchEntryException {
-                return evaluatePresenceAndReturn(
-                        repository.findByEmail(email),
-                        "email", email
-                );
+                return evaluatePresenceAndReturn(repository.findByEmail(email), "email",
+                                email);
         }
 
         @Override
         public User getByToken(String token) throws NoSuchEntryException {
-                return evaluatePresenceAndReturn(
-                        repository.findByToken(token),
-                        "token", token
-                );
+                return evaluatePresenceAndReturn(repository.findByToken(token), "token",
+                                token);
         }
 
         @Override
@@ -58,13 +54,13 @@ public class UserService extends Servicer implements UserServiceInterface {
                 entity.setPassword(hashedPasswd);
                 entity.setToken(new Token(128).getValue());
 
-
                 // Check email is taken;
                 Optional<User> user = repository.findByEmail(entity.getEmail());
 
                 if (user.isPresent()) {
                         throw valueTaken(entity.getEmail());
-                } else {
+                }
+                else {
                         return repository.save(entity);
                 }
 

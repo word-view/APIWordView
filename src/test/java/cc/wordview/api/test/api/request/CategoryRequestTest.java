@@ -1,8 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.category.CreateRequest;
 import cc.wordview.api.test.api.MockValues;
@@ -11,10 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CategoryRequestTest {
+class CategoryRequestTest {
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -26,7 +23,7 @@ public class CategoryRequestTest {
         }
 
         @Test
-        public void titleEmpty() throws Exception {
+        void titleEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -38,7 +35,7 @@ public class CategoryRequestTest {
         }
 
         @Test
-        public void titleNull() throws Exception {
+        void titleNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -49,7 +46,7 @@ public class CategoryRequestTest {
         }
 
         @Test
-        public void authorizationEmpty() throws Exception {
+        void authorizationEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -61,7 +58,7 @@ public class CategoryRequestTest {
         }
 
         @Test
-        public void authorizationNull() throws Exception {
+        void authorizationNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

@@ -1,17 +1,16 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.Test;
-
 import cc.wordview.api.request.word.CreateRequest;
 import cc.wordview.api.test.api.MockValues;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-public class WordRequestTest {
+class WordRequestTest {
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -24,7 +23,7 @@ public class WordRequestTest {
         }
 
         @Test
-        public void idLessonEmpty() throws Exception {
+        void idLessonEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -36,7 +35,7 @@ public class WordRequestTest {
         }
 
         @Test
-        public void nameIdEmpty() throws Exception {
+        void nameIdEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -49,7 +48,7 @@ public class WordRequestTest {
         }
 
         @Test
-        public void nameIdNull() throws Exception {
+        void nameIdNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -61,7 +60,7 @@ public class WordRequestTest {
         }
 
         @Test
-        public void authorizationEmpty() throws Exception {
+        void authorizationEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -74,7 +73,7 @@ public class WordRequestTest {
         }
 
         @Test
-        public void authorizationNull() throws Exception {
+        void authorizationNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

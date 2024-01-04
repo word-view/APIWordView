@@ -1,9 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.database.types.LessonDifficulty;
 import cc.wordview.api.request.lesson.CreateRequest;
@@ -13,11 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LessonRequestTest {
+class LessonRequestTest {
 
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -30,7 +26,7 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void titleEmpty() throws Exception {
+        void titleEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -43,7 +39,7 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void titleNull() throws Exception {
+        void titleNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -55,7 +51,7 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void difficultyEmpty() throws Exception {
+        void difficultyEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -68,7 +64,7 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void difficultyNull() throws Exception {
+        void difficultyNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -80,7 +76,7 @@ public class LessonRequestTest {
         }
 
         @Test
-        public void authorizationEmpty() throws Exception {
+        void authorizationEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -92,9 +88,8 @@ public class LessonRequestTest {
                 }, emptyOrNull("authorization").getMessage());
         }
 
-
         @Test
-        public void authorizationNull() throws Exception {
+        void authorizationNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

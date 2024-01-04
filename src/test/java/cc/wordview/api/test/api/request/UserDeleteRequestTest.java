@@ -1,8 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.DeleteRequest;
 import cc.wordview.api.test.api.MockValues;
@@ -15,14 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @Getter
 @Setter
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDeleteRequestTest {
         public String token;
         public String password;
         public String email;
 
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -35,7 +32,7 @@ public class UserDeleteRequestTest {
         }
 
         @Test
-        public void tokenEmpty() throws Exception {
+        void tokenEmpty() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -48,7 +45,7 @@ public class UserDeleteRequestTest {
         }
 
         @Test
-        public void tokenNull() throws Exception {
+        void tokenNull() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -59,9 +56,8 @@ public class UserDeleteRequestTest {
                 }, emptyOrNull("token").getMessage());
         }
 
-
         @Test
-        public void emailEmpty() throws Exception {
+        void emailEmpty() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -73,9 +69,8 @@ public class UserDeleteRequestTest {
                 }, emptyOrNull("email").getMessage());
         }
 
-
         @Test
-        public void emailNull() throws Exception {
+        void emailNull() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -87,7 +82,7 @@ public class UserDeleteRequestTest {
         }
 
         @Test
-        public void passwordEmpty() throws Exception {
+        void passwordEmpty() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 
@@ -100,7 +95,7 @@ public class UserDeleteRequestTest {
         }
 
         @Test
-        public void passswordNull() throws Exception {
+        void passswordNull() throws Exception {
                 assertThrows(() -> {
                         DeleteRequest request = new DeleteRequest();
 

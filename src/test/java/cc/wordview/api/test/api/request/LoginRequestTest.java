@@ -1,8 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.CreateRequest;
 import cc.wordview.api.request.user.LoginRequest;
@@ -11,10 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class LoginRequestTest {
+class LoginRequestTest {
         @Test
-        public void noException() throws Exception {
+        void noException() throws Exception {
                 assertDoesNotThrow(() -> {
                         LoginRequest request = new LoginRequest();
 
@@ -26,7 +23,7 @@ public class LoginRequestTest {
         }
 
         @Test
-        public void emailInvalid() throws Exception {
+        void emailInvalid() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -39,7 +36,7 @@ public class LoginRequestTest {
         }
 
         @Test
-        public void emailEmpty() throws Exception {
+        void emailEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -52,7 +49,7 @@ public class LoginRequestTest {
         }
 
         @Test
-        public void emailNull() throws Exception {
+        void emailNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -64,7 +61,7 @@ public class LoginRequestTest {
         }
 
         @Test
-        public void passwordEmpty() throws Exception {
+        void passwordEmpty() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 
@@ -77,7 +74,7 @@ public class LoginRequestTest {
         }
 
         @Test
-        public void passwordNull() throws Exception {
+        void passwordNull() throws Exception {
                 assertThrows(() -> {
                         CreateRequest request = new CreateRequest();
 

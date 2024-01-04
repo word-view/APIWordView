@@ -1,5 +1,6 @@
 package cc.wordview.api.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import cc.wordview.api.exception.NoSuchEntryException;
@@ -13,9 +14,14 @@ public abstract class Servicer {
         public <T, T2> T evaluatePresenceAndReturn(Optional<T> optional, String fieldName,
                         T2 fieldValue) throws NoSuchEntryException {
 
-                if (!optional.isPresent())
-                        throw noSuchEntry(fieldName, fieldValue);
+                T optionalValue = optional
+                                .orElseThrow(() -> noSuchEntry(fieldName, fieldValue));
 
-                return optional.get();
+                if (optionalValue instanceof ArrayList
+                                && ((ArrayList<?>) optionalValue).isEmpty()) {
+                        throw noSuchEntry(fieldName, fieldValue);
+                }
+
+                return optionalValue;
         }
 }

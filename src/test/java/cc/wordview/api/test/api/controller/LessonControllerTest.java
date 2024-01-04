@@ -1,13 +1,11 @@
 package cc.wordview.api.test.api.controller;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import cc.wordview.api.Application;
@@ -17,17 +15,16 @@ import cc.wordview.api.test.api.controller.mockentity.MockLesson;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @AutoConfigureMockMvc
-public class LessonControllerTest {
+@TestMethodOrder(MethodOrderer.MethodName.class)
+class LessonControllerTest {
         @Autowired
         private MockMvc request;
 
         // CREATE
         @Test
-        public void create() throws Exception {
+        void create() throws Exception {
                 TestRequest.post(request, "/lesson/",
                                 new MockLesson("lesson1", LessonDifficulty.STARTER,
                                                 MockValues.ADMIN_TOKEN).toJson(),
@@ -35,7 +32,7 @@ public class LessonControllerTest {
         }
 
         @Test
-        public void createByNonExistentUser() throws Exception {
+        void createByNonExistentUser() throws Exception {
                 TestRequest.post(request, "/lesson/",
                                 new MockLesson("lesson1", LessonDifficulty.STARTER,
                                                 MockValues.INEXISTENT_TOKEN).toJson(),
@@ -43,7 +40,7 @@ public class LessonControllerTest {
         }
 
         @Test
-        public void createByNonAdmin() throws Exception {
+        void createByNonAdmin() throws Exception {
                 TestRequest.post(request, "/lesson/",
                                 new MockLesson("lesson1", LessonDifficulty.STARTER,
                                                 MockValues.NON_ADMIN_TOKEN).toJson(),
@@ -52,37 +49,37 @@ public class LessonControllerTest {
 
         // READ
         @Test
-        public void getByTitle() throws Exception {
+        void getByTitle() throws Exception {
                 TestRequest.get(request, "/lesson/search?title=lesson", status().isOk());
         }
 
         @Test
-        public void getByNonExistentTitle() throws Exception {
+        void getByNonExistentTitle() throws Exception {
                 TestRequest.get(request, "/lesson/search?title=sd", status().isNotFound());
         }
 
         @Test
-        public void getByDifficulty() throws Exception {
+        void getByDifficulty() throws Exception {
                 TestRequest.get(request, "/lesson/search?diffi=starter", status().isOk());
         }
 
         @Test
-        public void getByNonExistentDifficulty() throws Exception {
-                TestRequest.get(request, "/lesson/search?diffi=sd", status().isNotFound());
+        void getByNonExistentDifficulty() throws Exception {
+                TestRequest.get(request, "/lesson/search?diffi=w", status().isNotFound());
         }
 
         @Test
-        public void getByCategory() throws Exception {
+        void getByCategory() throws Exception {
                 TestRequest.get(request, "/lesson/search?category=1", status().isOk());
         }
 
         @Test
-        public void getByZeroCategory() throws Exception {
+        void getByZeroCategory() throws Exception {
                 TestRequest.get(request, "/lesson/search?category=0", status().isBadRequest());
         }
 
         @Test
-        public void getByNonExistentCategory() throws Exception {
+        void getByNonExistentCategory() throws Exception {
                 TestRequest.get(request, "/lesson/search?category=2", status().isNotFound());
         }
 }
