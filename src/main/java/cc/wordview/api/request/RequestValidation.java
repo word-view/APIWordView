@@ -1,4 +1,4 @@
-package cc.wordview.api.security;
+package cc.wordview.api.request;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package cc.wordview.api.security;
+package cc.wordview.api.service.util;
 
 import java.util.Random;
 

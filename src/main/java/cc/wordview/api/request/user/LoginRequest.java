@@ -6,7 +6,7 @@ import static java.util.Objects.isNull;
 
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.RequestValidationException;
-import cc.wordview.api.security.RequestValidation;
+import cc.wordview.api.request.RequestValidation;
 import lombok.Getter;
 import lombok.Setter;
 

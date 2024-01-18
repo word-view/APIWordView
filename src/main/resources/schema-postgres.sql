@@ -12,6 +12,7 @@ CREATE TABLE member (
     password varchar(255),
     token varchar(255) UNIQUE,
     admin BOOL DEFAULT false,
+    role varchar(255),
     PRIMARY KEY (id)
 );
 
