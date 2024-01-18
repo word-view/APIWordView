@@ -7,7 +7,7 @@ import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.response.user.NoCredentialsResponse;
 
-public interface UserServiceInterface extends ServiceInterface<User, User> {
+public interface UserServiceInterface extends ServiceInterface<User> {
 	List<NoCredentialsResponse> getAllUsers();
 
 	User getByToken(String token) throws NoSuchEntryException;
@@ -19,4 +19,5 @@ public interface UserServiceInterface extends ServiceInterface<User, User> {
 	String login(User entity) throws NoSuchEntryException, IncorrectCredentialsException;
 
 	void delete(User entity) throws NoSuchEntryException, IncorrectCredentialsException;
+
 }

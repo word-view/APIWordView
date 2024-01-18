@@ -4,6 +4,6 @@ import cc.wordview.api.database.entity.LangWord;
 import cc.wordview.api.database.entity.Word;
 import cc.wordview.api.exception.NoSuchEntryException;
 
-public interface LangWordServiceInterface extends ServiceInterface<LangWord, LangWord> {
+public interface LangWordServiceInterface extends ServiceInterface<LangWord> {
 	LangWord wordToLangWord(Word word, String lang) throws NoSuchEntryException;
 }

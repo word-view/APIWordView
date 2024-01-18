@@ -5,7 +5,7 @@ import java.util.List;
 import cc.wordview.api.database.entity.Category;
 import cc.wordview.api.exception.NoSuchEntryException;
 
-public interface CategoryServiceInterface extends ServiceInterface<Category, Category> {
+public interface CategoryServiceInterface extends ServiceInterface<Category> {
 	@Override
 	Category getById(Long id) throws NoSuchEntryException;
 

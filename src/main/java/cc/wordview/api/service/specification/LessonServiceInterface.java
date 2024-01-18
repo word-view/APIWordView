@@ -5,7 +5,7 @@ import java.util.List;
 import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.exception.NoSuchEntryException;
 
-public interface LessonServiceInterface extends ServiceInterface<Lesson, Lesson> {
+public interface LessonServiceInterface extends ServiceInterface<Lesson> {
 	@Override
 	Lesson getById(Long id) throws NoSuchEntryException;
 

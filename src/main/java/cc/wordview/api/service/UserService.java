@@ -16,9 +16,9 @@ import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.exception.ValueTakenException;
 import cc.wordview.api.repository.UserRepository;
 import cc.wordview.api.response.user.NoCredentialsResponse;
-import cc.wordview.api.security.HashedPassword;
-import cc.wordview.api.security.Token;
 import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.service.util.HashedPassword;
+import cc.wordview.api.service.util.Token;
 
 @Service
 public class UserService extends Servicer implements UserServiceInterface {
