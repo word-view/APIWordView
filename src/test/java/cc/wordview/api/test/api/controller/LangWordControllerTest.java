@@ -16,37 +16,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 class LangWordControllerTest {
-        @Autowired
-        private MockMvc request;
+	@Autowired
+	private MockMvc request;
 
-        @Test
-        void create() throws Exception {
-                TestRequest.post(request, "/langword/",
-                                new MockLangWord("Carro", "pt_BR", 1L, MockValues.ADMIN_TOKEN)
-                                                .toJson(),
-                                status().isCreated());
-        }
+	@Test
+	void create() throws Exception {
+		TestRequest.post(request, "/langword/", new MockLangWord("Carro", "pt_BR", 1L, MockValues.ADMIN_TOKEN).toJson(),
+				status().isCreated());
+	}
 
-        @Test
-        void createByNonExistentUser() throws Exception {
-                TestRequest.post(request, "/langword/",
-                                new MockLangWord("Carro", "pt_BR", 2L,
-                                                MockValues.INEXISTENT_TOKEN).toJson(),
-                                status().isNotFound());
-        }
+	@Test
+	void createByNonExistentUser() throws Exception {
+		TestRequest.post(request, "/langword/",
+				new MockLangWord("Carro", "pt_BR", 2L, MockValues.INEXISTENT_TOKEN).toJson(), status().isNotFound());
+	}
 
-        @Test
-        void createByNonAdmin() throws Exception {
-                TestRequest.post(request, "/langword/",
-                                new MockLangWord("Carro", "pt_BR", 2L,
-                                                MockValues.NON_ADMIN_TOKEN).toJson(),
-                                status().isForbidden());
-        }
+	@Test
+	void createByNonAdmin() throws Exception {
+		TestRequest.post(request, "/langword/",
+				new MockLangWord("Carro", "pt_BR", 2L, MockValues.NON_ADMIN_TOKEN).toJson(), status().isForbidden());
+	}
 
-        @Test
-        void getByIdLesson() throws Exception {
-                TestRequest.post(request, "/langword/search?lessonid=1&lang=pt-br",
-                                new MockAuthorizationBody(MockValues.NON_ADMIN_TOKEN).toJson(),
-                                status().isOk());
-        }
+	@Test
+	void getByIdLesson() throws Exception {
+		TestRequest.post(request, "/langword/search?lessonid=1&lang=pt-br",
+				new MockAuthorizationBody(MockValues.NON_ADMIN_TOKEN).toJson(), status().isOk());
+	}
 }

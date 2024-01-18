@@ -6,10 +6,10 @@ import lombok.EqualsAndHashCode;
 
 /**
  * Test case workaround for get requests that require authentication
-*/
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class MockAuthorizationBody extends MockEntity {
-        private String authorization;
+	private String authorization;
 }

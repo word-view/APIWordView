@@ -8,6 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class MockCategory extends MockEntity {
-        private String title;
-        private String authorization;
+	private String title;
+	private String authorization;
 }

@@ -8,12 +8,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class MockUser extends MockEntity {
-        private String username;
-        private String email;
-        private String password;
+	private String username;
+	private String email;
+	private String password;
 
-        public MockUser(String email, String password) {
-                setEmail(email);
-                setPassword(password);
-        }
+	public MockUser(String email, String password) {
+		setEmail(email);
+		setPassword(password);
+	}
 }

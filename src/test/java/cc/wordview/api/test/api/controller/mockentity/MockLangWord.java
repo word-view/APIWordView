@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class MockLangWord extends MockEntity {
-        private String localizedWord;
-        private String lang;
-        private Long idWord;
-        private String authorization;
+	private String localizedWord;
+	private String lang;
+	private Long idWord;
+	private String authorization;
 }

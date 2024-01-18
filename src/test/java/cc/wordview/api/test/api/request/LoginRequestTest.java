@@ -10,79 +10,79 @@ import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
 class LoginRequestTest {
-        @Test
-        void noException() throws Exception {
-                assertDoesNotThrow(() -> {
-                        LoginRequest request = new LoginRequest();
+	@Test
+	void noException() throws Exception {
+		assertDoesNotThrow(() -> {
+			LoginRequest request = new LoginRequest();
 
-                        request.setEmail("arthur@gmail.com");
-                        request.setPassword("senha23213");
+			request.setEmail("arthur@gmail.com");
+			request.setPassword("senha23213");
 
-                        request.toEntity();
-                });
-        }
+			request.toEntity();
+		});
+	}
 
-        @Test
-        void emailInvalid() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void emailInvalid() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setUsername("Arthur");
-                        request.setPassword("senha23213");
-                        request.setEmail("arthur@cmake.com");
+			request.setUsername("Arthur");
+			request.setPassword("senha23213");
+			request.setEmail("arthur@cmake.com");
 
-                        request.toEntity();
-                }, invalid("email").getMessage());
-        }
+			request.toEntity();
+		}, invalid("email").getMessage());
+	}
 
-        @Test
-        void emailEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void emailEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setUsername("Arthur");
-                        request.setPassword("senha23213");
-                        request.setEmail("");
+			request.setUsername("Arthur");
+			request.setPassword("senha23213");
+			request.setEmail("");
 
-                        request.toEntity();
-                }, emptyOrNull("email").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("email").getMessage());
+	}
 
-        @Test
-        void emailNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void emailNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setUsername("Arthur");
-                        request.setPassword("senha23213");
+			request.setUsername("Arthur");
+			request.setPassword("senha23213");
 
-                        request.toEntity();
-                }, emptyOrNull("email").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("email").getMessage());
+	}
 
-        @Test
-        void passwordEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void passwordEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setUsername("Arthur");
-                        request.setPassword("");
-                        request.setEmail("arthur@gmail.com");
+			request.setUsername("Arthur");
+			request.setPassword("");
+			request.setEmail("arthur@gmail.com");
 
-                        request.toEntity();
-                }, emptyOrNull("password").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("password").getMessage());
+	}
 
-        @Test
-        void passwordNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void passwordNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setUsername("Arthur");
-                        request.setEmail("arthur@gmail.com");
+			request.setUsername("Arthur");
+			request.setEmail("arthur@gmail.com");
 
-                        request.toEntity();
-                }, emptyOrNull("password").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("password").getMessage());
+	}
 
 }

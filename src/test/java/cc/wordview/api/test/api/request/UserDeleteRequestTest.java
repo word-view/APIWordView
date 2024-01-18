@@ -14,95 +14,95 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 @Getter
 @Setter
 public class UserDeleteRequestTest {
-        public String token;
-        public String password;
-        public String email;
+	public String token;
+	public String password;
+	public String email;
 
-        @Test
-        void noException() throws Exception {
-                assertDoesNotThrow(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void noException() throws Exception {
+		assertDoesNotThrow(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken(MockValues.ADMIN_TOKEN);
-                        request.setEmail("arthur@gmail.com");
-                        request.setPassword("senha");
+			request.setToken(MockValues.ADMIN_TOKEN);
+			request.setEmail("arthur@gmail.com");
+			request.setPassword("senha");
 
-                        request.toEntity();
-                });
-        }
+			request.toEntity();
+		});
+	}
 
-        @Test
-        void tokenEmpty() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void tokenEmpty() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken("");
-                        request.setEmail("arthur@gmail.com");
-                        request.setPassword("senha");
+			request.setToken("");
+			request.setEmail("arthur@gmail.com");
+			request.setPassword("senha");
 
-                        request.toEntity();
-                }, emptyOrNull("token").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("token").getMessage());
+	}
 
-        @Test
-        void tokenNull() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void tokenNull() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setEmail("arthur@gmail.com");
-                        request.setPassword("senha");
+			request.setEmail("arthur@gmail.com");
+			request.setPassword("senha");
 
-                        request.toEntity();
-                }, emptyOrNull("token").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("token").getMessage());
+	}
 
-        @Test
-        void emailEmpty() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void emailEmpty() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken(MockValues.ADMIN_TOKEN);
-                        request.setEmail("");
-                        request.setPassword("senha");
+			request.setToken(MockValues.ADMIN_TOKEN);
+			request.setEmail("");
+			request.setPassword("senha");
 
-                        request.toEntity();
-                }, emptyOrNull("email").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("email").getMessage());
+	}
 
-        @Test
-        void emailNull() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void emailNull() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken(MockValues.ADMIN_TOKEN);
-                        request.setPassword("senha");
+			request.setToken(MockValues.ADMIN_TOKEN);
+			request.setPassword("senha");
 
-                        request.toEntity();
-                }, emptyOrNull("email").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("email").getMessage());
+	}
 
-        @Test
-        void passwordEmpty() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void passwordEmpty() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken(MockValues.ADMIN_TOKEN);
-                        request.setEmail("arthur@gmail.com");
-                        request.setPassword("");
+			request.setToken(MockValues.ADMIN_TOKEN);
+			request.setEmail("arthur@gmail.com");
+			request.setPassword("");
 
-                        request.toEntity();
-                }, emptyOrNull("password").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("password").getMessage());
+	}
 
-        @Test
-        void passswordNull() throws Exception {
-                assertThrows(() -> {
-                        DeleteRequest request = new DeleteRequest();
+	@Test
+	void passswordNull() throws Exception {
+		assertThrows(() -> {
+			DeleteRequest request = new DeleteRequest();
 
-                        request.setToken(MockValues.ADMIN_TOKEN);
-                        request.setEmail("arthur@gmail.com");
+			request.setToken(MockValues.ADMIN_TOKEN);
+			request.setEmail("arthur@gmail.com");
 
-                        request.toEntity();
-                }, emptyOrNull("password").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("password").getMessage());
+	}
 }

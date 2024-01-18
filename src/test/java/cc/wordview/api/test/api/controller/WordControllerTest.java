@@ -15,28 +15,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 class WordControllerTest {
-        @Autowired
-        private MockMvc request;
+	@Autowired
+	private MockMvc request;
 
-        // CREATE
-        @Test
-        void create() throws Exception {
-                TestRequest.post(request, "/word/",
-                                new MockWord("car", "2", MockValues.ADMIN_TOKEN).toJson(),
-                                status().isCreated());
-        }
+	// CREATE
+	@Test
+	void create() throws Exception {
+		TestRequest.post(request, "/word/", new MockWord("car", "2", MockValues.ADMIN_TOKEN).toJson(),
+				status().isCreated());
+	}
 
-        @Test
-        void createByNonAdmin() throws Exception {
-                TestRequest.post(request, "/word/",
-                                new MockWord("car", "2", MockValues.NON_ADMIN_TOKEN).toJson(),
-                                status().isForbidden());
-        }
+	@Test
+	void createByNonAdmin() throws Exception {
+		TestRequest.post(request, "/word/", new MockWord("car", "2", MockValues.NON_ADMIN_TOKEN).toJson(),
+				status().isForbidden());
+	}
 
-        @Test
-        void createByNonExistentUser() throws Exception {
-                TestRequest.post(request, "/word/",
-                                new MockWord("car", "2", MockValues.INEXISTENT_TOKEN).toJson(),
-                                status().isNotFound());
-        }
+	@Test
+	void createByNonExistentUser() throws Exception {
+		TestRequest.post(request, "/word/", new MockWord("car", "2", MockValues.INEXISTENT_TOKEN).toJson(),
+				status().isNotFound());
+	}
 }

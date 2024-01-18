@@ -9,78 +9,78 @@ import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
 class WordRequestTest {
-        @Test
-        void noException() throws Exception {
-                assertDoesNotThrow(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void noException() throws Exception {
+		assertDoesNotThrow(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setIdLesson(1L);
-                        request.setNameId("car");
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setIdLesson(1L);
+			request.setNameId("car");
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                });
-        }
+			request.toEntity();
+		});
+	}
 
-        @Test
-        void idLessonEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void idLessonEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setNameId("car");
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setNameId("car");
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("idLesson").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("idLesson").getMessage());
+	}
 
-        @Test
-        void nameIdEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void nameIdEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setIdLesson(1L);
-                        request.setNameId("");
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setIdLesson(1L);
+			request.setNameId("");
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("nameId").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("nameId").getMessage());
+	}
 
-        @Test
-        void nameIdNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void nameIdNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setIdLesson(1L);
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setIdLesson(1L);
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("nameId").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("nameId").getMessage());
+	}
 
-        @Test
-        void authorizationEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void authorizationEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setIdLesson(1L);
-                        request.setNameId("car");
-                        request.setAuthorization("");
+			request.setIdLesson(1L);
+			request.setNameId("car");
+			request.setAuthorization("");
 
-                        request.toEntity();
-                }, emptyOrNull("authorization").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("authorization").getMessage());
+	}
 
-        @Test
-        void authorizationNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void authorizationNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setIdLesson(1L);
-                        request.setNameId("car");
+			request.setIdLesson(1L);
+			request.setNameId("car");
 
-                        request.toEntity();
-                }, emptyOrNull("authorization").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("authorization").getMessage());
+	}
 }

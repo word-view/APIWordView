@@ -7,11 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreatedResponse {
-        private Long id;
-        private String token;
+	private Long id;
+	private String token;
 
-        public CreatedResponse(User user) {
-                this.id = user.getId();
-                this.token = user.getToken();
-        }
+	public CreatedResponse(User user) {
+		this.id = user.getId();
+		this.token = user.getToken();
+	}
 }

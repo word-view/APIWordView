@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class MockWord extends MockEntity {
-        private String nameId;
-        private String idLesson;
-        private String authorization;
+	private String nameId;
+	private String idLesson;
+	private String authorization;
 }

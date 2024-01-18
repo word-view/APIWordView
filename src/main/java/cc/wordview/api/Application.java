@@ -32,17 +32,18 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = { "cc.wordview.api" })
 public class Application implements ApplicationRunner {
 
-        private static final Logger logger = LoggerFactory.getLogger(Application.class);
+	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-        public static void main(String... args) throws Exception {
-                SpringApplication.run(Application.class, args);
-        }
+	public static void main(String... args) throws Exception {
+		SpringApplication.run(Application.class, args);
+	}
 
-        @Override
-        public void run(ApplicationArguments args) throws Exception {
-                if (args.containsOption("production")) {
-                        if (CORS_ORIGIN == CORS_ORIGIN_ALL)
-                                logger.warn("CORS_ORIGIN is set to all.");
-                }
-        }
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		if (args.containsOption("production")) {
+			if (CORS_ORIGIN == CORS_ORIGIN_ALL) {
+				logger.warn("CORS_ORIGIN is set to all.");
+			}
+		}
+	}
 }

@@ -11,26 +11,26 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRequest {
-        public String title;
-        public String authorization;
+	public String title;
+	public String authorization;
 
-        public Category toEntity() throws RequestValidationException {
-                this.validate();
+	public Category toEntity() throws RequestValidationException {
+		this.validate();
 
-                Category newCategory = new Category();
+		Category newCategory = new Category();
 
-                newCategory.setTitle(title);
+		newCategory.setTitle(title);
 
-                return newCategory;
-        }
+		return newCategory;
+	}
 
-        private void validate() throws RequestValidationException {
-                if (isNull(title) || title.isEmpty()) {
-                        throw emptyOrNull("title");
-                }
+	private void validate() throws RequestValidationException {
+		if (isNull(title) || title.isEmpty()) {
+			throw emptyOrNull("title");
+		}
 
-                if (isNull(authorization) || authorization.isEmpty()) {
-                        throw emptyOrNull("authorization");
-                }
-        }
+		if (isNull(authorization) || authorization.isEmpty()) {
+			throw emptyOrNull("authorization");
+		}
+	}
 }

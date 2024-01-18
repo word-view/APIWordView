@@ -7,13 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NoCredentialsResponse {
-        public Long id;
-        public String username;
-        public String email;
+	public Long id;
+	public String username;
+	public String email;
 
-        public NoCredentialsResponse(User user) {
-                this.id = user.getId();
-                this.username = user.getUsername();
-                this.email = user.getEmail();
-        }
+	public NoCredentialsResponse(User user) {
+		this.id = user.getId();
+		this.username = user.getUsername();
+		this.email = user.getEmail();
+	}
 }

@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthorizationRequest {
-        public String authorization;
+	public String authorization;
 }

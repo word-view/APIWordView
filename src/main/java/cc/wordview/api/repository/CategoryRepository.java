@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 import cc.wordview.api.database.entity.Category;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
-        Optional<List<Category>> findByTitle(String title);
+	Optional<List<Category>> findByTitle(String title);
 }

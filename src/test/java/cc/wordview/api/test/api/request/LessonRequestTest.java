@@ -12,91 +12,91 @@ import static cc.wordview.api.request.ExceptionTemplate.*;
 
 class LessonRequestTest {
 
-        @Test
-        void noException() throws Exception {
-                assertDoesNotThrow(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void noException() throws Exception {
+		assertDoesNotThrow(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setTitle("Lesson 1");
+			request.setDifficulty(LessonDifficulty.STARTER);
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                });
-        }
+			request.toEntity();
+		});
+	}
 
-        @Test
-        void titleEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void titleEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("");
-                        request.setDifficulty(LessonDifficulty.STARTER);
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setTitle("");
+			request.setDifficulty(LessonDifficulty.STARTER);
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("title").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("title").getMessage());
+	}
 
-        @Test
-        void titleNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void titleNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setDifficulty(LessonDifficulty.STARTER);
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setDifficulty(LessonDifficulty.STARTER);
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("title").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("title").getMessage());
+	}
 
-        @Test
-        void difficultyEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void difficultyEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty("");
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setTitle("Lesson 1");
+			request.setDifficulty("");
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("difficulty").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("difficulty").getMessage());
+	}
 
-        @Test
-        void difficultyNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void difficultyNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setAuthorization(MockValues.ADMIN_TOKEN);
+			request.setTitle("Lesson 1");
+			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
-                        request.toEntity();
-                }, emptyOrNull("difficulty").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("difficulty").getMessage());
+	}
 
-        @Test
-        void authorizationEmpty() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void authorizationEmpty() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
-                        request.setAuthorization("");
+			request.setTitle("Lesson 1");
+			request.setDifficulty(LessonDifficulty.STARTER);
+			request.setAuthorization("");
 
-                        request.toEntity();
-                }, emptyOrNull("authorization").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("authorization").getMessage());
+	}
 
-        @Test
-        void authorizationNull() throws Exception {
-                assertThrows(() -> {
-                        CreateRequest request = new CreateRequest();
+	@Test
+	void authorizationNull() throws Exception {
+		assertThrows(() -> {
+			CreateRequest request = new CreateRequest();
 
-                        request.setTitle("Lesson 1");
-                        request.setDifficulty(LessonDifficulty.STARTER);
+			request.setTitle("Lesson 1");
+			request.setDifficulty(LessonDifficulty.STARTER);
 
-                        request.toEntity();
-                }, emptyOrNull("authorization").getMessage());
-        }
+			request.toEntity();
+		}, emptyOrNull("authorization").getMessage());
+	}
 }

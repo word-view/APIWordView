@@ -12,39 +12,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.wordview.api.service.specification.CategoryServiceInterface;
-import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.Constants;
 import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.category.CreateRequest;
+import cc.wordview.api.service.specification.CategoryServiceInterface;
+import cc.wordview.api.service.specification.UserServiceInterface;
 
 @RestController
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/category")
 public class CategoryController {
-        @Autowired
-        private CategoryServiceInterface service;
+	@Autowired
+	private CategoryServiceInterface service;
 
-        @Autowired
-        private UserServiceInterface userService;
+	@Autowired
+	private UserServiceInterface userService;
 
-        @PostMapping(consumes = "application/json")
-        public ResponseEntity<?> create(@RequestBody CreateRequest request) {
-                return ExceptionHandler.response(() -> {
-                        User user = userService.getByToken(request.authorization);
+	@PostMapping(consumes = "application/json")
+	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
+		return ExceptionHandler.response(() -> {
+			User user = userService.getByToken(request.authorization);
 
-                        if (!user.isAdmin())
-                                return forbidden(ResponseTemplate.NOT_ADMIN_MESSAGE);
+			if (!user.isAdmin())
+				return forbidden(ResponseTemplate.NOT_ADMIN_MESSAGE);
 
-                        service.insert(request.toEntity());
-                        return created();
-                });
-        }
+			service.insert(request.toEntity());
+			return created();
+		});
+	}
 
-        @GetMapping
-        public ResponseEntity<?> getAll() {
-                return ExceptionHandler.okResponse(() -> service.getAll());
-        }
+	@GetMapping
+	public ResponseEntity<?> getAll() {
+		return ExceptionHandler.okResponse(() -> service.getAll());
+	}
 }

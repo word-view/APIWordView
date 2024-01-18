@@ -1,43 +1,43 @@
 package cc.wordview.api.request.lesson;
 
+import static cc.wordview.api.request.ExceptionTemplate.emptyOrNull;
+import static java.util.Objects.isNull;
+
+import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.exception.RequestValidationException;
 import lombok.Getter;
 import lombok.Setter;
-import cc.wordview.api.database.entity.Lesson;
-
-import static java.util.Objects.isNull;
-import static cc.wordview.api.request.ExceptionTemplate.*;
 
 @Getter
 @Setter
 public class CreateRequest {
-        public String title;
-        public String difficulty;
-        public String authorization;
+	public String title;
+	public String difficulty;
+	public String authorization;
 
-        public Lesson toEntity() throws RequestValidationException {
-                this.validate();
+	public Lesson toEntity() throws RequestValidationException {
+		this.validate();
 
-                Lesson newLesson = new Lesson();
+		Lesson newLesson = new Lesson();
 
-                newLesson.setTitle(title);
-                newLesson.setDifficulty(difficulty);
+		newLesson.setTitle(title);
+		newLesson.setDifficulty(difficulty);
 
-                return newLesson;
-        }
+		return newLesson;
+	}
 
-        private void validate() throws RequestValidationException {
-                if (isNull(title) || title.isEmpty()) {
-                        throw emptyOrNull("title");
-                }
+	private void validate() throws RequestValidationException {
+		if (isNull(title) || title.isEmpty()) {
+			throw emptyOrNull("title");
+		}
 
-                if (isNull(difficulty) || difficulty.isEmpty()) {
-                        throw emptyOrNull("difficulty");
-                }
+		if (isNull(difficulty) || difficulty.isEmpty()) {
+			throw emptyOrNull("difficulty");
+		}
 
-                if (isNull(authorization) || authorization.isEmpty()) {
-                        throw emptyOrNull("authorization");
-                }
+		if (isNull(authorization) || authorization.isEmpty()) {
+			throw emptyOrNull("authorization");
+		}
 
-        }
+	}
 }

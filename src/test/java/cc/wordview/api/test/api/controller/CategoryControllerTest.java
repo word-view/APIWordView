@@ -15,35 +15,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 class CategoryControllerTest {
-        @Autowired
-        private MockMvc request;
+	@Autowired
+	private MockMvc request;
 
-        @Test
-        void create() throws Exception {
-                TestRequest.post(request, "/category",
-                                new MockCategory("TestCategory", MockValues.ADMIN_TOKEN)
-                                                .toJson(),
-                                status().isCreated());
-        }
+	@Test
+	void create() throws Exception {
+		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.ADMIN_TOKEN).toJson(),
+				status().isCreated());
+	}
 
-        @Test
-        void createByNonAdmin() throws Exception {
-                TestRequest.post(request, "/category",
-                                new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN)
-                                                .toJson(),
-                                status().isForbidden());
-        }
+	@Test
+	void createByNonAdmin() throws Exception {
+		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN).toJson(),
+				status().isForbidden());
+	}
 
-        @Test
-        void createByNonExistentUser() throws Exception {
-                TestRequest.post(request, "/category",
-                                new MockCategory("TestCategory", MockValues.INEXISTENT_TOKEN)
-                                                .toJson(),
-                                status().isNotFound());
-        }
+	@Test
+	void createByNonExistentUser() throws Exception {
+		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.INEXISTENT_TOKEN).toJson(),
+				status().isNotFound());
+	}
 
-        @Test
-        void getAll() throws Exception {
-                TestRequest.get(request, "/category", status().isOk());
-        }
+	@Test
+	void getAll() throws Exception {
+		TestRequest.get(request, "/category", status().isOk());
+	}
 }
