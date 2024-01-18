@@ -4,6 +4,7 @@ import static cc.wordview.api.controller.response.Response.badRequest;
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.forbidden;
 import static cc.wordview.api.controller.response.Response.ok;
+import static cc.wordview.api.controller.response.ExceptionHandler.*;
 import static java.util.Objects.isNull;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class LessonController {
 
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
-		return ExceptionHandler.response(() -> {
+		return response(() -> {
 			User user = userService.getByToken(request.authorization);
 
 			if (!user.isAdmin())
@@ -59,7 +60,7 @@ public class LessonController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
-		return ExceptionHandler.response(() -> {
+		return response(() -> {
 			Lesson lesson = service.getById(id);
 			List<Word> words = wordService.getByIdLesson(id);
 

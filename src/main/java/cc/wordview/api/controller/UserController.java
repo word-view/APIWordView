@@ -2,6 +2,7 @@ package cc.wordview.api.controller;
 
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.notImplemented;
+import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Constants;
-import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.user.CreateRequest;
 import cc.wordview.api.request.user.DeleteRequest;
@@ -32,9 +32,9 @@ public class UserController {
 	private UserServiceInterface service;
 
 	// CREATE
-	@PostMapping(consumes = "application/json")
+	@PostMapping(path = "/register", consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
-		return ExceptionHandler.response(() -> {
+		return response(() -> {
 			User createdUser = service.insert(request.toEntity());
 			return created(new CreatedResponse(createdUser));
 		});
@@ -43,17 +43,17 @@ public class UserController {
 	// READ
 	@PostMapping(path = "/login", consumes = "application/json")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-		return ExceptionHandler.okResponse(() -> service.login(request.toEntity()));
+		return okResponse(() -> service.login(request.toEntity()));
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
-		return ExceptionHandler.okResponse(() -> service.getByIdWithoutCredentials(id));
+		return okResponse(() -> service.getByIdWithoutCredentials(id));
 	}
 
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		return ExceptionHandler.okResponse(() -> service.getAllUsers());
+		return okResponse(() -> service.getAllUsers());
 	}
 
 	@PatchMapping

@@ -2,6 +2,7 @@ package cc.wordview.api.controller;
 
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.forbidden;
+import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class CategoryController {
 
 	@PostMapping(consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
-		return ExceptionHandler.response(() -> {
+		return response(() -> {
 			User user = userService.getByToken(request.authorization);
 
 			if (!user.isAdmin())
