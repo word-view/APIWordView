@@ -1,6 +1,7 @@
 package cc.wordview.api.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import cc.wordview.api.repository.CategoryRepository;
 import cc.wordview.api.service.specification.CategoryServiceInterface;
 
 @Service
-public class CategoryService extends Servicer implements CategoryServiceInterface {
+public class CategoryService implements CategoryServiceInterface {
 	@Autowired
 	private CategoryRepository repository;
 
@@ -22,12 +23,24 @@ public class CategoryService extends Servicer implements CategoryServiceInterfac
 
 	@Override
 	public Category getById(Long id) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findById(id), "id", id);
+		Optional<Category> category = repository.findById(id);
+
+		if (!category.isPresent()) {
+			throw new NoSuchEntryException("Unable to find any category with this id");
+		}
+
+		return category.get();
 	}
 
 	@Override
 	public List<Category> getByTitle(String title) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findByTitle(title), "title", title);
+		Optional<List<Category>> category = repository.findByTitle(title);
+
+		if (!category.isPresent()) {
+			throw new NoSuchEntryException("Unable to find any category with this title");
+		}
+
+		return category.get();
 	}
 
 	@Override

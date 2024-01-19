@@ -1,8 +1,7 @@
 package cc.wordview.api.service;
 
-import static cc.wordview.api.service.ExceptionTemplate.noSuchEntry;
-
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +13,20 @@ import cc.wordview.api.repository.LangWordRepository;
 import cc.wordview.api.service.specification.LangWordServiceInterface;
 
 @Service
-public class LangWordService extends Servicer implements LangWordServiceInterface {
+public class LangWordService implements LangWordServiceInterface {
 
 	@Autowired
 	private LangWordRepository repository;
 
 	@Override
 	public LangWord getById(Long id) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findById(id), "id", id);
+		Optional<LangWord> langword = repository.findById(id);
+
+		if (!langword.isPresent()) {
+			throw new NoSuchEntryException("Unable to find a langword with this id");
+		}
+
+		return langword.get();
 	}
 
 	@Override
@@ -40,8 +45,9 @@ public class LangWordService extends Servicer implements LangWordServiceInterfac
 				langWordToReturn = langWord;
 		}
 
-		if (langWordToReturn == null)
-			throw noSuchEntry("word", word.getNameId());
+		if (langWordToReturn == null) {
+			throw new NoSuchEntryException("Unable to any word matching this langword");
+		}
 
 		return langWordToReturn;
 	}

@@ -1,8 +1,7 @@
 package cc.wordview.api.service;
 
-import static cc.wordview.api.service.ExceptionTemplate.noSuchEntry;
-
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +12,20 @@ import cc.wordview.api.repository.WordRepository;
 import cc.wordview.api.service.specification.WordServiceInterface;
 
 @Service
-public class WordService extends Servicer implements WordServiceInterface {
+public class WordService implements WordServiceInterface {
 
 	@Autowired
 	private WordRepository repository;
 
 	@Override
 	public Word getById(Long id) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findById(id), "id", id);
+		Optional<Word> word = repository.findById(id);
+
+		if (!word.isPresent()) {
+			throw new NoSuchEntryException("Unable to find word with this id");
+		}
+
+		return word.get();
 	}
 
 	@Override
@@ -30,15 +35,22 @@ public class WordService extends Servicer implements WordServiceInterface {
 
 	@Override
 	public Word getByNameId(String nameId) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findByNameId(nameId), "nameId", nameId);
+		Optional<Word> word = repository.findByNameId(nameId);
+
+		if (!word.isPresent()) {
+			throw new NoSuchEntryException("Unable to find word with this name_id");
+		}
+
+		return word.get();
 	}
 
 	@Override
 	public List<Word> getByIdLesson(Long idLesson) throws NoSuchEntryException {
 		List<Word> words = repository.findByIdLesson(idLesson);
 
-		if (words.isEmpty())
-			throw noSuchEntry("idLesson", idLesson);
+		if (words.isEmpty()) {
+			throw new NoSuchEntryException("Unable to find any word with this id_lesson");
+		}
 
 		return words;
 	}

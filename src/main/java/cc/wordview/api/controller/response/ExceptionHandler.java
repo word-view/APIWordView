@@ -8,6 +8,8 @@ import static cc.wordview.api.controller.response.Response.unauthorized;
 
 import java.util.concurrent.Callable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 
 import cc.wordview.api.exception.IncorrectCredentialsException;
@@ -19,6 +21,8 @@ import cc.wordview.api.exception.ValueTakenException;
  * Globally handles exceptions for API responses
  */
 public class ExceptionHandler {
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
+
 	public static <T> ResponseEntity<?> okResponse(Callable<T> callable) {
 		try {
 			return Response.ok(callable.call());
@@ -29,6 +33,7 @@ public class ExceptionHandler {
 		} catch (NoSuchEntryException e) {
 			return notFound(e.getMessage());
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			return internalServerError(e.getStackTrace());
 		}
 	}
@@ -43,6 +48,7 @@ public class ExceptionHandler {
 		} catch (NoSuchEntryException e) {
 			return notFound(e.getMessage());
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			return internalServerError(e.getStackTrace());
 		}
 	}
@@ -62,6 +68,7 @@ public class ExceptionHandler {
 		} catch (ValueTakenException e) {
 			return forbidden(e.getMessage());
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			return internalServerError(e.getCause());
 		}
 	}

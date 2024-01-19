@@ -1,8 +1,5 @@
 package cc.wordview.api.service;
 
-import static cc.wordview.api.service.ExceptionTemplate.incorrectCredentials;
-import static cc.wordview.api.service.ExceptionTemplate.valueTaken;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +18,7 @@ import cc.wordview.api.service.util.HashedPassword;
 import cc.wordview.api.service.util.Token;
 
 @Service
-public class UserService extends Servicer implements UserServiceInterface {
+public class UserService implements UserServiceInterface {
 	@Autowired
 	private UserRepository repository;
 
@@ -31,7 +28,13 @@ public class UserService extends Servicer implements UserServiceInterface {
 
 	@Override
 	public User getById(Long id) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findById(id), "id", id);
+		Optional<User> user = repository.findById(id);
+
+		if (!user.isPresent()) {
+			throw new NoSuchEntryException("Unable to find a user with this id");
+		}
+
+		return user.get();
 	}
 
 	public NoCredentialsResponse getByIdWithoutCredentials(Long id) throws NoSuchEntryException {
@@ -40,29 +43,41 @@ public class UserService extends Servicer implements UserServiceInterface {
 
 	@Override
 	public User getByEmail(String email) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findByEmail(email), "email", email);
+		Optional<User> user = repository.findByEmail(email);
+
+		if (!user.isPresent()) {
+			throw new NoSuchEntryException("Unable to find a user with this email");
+		}
+
+		return user.get();
 	}
 
 	@Override
+	@Deprecated
 	public User getByToken(String token) throws NoSuchEntryException {
-		return evaluatePresenceAndReturn(repository.findByToken(token), "token", token);
+		Optional<User> user = repository.findByToken(token);
+
+		if (!user.isPresent()) {
+			throw new NoSuchEntryException("Unable to find a user with this token");
+		}
+
+		return user.get();
 	}
 
 	@Override
 	public User insert(User entity) throws ValueTakenException {
+		Optional<User> userWithSameEmail = repository.findByEmail(entity.getEmail());
+
+		if (userWithSameEmail.isPresent()) {
+			throw new ValueTakenException("The specified email is already taken");
+		}
+
 		String hashedPasswd = new HashedPassword(entity).getValue();
 
 		entity.setPassword(hashedPasswd);
 		entity.setToken(new Token(128).getValue());
 
-		// Check email is taken;
-		Optional<User> user = repository.findByEmail(entity.getEmail());
-
-		if (user.isPresent()) {
-			throw valueTaken(entity.getEmail());
-		} else {
-			return repository.save(entity);
-		}
+		return repository.save(entity);
 
 	}
 
@@ -71,8 +86,9 @@ public class UserService extends Servicer implements UserServiceInterface {
 		String hashedPasswd = new HashedPassword(entity).getValue();
 		User user = this.getByEmail(entity.getEmail());
 
-		if (!user.getPassword().equals(hashedPasswd))
-			throw incorrectCredentials();
+		if (!user.getPassword().equals(hashedPasswd)) {
+			throw new IncorrectCredentialsException("Bad credentials");
+		}
 
 		return user.getToken();
 	}
@@ -93,8 +109,9 @@ public class UserService extends Servicer implements UserServiceInterface {
 		User userToDelete = this.getByToken(entity.getToken());
 		String hashedPasswd = new HashedPassword(entity).getValue();
 
-		if (!userToDelete.getPassword().equals(hashedPasswd))
-			throw incorrectCredentials();
+		if (!userToDelete.getPassword().equals(hashedPasswd)) {
+			throw new IncorrectCredentialsException("Bad credentials");
+		}
 
 		repository.delete(userToDelete);
 	}
