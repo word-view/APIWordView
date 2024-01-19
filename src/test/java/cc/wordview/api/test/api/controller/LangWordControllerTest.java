@@ -21,25 +21,30 @@ class LangWordControllerTest {
 
 	@Test
 	void create() throws Exception {
-		TestRequest.post(request, "/langword/", new MockLangWord("Carro", "pt_BR", 1L, MockValues.ADMIN_TOKEN).toJson(),
-				status().isCreated());
+		MockLangWord langWord = new MockLangWord("Carro", "pt_BR", 1L, MockValues.ADMIN_TOKEN);
+
+		TestRequest.post(request, "/langword/", langWord.toJson(), status().isCreated());
 	}
 
 	@Test
 	void createByNonExistentUser() throws Exception {
 		TestRequest.post(request, "/langword/",
-				new MockLangWord("Carro", "pt_BR", 2L, MockValues.INEXISTENT_TOKEN).toJson(), status().isNotFound());
+				new MockLangWord("Carro", "pt_BR", 2L, MockValues.INEXISTENT_TOKEN).toJson(),
+				status().isNotFound());
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		TestRequest.post(request, "/langword/",
-				new MockLangWord("Carro", "pt_BR", 2L, MockValues.NON_ADMIN_TOKEN).toJson(), status().isForbidden());
+		MockLangWord langWord = new MockLangWord("Carro", "pt_BR", 2L, MockValues.NON_ADMIN_TOKEN);
+
+		TestRequest.post(request, "/langword/", langWord.toJson(), status().isForbidden());
 	}
 
 	@Test
 	void getByIdLesson() throws Exception {
-		TestRequest.post(request, "/langword/search?lessonid=1&lang=pt-br",
-				new MockAuthorizationBody(MockValues.NON_ADMIN_TOKEN).toJson(), status().isOk());
+		MockAuthorizationBody authorizationBody = new MockAuthorizationBody(MockValues.NON_ADMIN_TOKEN);
+
+		TestRequest.post(request, "/langword/search?lessonid=1&lang=pt-br", authorizationBody.toJson(),
+				status().isOk());
 	}
 }

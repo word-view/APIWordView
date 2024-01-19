@@ -25,23 +25,23 @@ class LessonControllerTest {
 	// CREATE
 	@Test
 	void create() throws Exception {
-		TestRequest.post(request, "/lesson/",
-				new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.ADMIN_TOKEN).toJson(),
-				status().isCreated());
+		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.ADMIN_TOKEN);
+
+		TestRequest.post(request, "/lesson/", lesson.toJson(), status().isCreated());
 	}
 
 	@Test
 	void createByNonExistentUser() throws Exception {
-		TestRequest.post(request, "/lesson/",
-				new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.INEXISTENT_TOKEN).toJson(),
-				status().isNotFound());
+		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.INEXISTENT_TOKEN);
+
+		TestRequest.post(request, "/lesson/", lesson.toJson(), status().isNotFound());
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		TestRequest.post(request, "/lesson/",
-				new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.NON_ADMIN_TOKEN).toJson(),
-				status().isForbidden());
+		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.NON_ADMIN_TOKEN);
+
+		TestRequest.post(request, "/lesson/", lesson.toJson(), status().isForbidden());
 	}
 
 	// READ

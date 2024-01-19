@@ -20,20 +20,23 @@ class CategoryControllerTest {
 
 	@Test
 	void create() throws Exception {
-		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.ADMIN_TOKEN).toJson(),
-				status().isCreated());
+		MockCategory category = new MockCategory("TestCategory", MockValues.ADMIN_TOKEN);
+
+		TestRequest.post(request, "/category", category.toJson(), status().isCreated());
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN).toJson(),
-				status().isForbidden());
+		MockCategory category = new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN);
+
+		TestRequest.post(request, "/category", category.toJson(), status().isForbidden());
 	}
 
 	@Test
 	void createByNonExistentUser() throws Exception {
-		TestRequest.post(request, "/category", new MockCategory("TestCategory", MockValues.INEXISTENT_TOKEN).toJson(),
-				status().isNotFound());
+		MockCategory category = new MockCategory("TestCategory", MockValues.INEXISTENT_TOKEN);
+
+		TestRequest.post(request, "/category", category.toJson(), status().isNotFound());
 	}
 
 	@Test
