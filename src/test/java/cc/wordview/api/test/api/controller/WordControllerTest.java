@@ -23,20 +23,17 @@ class WordControllerTest {
 	void create() throws Exception {
 		MockWord word = new MockWord("car", "2", MockValues.ADMIN_TOKEN);
 
-		TestRequest.post(request, "/word/", word.toJson(), status().isCreated());
+		String jwt = MockValues.getAdmJwt(request);
+
+		TestRequest.post(request, "/word", word.toJson(), status().isCreated(), jwt);
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
 		MockWord word = new MockWord("car", "2", MockValues.NON_ADMIN_TOKEN);
 
-		TestRequest.post(request, "/word/", word.toJson(), status().isForbidden());
-	}
+		String jwt = MockValues.getUserJwt(request);
 
-	@Test
-	void createByNonExistentUser() throws Exception {
-		MockWord word = new MockWord("car", "2", MockValues.INEXISTENT_TOKEN);
-
-		TestRequest.post(request, "/word/", word.toJson(), status().isNotFound());
+		TestRequest.post(request, "/word/", word.toJson(), status().isUnauthorized(), jwt);
 	}
 }

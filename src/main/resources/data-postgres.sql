@@ -1,8 +1,15 @@
-INSERT INTO member (username, email, password, token, admin)
-VALUES ('Arthur', 'arthur.araujo@tutanota.com', 'senha', '4e9394b4d2876b8741b10a', true);
 
-INSERT INTO member (username, email, password , token, admin)
-VALUES ('conta', 'conta2@tutanota.com', 'senha', '4e9394b42d8741b10a', false);
+INSERT INTO member (username, email, password) VALUES
+    ('Arthur', 'arthur.araujo@tutanota.com', 'senha');
+
+INSERT INTO member (username, email, password) VALUES
+    ('conta', 'conta2@tutanota.com', 'senha');
+
+INSERT INTO member (username, email, password, role) VALUES
+    ('mock.user', 'mock.user@gmail.com', '8631b7298388ab36f3785770cc07c4ea', 'USER');
+
+INSERT INTO member (username, email, password, role) VALUES
+    ('mock.admin', 'mock.admin@gmail.com', '061cf224cffe1951e32ffaa1c414544a', 'ADMIN');
 
 INSERT INTO category (title) VALUES ('Natureza');
 

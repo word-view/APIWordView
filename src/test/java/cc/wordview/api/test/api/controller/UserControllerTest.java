@@ -25,39 +25,39 @@ class UserControllerTest {
 	void create() throws Exception {
 		MockUser user = new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64");
 
-		TestRequest.post(request, "/users/register", user.toJson(), status().isCreated());
+		TestRequest.post(request, "/user/register", user.toJson(), status().isCreated());
 	}
 
 	@Test
 	void createUserExistingEmail() throws Exception {
 		MockUser user = new MockUser("aaaaaaaa", "arthur.araujo@tutanota.com", "S_enha64");
 
-		TestRequest.post(request, "/users/register", user.toJson(), status().isForbidden());
+		TestRequest.post(request, "/user/register", user.toJson(), status().isForbidden());
 	}
 
 	// READ
 	@Test
 	void getById() throws Exception {
-		TestRequest.get(request, "/users/1", status().isOk());
+		TestRequest.get(request, "/user/1", status().isOk());
 	}
 
 	@Test
 	void getByInexistentId() throws Exception {
-		TestRequest.get(request, "/users/64", status().isNotFound());
+		TestRequest.get(request, "/user/64", status().isNotFound());
 	}
 
 	@Test
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
-		TestRequest.post(request, "/users/login", user.toJson(), status().isOk());
+		TestRequest.post(request, "/user/login", user.toJson(), status().isOk());
 	}
 
 	@Test
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
-		TestRequest.post(request, "/users/login", user.toJson(), status().isUnauthorized());
+		TestRequest.post(request, "/user/login", user.toJson(), status().isUnauthorized());
 	}
 	// UPDATE
 	// DELETE
@@ -65,7 +65,7 @@ class UserControllerTest {
 	// @Test
 	// public void deleteUser() throws Exception {
 	// request.perform(delete(REQUEST_PATH +
-	// "/users").contentType("application/json")
+	// "/user").contentType("application/json")
 	// .content("{ \"token\": \"\", \"email\":
 	// \"conta2@tutanota.com\", \"password\": \"senha\" }"))
 	// .andExpect(status().isNotFound());

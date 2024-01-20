@@ -22,21 +22,18 @@ class CategoryControllerTest {
 	void create() throws Exception {
 		MockCategory category = new MockCategory("TestCategory", MockValues.ADMIN_TOKEN);
 
-		TestRequest.post(request, "/category", category.toJson(), status().isCreated());
+		String jwt = MockValues.getAdmJwt(request);
+
+		TestRequest.post(request, "/category", category.toJson(), status().isCreated(), jwt);
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
 		MockCategory category = new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN);
 
-		TestRequest.post(request, "/category", category.toJson(), status().isForbidden());
-	}
+		String jwt = MockValues.getUserJwt(request);
 
-	@Test
-	void createByNonExistentUser() throws Exception {
-		MockCategory category = new MockCategory("TestCategory", MockValues.INEXISTENT_TOKEN);
-
-		TestRequest.post(request, "/category", category.toJson(), status().isNotFound());
+		TestRequest.post(request, "/category", category.toJson(), status().isUnauthorized(), jwt);
 	}
 
 	@Test

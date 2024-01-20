@@ -32,10 +32,10 @@ public class CreateRequest {
 
 	private void validate() throws RequestValidationException {
 		if (isNull(username) || username.isEmpty()) {
-			throw emptyOrNull("name");
+			throw emptyOrNull("username");
 		}
 		if (RequestValidation.hasSpecialCharacters(username)) {
-			throw specialChars("name");
+			throw specialChars("username");
 		}
 
 		if (isNull(email) || email.isEmpty()) {

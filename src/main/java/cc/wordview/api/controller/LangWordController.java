@@ -1,12 +1,14 @@
 package cc.wordview.api.controller;
 
 import static cc.wordview.api.controller.response.Response.created;
-import static cc.wordview.api.controller.response.Response.forbidden;
 import static cc.wordview.api.controller.response.Response.ok;
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
+import static cc.wordview.api.controller.response.ResponseTemplate.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.controller.response.ExceptionHandler;
-import cc.wordview.api.controller.response.ResponseTemplate;
 import cc.wordview.api.database.entity.LangWord;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.database.entity.Word;
+import cc.wordview.api.exception.PermissionDeniedException;
 import cc.wordview.api.request.langword.CreateRequest;
 import cc.wordview.api.service.specification.LangWordServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
@@ -42,12 +44,13 @@ public class LangWordController {
 	private WordServiceInterface wordService;
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
+	public ResponseEntity<?> create(@RequestBody CreateRequest request, HttpServletRequest req) {
 		return response(() -> {
-			User user = userService.getByToken(request.authorization);
+			User user = userService.getMe(req);
 
-			if (!user.isAdmin())
-				return forbidden(ResponseTemplate.NOT_ADMIN_MESSAGE);
+			if (!user.getRole().equals("ADMIN")) {
+				throw new PermissionDeniedException(NOT_ADMIN_MESSAGE);
+			}
 
 			service.insert(request.toEntity());
 			return created();

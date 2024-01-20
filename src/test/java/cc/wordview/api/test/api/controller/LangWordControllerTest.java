@@ -23,21 +23,18 @@ class LangWordControllerTest {
 	void create() throws Exception {
 		MockLangWord langWord = new MockLangWord("Carro", "pt_BR", 1L, MockValues.ADMIN_TOKEN);
 
-		TestRequest.post(request, "/langword/", langWord.toJson(), status().isCreated());
-	}
+		String jwt = MockValues.getAdmJwt(request);
 
-	@Test
-	void createByNonExistentUser() throws Exception {
-		TestRequest.post(request, "/langword/",
-				new MockLangWord("Carro", "pt_BR", 2L, MockValues.INEXISTENT_TOKEN).toJson(),
-				status().isNotFound());
+		TestRequest.post(request, "/langword/", langWord.toJson(), status().isCreated(), jwt);
 	}
 
 	@Test
 	void createByNonAdmin() throws Exception {
 		MockLangWord langWord = new MockLangWord("Carro", "pt_BR", 2L, MockValues.NON_ADMIN_TOKEN);
 
-		TestRequest.post(request, "/langword/", langWord.toJson(), status().isForbidden());
+		String jwt = MockValues.getUserJwt(request);
+
+		TestRequest.post(request, "/langword/", langWord.toJson(), status().isUnauthorized(), jwt);
 	}
 
 	@Test

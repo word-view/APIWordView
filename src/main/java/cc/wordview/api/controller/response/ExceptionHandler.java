@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.exception.PermissionDeniedException;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.exception.ValueTakenException;
 
@@ -67,6 +68,8 @@ public class ExceptionHandler {
 			return notFound(e.getMessage());
 		} catch (ValueTakenException e) {
 			return forbidden(e.getMessage());
+		} catch (PermissionDeniedException e) {
+			return unauthorized(e.getMessage());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return internalServerError(e.getCause());

@@ -33,7 +33,7 @@ class UserRequestTest {
 			request.setEmail("arthur@gmail.com");
 
 			request.toEntity();
-		}, specialChars("name").getMessage());
+		}, specialChars("username").getMessage());
 	}
 
 	@Test
@@ -46,7 +46,7 @@ class UserRequestTest {
 			request.setEmail("arthur@gmail.com");
 
 			request.toEntity();
-		}, emptyOrNull("name").getMessage());
+		}, emptyOrNull("username").getMessage());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ class UserRequestTest {
 			request.setEmail("arthur@gmail.com");
 
 			request.toEntity();
-		}, emptyOrNull("name").getMessage());
+		}, emptyOrNull("username").getMessage());
 	}
 
 	@Test

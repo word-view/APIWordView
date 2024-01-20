@@ -10,8 +10,6 @@ CREATE TABLE member (
     username varchar(255),
     email varchar(255) UNIQUE,
     password varchar(255),
-    token varchar(255) UNIQUE,
-    admin BOOL DEFAULT false,
     role varchar(255),
     PRIMARY KEY (id)
 );

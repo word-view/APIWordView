@@ -1,7 +1,10 @@
 package cc.wordview.api.controller;
 
 import static cc.wordview.api.controller.response.Response.created;
-import static cc.wordview.api.controller.response.Response.notImplemented;
+import static cc.wordview.api.controller.response.Response.ok;
+
+import javax.servlet.http.HttpServletRequest;
+
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,14 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.user.CreateRequest;
-import cc.wordview.api.request.user.DeleteRequest;
 import cc.wordview.api.request.user.LoginRequest;
-import cc.wordview.api.response.user.CreatedResponse;
+import cc.wordview.api.request.user.UpdateRequest;
 import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.util.ClassMerger;
 
 @RestController
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/users")
+@RequestMapping(path = Constants.REQUEST_PATH + "/user")
 public class UserController {
 	@Autowired
 	private UserServiceInterface service;
@@ -35,15 +38,23 @@ public class UserController {
 	@PostMapping(path = "/register", consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
 		return response(() -> {
-			User createdUser = service.insert(request.toEntity());
-			return created(new CreatedResponse(createdUser));
+			String jwtToken = service.register(request.toEntity());
+			return created(jwtToken);
 		});
 	}
 
 	// READ
 	@PostMapping(path = "/login", consumes = "application/json")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-		return okResponse(() -> service.login(request.toEntity()));
+		return response(() -> {
+			String jwtToken = service.login(request.toEntity());
+			return ok(jwtToken);
+		});
+	}
+
+	@GetMapping("/me")
+	public ResponseEntity<?> getMe(HttpServletRequest request) {
+		return okResponse(() -> service.getMe(request));
 	}
 
 	@GetMapping("/{id}")
@@ -51,19 +62,27 @@ public class UserController {
 		return okResponse(() -> service.getByIdWithoutCredentials(id));
 	}
 
-	@GetMapping
-	public ResponseEntity<?> getAll() {
-		return okResponse(() -> service.getAllUsers());
-	}
+	@PutMapping
+	public ResponseEntity<?> update(@RequestBody UpdateRequest request, HttpServletRequest req) {
+		return response(() -> {
+			User user = service.getMe(req);
+			User userAlter = request.toEntity();
 
-	@PatchMapping
-	public ResponseEntity<?> update(@RequestBody LoginRequest request) {
-		return notImplemented();
+			User merged = ClassMerger.merge(user, userAlter);
+
+			service.insert(merged);
+
+			return ok();
+		});
 	}
 
 	// DELETE
 	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestBody DeleteRequest request) {
-		return notImplemented();
+	public ResponseEntity<?> delete(HttpServletRequest request) {
+		return response(() -> {
+			User user = service.getMe(request);
+			service.delete(user);
+			return ok();
+		});
 	}
 }

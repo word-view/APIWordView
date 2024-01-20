@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeleteRequest {
-	public String token;
+	// public String token;
 	public String password;
 	public String email;
 
@@ -20,7 +20,7 @@ public class DeleteRequest {
 
 		User newUser = new User();
 
-		newUser.setToken(token);
+		// newUser.setToken(token);
 		newUser.setEmail(email);
 		newUser.setPassword(password);
 
@@ -28,9 +28,9 @@ public class DeleteRequest {
 	}
 
 	private void validate() throws RequestValidationException {
-		if (isNull(token) || token.isEmpty()) {
-			throw emptyOrNull("token");
-		}
+		// if (isNull(token) || token.isEmpty()) {
+		// throw emptyOrNull("token");
+		// }
 
 		if (isNull(email) || email.isEmpty()) {
 			throw emptyOrNull("email");

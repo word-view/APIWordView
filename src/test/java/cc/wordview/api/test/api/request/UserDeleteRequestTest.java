@@ -23,7 +23,6 @@ public class UserDeleteRequestTest {
 		assertDoesNotThrow(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken(MockValues.ADMIN_TOKEN);
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha");
 
@@ -36,7 +35,6 @@ public class UserDeleteRequestTest {
 		assertThrows(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken("");
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha");
 
@@ -61,7 +59,6 @@ public class UserDeleteRequestTest {
 		assertThrows(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken(MockValues.ADMIN_TOKEN);
 			request.setEmail("");
 			request.setPassword("senha");
 
@@ -74,7 +71,6 @@ public class UserDeleteRequestTest {
 		assertThrows(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken(MockValues.ADMIN_TOKEN);
 			request.setPassword("senha");
 
 			request.toEntity();
@@ -86,7 +82,6 @@ public class UserDeleteRequestTest {
 		assertThrows(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken(MockValues.ADMIN_TOKEN);
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("");
 
@@ -99,7 +94,6 @@ public class UserDeleteRequestTest {
 		assertThrows(() -> {
 			DeleteRequest request = new DeleteRequest();
 
-			request.setToken(MockValues.ADMIN_TOKEN);
 			request.setEmail("arthur@gmail.com");
 
 			request.toEntity();

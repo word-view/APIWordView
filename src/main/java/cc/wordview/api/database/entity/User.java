@@ -1,9 +1,6 @@
 package cc.wordview.api.database.entity;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Data
@@ -37,17 +31,6 @@ public class User implements Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "token", unique = true)
-	private String token;
-
-	@Column(name = "admin")
-	@Getter(value = AccessLevel.NONE)
-	private boolean admin;
-	
 	@Column(name = "role")
 	private String role;
-	
-	public boolean isAdmin() {
-		return admin;
-	}
 }

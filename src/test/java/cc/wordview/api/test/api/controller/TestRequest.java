@@ -11,10 +11,25 @@ public class TestRequest {
 		request.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url)).andExpect(status).andReturn();
 	}
 
-	public static void post(MockMvc request, String url, String content, ResultMatcher status) throws Exception {
+	public static void get(MockMvc request, String url, ResultMatcher status, String jwt) throws Exception {
+		request.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt))
+				.andExpect(status).andReturn();
+	}
 
+	public static void post(MockMvc request, String url, String content, ResultMatcher status) throws Exception {
 		request.perform(
-				MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json").content(content))
+				MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json")
+						.content(content))
+				.andExpect(status);
+	}
+
+	public static void post(MockMvc request, String url, String content, ResultMatcher status, String jwt)
+			throws Exception {
+		request.perform(
+				MockMvcRequestBuilders.post(REQUEST_PATH + url)
+						.header("Authorization", "Bearer " + jwt)
+						.contentType("application/json")
+						.content(content))
 				.andExpect(status);
 	}
 }
