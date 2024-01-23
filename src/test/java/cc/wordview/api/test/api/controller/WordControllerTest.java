@@ -21,7 +21,7 @@ class WordControllerTest {
 	// CREATE
 	@Test
 	void create() throws Exception {
-		MockWord word = new MockWord("car", "2", MockValues.ADMIN_TOKEN);
+		MockWord word = new MockWord("car", "2");
 
 		String jwt = MockValues.getAdmJwt(request);
 
@@ -30,7 +30,7 @@ class WordControllerTest {
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		MockWord word = new MockWord("car", "2", MockValues.NON_ADMIN_TOKEN);
+		MockWord word = new MockWord("car", "2");
 
 		String jwt = MockValues.getUserJwt(request);
 
