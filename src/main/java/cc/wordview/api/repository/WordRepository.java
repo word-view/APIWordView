@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import cc.wordview.api.database.entity.Word;
 
 public interface WordRepository extends CrudRepository<Word, Long> {
-	Optional<Word> findByNameId(String nameId);
+	Optional<Word> findByName(String name);
 
 	List<Word> findByIdLesson(Long idLesson);
 }

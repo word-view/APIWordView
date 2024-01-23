@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Constants;
-import cc.wordview.api.controller.response.ExceptionHandler;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.PermissionDeniedException;
 import cc.wordview.api.request.category.CreateRequest;
@@ -48,6 +47,6 @@ public class CategoryController {
 
 	@GetMapping
 	public ResponseEntity<?> getAll() {
-		return ExceptionHandler.okResponse(() -> service.getAll());
+		return okResponse(() -> service.getAll());
 	}
 }

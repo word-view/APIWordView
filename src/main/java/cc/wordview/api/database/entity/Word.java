@@ -22,9 +22,15 @@ public class Word implements Serializable {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "name_id")
-	private String nameId;
-
 	@Column(name = "id_lesson")
 	private Long idLesson;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "lang")
+	private String lang;
+
+	@Column(name = "localized_word")
+	private String localizedWord;
 }

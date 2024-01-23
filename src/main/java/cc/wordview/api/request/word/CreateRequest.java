@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRequest {
-	public String nameId;
+	public String name;
 	public Long idLesson;
 	public String authorization;
 
@@ -20,7 +20,7 @@ public class CreateRequest {
 
 		Word newWord = new Word();
 
-		newWord.setNameId(nameId);
+		newWord.setName(name);
 		newWord.setIdLesson(idLesson);
 
 		return newWord;
@@ -31,8 +31,8 @@ public class CreateRequest {
 			throw emptyOrNull("idLesson");
 		}
 
-		if (isNull(nameId) || nameId.isEmpty()) {
-			throw emptyOrNull("nameId");
+		if (isNull(name) || name.isEmpty()) {
+			throw emptyOrNull("name");
 		}
 
 		if (isNull(idLesson)) {

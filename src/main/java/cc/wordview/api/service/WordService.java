@@ -34,8 +34,8 @@ public class WordService implements WordServiceInterface {
 	}
 
 	@Override
-	public Word getByNameId(String nameId) throws NoSuchEntryException {
-		Optional<Word> word = repository.findByNameId(nameId);
+	public Word getByName(String name) throws NoSuchEntryException {
+		Optional<Word> word = repository.findByName(name);
 
 		if (!word.isPresent()) {
 			throw new NoSuchEntryException("Unable to find word with this name_id");

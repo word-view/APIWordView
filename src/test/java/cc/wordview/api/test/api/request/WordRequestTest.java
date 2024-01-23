@@ -15,7 +15,7 @@ class WordRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setIdLesson(1L);
-			request.setNameId("car");
+			request.setName("car");
 			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
@@ -27,7 +27,7 @@ class WordRequestTest {
 		assertThrows(() -> {
 			CreateRequest request = new CreateRequest();
 
-			request.setNameId("car");
+			request.setName("car");
 			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
@@ -35,20 +35,20 @@ class WordRequestTest {
 	}
 
 	@Test
-	void nameIdEmpty() throws Exception {
+	void nameEmpty() throws Exception {
 		assertThrows(() -> {
 			CreateRequest request = new CreateRequest();
 
 			request.setIdLesson(1L);
-			request.setNameId("");
+			request.setName("");
 			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
-		}, emptyOrNull("nameId").getMessage());
+		}, emptyOrNull("name").getMessage());
 	}
 
 	@Test
-	void nameIdNull() throws Exception {
+	void nameNull() throws Exception {
 		assertThrows(() -> {
 			CreateRequest request = new CreateRequest();
 
@@ -56,7 +56,7 @@ class WordRequestTest {
 			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
-		}, emptyOrNull("nameId").getMessage());
+		}, emptyOrNull("name").getMessage());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ class WordRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setIdLesson(1L);
-			request.setNameId("car");
+			request.setName("car");
 			request.setAuthorization("");
 
 			request.toEntity();
@@ -78,7 +78,7 @@ class WordRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setIdLesson(1L);
-			request.setNameId("car");
+			request.setName("car");
 
 			request.toEntity();
 		}, emptyOrNull("authorization").getMessage());

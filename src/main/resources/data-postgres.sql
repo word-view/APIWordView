@@ -20,8 +20,5 @@ INSERT INTO lesson (id_category, title, difficulty)
 VALUES (1, 'lesson3', 'starter');
 
 
-INSERT INTO word (name_id, id_lesson)
-VALUES ('phone', 1);
-
-INSERT INTO language_word (localized_word, lang, id_word)
-VALUES ('Telefone', 'pt-br', 1);
+INSERT INTO word (id_lesson, name, lang, localized_word, romanized_word)
+VALUES (1, 'night', 'jp', '夜', 'yoru');

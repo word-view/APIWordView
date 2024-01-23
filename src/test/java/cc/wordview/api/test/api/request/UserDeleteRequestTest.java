@@ -3,7 +3,6 @@ package cc.wordview.api.test.api.request;
 import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.DeleteRequest;
-import cc.wordview.api.test.api.MockValues;
 import lombok.Getter;
 import lombok.Setter;
 

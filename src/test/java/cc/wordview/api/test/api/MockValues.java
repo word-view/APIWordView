@@ -1,6 +1,5 @@
 package cc.wordview.api.test.api;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.springframework.test.web.servlet.MockMvc;

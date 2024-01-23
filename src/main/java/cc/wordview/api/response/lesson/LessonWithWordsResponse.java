@@ -27,11 +27,11 @@ public class LessonWithWordsResponse {
 @Getter
 @Setter
 class WordWithoutIDS {
-	public String nameId;
+	public String name;
 	public String imageURL;
 
 	public WordWithoutIDS(Word word) {
-		setNameId(word.getNameId());
-		setImageURL("https://localhost:8443/img/" + nameId + ".png");
+		setName(word.getName());
+		setImageURL("https://localhost:8443/img/" + name + ".png");
 	}
 }
