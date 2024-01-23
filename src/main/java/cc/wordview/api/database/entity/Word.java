@@ -33,4 +33,7 @@ public class Word implements Serializable {
 
 	@Column(name = "localized_word")
 	private String localizedWord;
+
+	@Column(name = "romanized_word")
+	private String romanizedWord;
 }

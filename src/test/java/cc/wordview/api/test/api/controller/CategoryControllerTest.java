@@ -20,7 +20,7 @@ class CategoryControllerTest {
 
 	@Test
 	void create() throws Exception {
-		MockCategory category = new MockCategory("TestCategory", MockValues.ADMIN_TOKEN);
+		MockCategory category = new MockCategory("TestCategory");
 
 		String jwt = MockValues.getAdmJwt(request);
 
@@ -29,7 +29,7 @@ class CategoryControllerTest {
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		MockCategory category = new MockCategory("TestCategory", MockValues.NON_ADMIN_TOKEN);
+		MockCategory category = new MockCategory("TestCategory");
 
 		String jwt = MockValues.getUserJwt(request);
 

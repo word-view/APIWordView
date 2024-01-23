@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 public class CreateRequest {
 	public String title;
-	public String authorization;
 
 	public Category toEntity() throws RequestValidationException {
 		this.validate();
@@ -27,10 +26,6 @@ public class CreateRequest {
 	private void validate() throws RequestValidationException {
 		if (isNull(title) || title.isEmpty()) {
 			throw emptyOrNull("title");
-		}
-
-		if (isNull(authorization) || authorization.isEmpty()) {
-			throw emptyOrNull("authorization");
 		}
 	}
 }

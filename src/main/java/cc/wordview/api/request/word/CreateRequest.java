@@ -11,17 +11,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateRequest {
-	public String name;
 	public Long idLesson;
-	public String authorization;
+	public String name;
+	public String lang;
+	public String localizedWord;
+	public String romanizedWord;
 
 	public Word toEntity() throws RequestValidationException {
 		this.validate();
 
 		Word newWord = new Word();
 
-		newWord.setName(name);
 		newWord.setIdLesson(idLesson);
+		newWord.setName(name);
+		newWord.setLang(lang);
+		newWord.setLocalizedWord(localizedWord);
+		newWord.setRomanizedWord(romanizedWord);
 
 		return newWord;
 	}
@@ -39,9 +44,12 @@ public class CreateRequest {
 			throw emptyOrNull("difficulty");
 		}
 
-		if (isNull(authorization) || authorization.isEmpty()) {
-			throw emptyOrNull("authorization");
+		if (isNull(lang) || lang.isEmpty()) {
+			throw emptyOrNull("lang");
 		}
 
+		if (isNull(localizedWord) || localizedWord.isEmpty()) {
+			throw emptyOrNull("localizedWord");
+		}
 	}
 }

@@ -25,7 +25,7 @@ class LessonControllerTest {
 	// CREATE
 	@Test
 	void create() throws Exception {
-		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.ADMIN_TOKEN);
+		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER);
 
 		String jwt = MockValues.getAdmJwt(request);
 
@@ -34,7 +34,7 @@ class LessonControllerTest {
 
 	@Test
 	void createByNonAdmin() throws Exception {
-		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER, MockValues.NON_ADMIN_TOKEN);
+		MockLesson lesson = new MockLesson("lesson1", LessonDifficulty.STARTER);
 
 		String jwt = MockValues.getUserJwt(request);
 

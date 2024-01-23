@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.database.types.LessonDifficulty;
 import cc.wordview.api.request.lesson.CreateRequest;
-import cc.wordview.api.test.api.MockValues;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
@@ -19,7 +17,6 @@ class LessonRequestTest {
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty(LessonDifficulty.STARTER);
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		});
@@ -32,7 +29,6 @@ class LessonRequestTest {
 
 			request.setTitle("");
 			request.setDifficulty(LessonDifficulty.STARTER);
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("title").getMessage());
@@ -44,7 +40,6 @@ class LessonRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setDifficulty(LessonDifficulty.STARTER);
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("title").getMessage());
@@ -57,7 +52,6 @@ class LessonRequestTest {
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty("");
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("difficulty").getMessage());
@@ -69,7 +63,6 @@ class LessonRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setTitle("Lesson 1");
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("difficulty").getMessage());
@@ -82,7 +75,6 @@ class LessonRequestTest {
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty(LessonDifficulty.STARTER);
-			request.setAuthorization("");
 
 			request.toEntity();
 		}, emptyOrNull("authorization").getMessage());

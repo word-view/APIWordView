@@ -10,5 +10,4 @@ import lombok.EqualsAndHashCode;
 public class MockLesson extends MockEntity {
 	private String title;
 	private String difficulty;
-	private String authorization;
 }

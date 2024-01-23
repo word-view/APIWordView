@@ -3,7 +3,6 @@ package cc.wordview.api.test.api.request;
 import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.category.CreateRequest;
-import cc.wordview.api.test.api.MockValues;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
@@ -16,7 +15,6 @@ class CategoryRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setTitle("Cidade");
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		});
@@ -28,7 +26,6 @@ class CategoryRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setTitle("");
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("title").getMessage());
@@ -38,8 +35,6 @@ class CategoryRequestTest {
 	void titleNull() throws Exception {
 		assertThrows(() -> {
 			CreateRequest request = new CreateRequest();
-
-			request.setAuthorization(MockValues.ADMIN_TOKEN);
 
 			request.toEntity();
 		}, emptyOrNull("title").getMessage());
@@ -51,7 +46,6 @@ class CategoryRequestTest {
 			CreateRequest request = new CreateRequest();
 
 			request.setTitle("Cidade");
-			request.setAuthorization("");
 
 			request.toEntity();
 		}, emptyOrNull("authorization").getMessage());

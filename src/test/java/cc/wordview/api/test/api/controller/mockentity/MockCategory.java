@@ -9,5 +9,4 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class MockCategory extends MockEntity {
 	private String title;
-	private String authorization;
 }

@@ -13,25 +13,13 @@ import lombok.Setter;
 public class LessonWithWordsResponse {
 	private String title;
 	private String difficulty;
-	private List<WordWithoutIDS> words = new ArrayList<>();
+	private List<WordWithoutId> words = new ArrayList<>();
 
 	public LessonWithWordsResponse(Lesson lesson, List<Word> words) {
 		setTitle(lesson.getTitle());
 		setDifficulty(lesson.getDifficulty());
 		for (Word word : words) {
-			this.words.add(new WordWithoutIDS(word));
+			this.words.add(new WordWithoutId(word));
 		}
-	}
-}
-
-@Getter
-@Setter
-class WordWithoutIDS {
-	public String name;
-	public String imageURL;
-
-	public WordWithoutIDS(Word word) {
-		setName(word.getName());
-		setImageURL("https://localhost:8443/img/" + name + ".png");
 	}
 }

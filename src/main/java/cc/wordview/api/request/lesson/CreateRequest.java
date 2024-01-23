@@ -13,7 +13,6 @@ import lombok.Setter;
 public class CreateRequest {
 	public String title;
 	public String difficulty;
-	public String authorization;
 
 	public Lesson toEntity() throws RequestValidationException {
 		this.validate();
@@ -34,10 +33,5 @@ public class CreateRequest {
 		if (isNull(difficulty) || difficulty.isEmpty()) {
 			throw emptyOrNull("difficulty");
 		}
-
-		if (isNull(authorization) || authorization.isEmpty()) {
-			throw emptyOrNull("authorization");
-		}
-
 	}
 }
