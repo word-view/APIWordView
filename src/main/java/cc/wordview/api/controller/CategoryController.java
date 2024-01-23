@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.PermissionDeniedException;
-import cc.wordview.api.request.category.CreateRequest;
+import cc.wordview.api.request.category.CategoryCreateRequest;
 import cc.wordview.api.service.specification.CategoryServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
 
@@ -32,7 +32,7 @@ public class CategoryController {
 	private UserServiceInterface userService;
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody CreateRequest request, HttpServletRequest req) {
+	public ResponseEntity<?> create(@RequestBody CategoryCreateRequest request, HttpServletRequest req) {
 		return response(() -> {
 			User user = userService.getMe(req);
 

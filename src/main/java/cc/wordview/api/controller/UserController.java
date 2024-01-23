@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
-import cc.wordview.api.request.user.CreateRequest;
-import cc.wordview.api.request.user.LoginRequest;
-import cc.wordview.api.request.user.UpdateRequest;
+import cc.wordview.api.request.user.UserCreateRequest;
+import cc.wordview.api.request.user.UserLoginRequest;
+import cc.wordview.api.request.user.UserUpdateRequest;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.util.ClassMerger;
 
@@ -36,7 +36,7 @@ public class UserController {
 
 	// CREATE
 	@PostMapping(path = "/register", consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody CreateRequest request) {
+	public ResponseEntity<?> create(@RequestBody UserCreateRequest request) {
 		return response(() -> {
 			String jwtToken = service.register(request.toEntity());
 			return created(jwtToken);
@@ -45,7 +45,7 @@ public class UserController {
 
 	// READ
 	@PostMapping(path = "/login", consumes = "application/json")
-	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+	public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
 		return response(() -> {
 			String jwtToken = service.login(request.toEntity());
 			return ok(jwtToken);
@@ -63,7 +63,7 @@ public class UserController {
 	}
 
 	@PutMapping
-	public ResponseEntity<?> update(@RequestBody UpdateRequest request, HttpServletRequest req) {
+	public ResponseEntity<?> update(@RequestBody UserUpdateRequest request, HttpServletRequest req) {
 		return response(() -> {
 			User user = service.getMe(req);
 			User userAlter = request.toEntity();

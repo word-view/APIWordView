@@ -2,7 +2,7 @@ package cc.wordview.api.test.api.request;
 
 import org.junit.jupiter.api.Test;
 
-import cc.wordview.api.request.category.CreateRequest;
+import cc.wordview.api.request.category.CategoryCreateRequest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
@@ -12,7 +12,7 @@ class CategoryRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			CreateRequest request = new CreateRequest();
+			CategoryCreateRequest request = new CategoryCreateRequest();
 
 			request.setTitle("Cidade");
 
@@ -23,7 +23,7 @@ class CategoryRequestTest {
 	@Test
 	void titleEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			CategoryCreateRequest request = new CategoryCreateRequest();
 
 			request.setTitle("");
 
@@ -34,7 +34,7 @@ class CategoryRequestTest {
 	@Test
 	void titleNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			CategoryCreateRequest request = new CategoryCreateRequest();
 
 			request.toEntity();
 		}, emptyOrNull("title").getMessage());
@@ -43,7 +43,7 @@ class CategoryRequestTest {
 	@Test
 	void authorizationEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			CategoryCreateRequest request = new CategoryCreateRequest();
 
 			request.setTitle("Cidade");
 
@@ -54,7 +54,7 @@ class CategoryRequestTest {
 	@Test
 	void authorizationNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			CategoryCreateRequest request = new CategoryCreateRequest();
 
 			request.setTitle("Cidade");
 

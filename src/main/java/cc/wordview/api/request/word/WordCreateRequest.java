@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateRequest {
+public class WordCreateRequest {
 	public Long idLesson;
 	public String name;
 	public String lang;

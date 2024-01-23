@@ -31,8 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 http.authorizeRequests(requests -> requests
                                 .antMatchers("/api/v1/**").permitAll()
+                                .antMatchers("/swagger-ui").permitAll()
+                                .antMatchers("/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated());
-
 
                 http.exceptionHandling(handling -> handling.accessDeniedPage("/login"));
 
@@ -41,7 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         public void configure(WebSecurity web) throws Exception {
-                web.ignoring().antMatchers("/public");
+                web.ignoring().antMatchers("/public")
+                                .antMatchers("/v2/api-docs")//
+                                .antMatchers("/swagger-resources/**")//
+                                .antMatchers("/swagger-ui.html")//
+                                .antMatchers("/swagger-ui")//
+                                .antMatchers("/configuration/**")//
+                                .antMatchers("/webjars/**");
         }
 
         @Override

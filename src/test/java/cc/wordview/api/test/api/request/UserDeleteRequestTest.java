@@ -2,7 +2,7 @@ package cc.wordview.api.test.api.request;
 
 import org.junit.jupiter.api.Test;
 
-import cc.wordview.api.request.user.DeleteRequest;
+import cc.wordview.api.request.user.UserDeleteRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha");
@@ -32,7 +32,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void tokenEmpty() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha");
@@ -44,7 +44,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void tokenNull() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha");
@@ -56,7 +56,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void emailEmpty() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("");
 			request.setPassword("senha");
@@ -68,7 +68,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void emailNull() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setPassword("senha");
 
@@ -79,7 +79,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void passwordEmpty() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("");
@@ -91,7 +91,7 @@ public class UserDeleteRequestTest {
 	@Test
 	void passswordNull() throws Exception {
 		assertThrows(() -> {
-			DeleteRequest request = new DeleteRequest();
+			UserDeleteRequest request = new UserDeleteRequest();
 
 			request.setEmail("arthur@gmail.com");
 

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.PermissionDeniedException;
-import cc.wordview.api.request.word.CreateRequest;
+import cc.wordview.api.request.word.WordCreateRequest;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.service.specification.WordServiceInterface;
 
@@ -34,7 +34,7 @@ public class WordController {
 
 	// CREATE
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody CreateRequest request, HttpServletRequest req) {
+	public ResponseEntity<?> create(@RequestBody WordCreateRequest request, HttpServletRequest req) {
 		return response(() -> {
 			User user = userService.getMe(req);
 

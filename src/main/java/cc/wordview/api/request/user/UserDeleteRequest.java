@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DeleteRequest {
+public class UserDeleteRequest {
 	// public String token;
 	public String password;
 	public String email;

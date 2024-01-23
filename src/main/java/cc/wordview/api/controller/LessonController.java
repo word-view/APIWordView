@@ -28,7 +28,7 @@ import cc.wordview.api.database.entity.Lesson;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.database.entity.Word;
 import cc.wordview.api.exception.PermissionDeniedException;
-import cc.wordview.api.request.lesson.CreateRequest;
+import cc.wordview.api.request.lesson.LessonCreateRequest;
 import cc.wordview.api.response.lesson.LessonWithWordsResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
@@ -48,7 +48,7 @@ public class LessonController {
 	private WordServiceInterface wordService;
 
 	@PostMapping(consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody CreateRequest request, HttpServletRequest req) {
+	public ResponseEntity<?> create(@RequestBody LessonCreateRequest request, HttpServletRequest req) {
 		return response(() -> {
 			User user = userService.getMe(req);
 

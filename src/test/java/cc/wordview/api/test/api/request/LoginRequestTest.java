@@ -2,8 +2,8 @@ package cc.wordview.api.test.api.request;
 
 import org.junit.jupiter.api.Test;
 
-import cc.wordview.api.request.user.CreateRequest;
-import cc.wordview.api.request.user.LoginRequest;
+import cc.wordview.api.request.user.UserCreateRequest;
+import cc.wordview.api.request.user.UserLoginRequest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
@@ -13,7 +13,7 @@ class LoginRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			LoginRequest request = new LoginRequest();
+			UserLoginRequest request = new UserLoginRequest();
 
 			request.setEmail("arthur@gmail.com");
 			request.setPassword("senha23213");
@@ -25,7 +25,7 @@ class LoginRequestTest {
 	@Test
 	void emailInvalid() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -38,7 +38,7 @@ class LoginRequestTest {
 	@Test
 	void emailEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -51,7 +51,7 @@ class LoginRequestTest {
 	@Test
 	void emailNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -63,7 +63,7 @@ class LoginRequestTest {
 	@Test
 	void passwordEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("");
@@ -76,7 +76,7 @@ class LoginRequestTest {
 	@Test
 	void passwordNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setEmail("arthur@gmail.com");

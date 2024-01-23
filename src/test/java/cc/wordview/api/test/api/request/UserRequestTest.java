@@ -2,7 +2,7 @@ package cc.wordview.api.test.api.request;
 
 import org.junit.jupiter.api.Test;
 
-import cc.wordview.api.request.user.CreateRequest;
+import cc.wordview.api.request.user.UserCreateRequest;
 
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
@@ -13,7 +13,7 @@ class UserRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("arthur");
 			request.setPassword("senha23213");
@@ -26,7 +26,7 @@ class UserRequestTest {
 	@Test
 	void usernameWithSpecialChars() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("asda@!#!@");
 			request.setPassword("senha23213");
@@ -39,7 +39,7 @@ class UserRequestTest {
 	@Test
 	void usernameEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("");
 			request.setPassword("senha23213");
@@ -52,7 +52,7 @@ class UserRequestTest {
 	@Test
 	void usernameNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setPassword("senha23213");
 			request.setEmail("arthur@gmail.com");
@@ -64,7 +64,7 @@ class UserRequestTest {
 	@Test
 	void emailInvalid() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -77,7 +77,7 @@ class UserRequestTest {
 	@Test
 	void emailEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -90,7 +90,7 @@ class UserRequestTest {
 	@Test
 	void emailNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("senha23213");
@@ -102,7 +102,7 @@ class UserRequestTest {
 	@Test
 	void passwordEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setPassword("");
@@ -115,7 +115,7 @@ class UserRequestTest {
 	@Test
 	void passwordNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			UserCreateRequest request = new UserCreateRequest();
 
 			request.setUsername("Arthur");
 			request.setEmail("arthur@gmail.com");

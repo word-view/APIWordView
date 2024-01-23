@@ -1,6 +1,6 @@
 package cc.wordview.api.test.api.request;
 
-import cc.wordview.api.request.word.CreateRequest;
+import cc.wordview.api.request.word.WordCreateRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -11,7 +11,7 @@ class WordRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("car");
@@ -26,7 +26,7 @@ class WordRequestTest {
 	@Test
 	void idLessonEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setName("car");
 			request.setLang("jp");
@@ -40,7 +40,7 @@ class WordRequestTest {
 	@Test
 	void nameEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("");
@@ -55,7 +55,7 @@ class WordRequestTest {
 	@Test
 	void nameNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setLang("jp");
@@ -69,7 +69,7 @@ class WordRequestTest {
 	@Test
 	void langEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("car");
@@ -84,7 +84,7 @@ class WordRequestTest {
 	@Test
 	void langNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("car");
@@ -98,7 +98,7 @@ class WordRequestTest {
 	@Test
 	void localizedWordEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("car");
@@ -113,7 +113,7 @@ class WordRequestTest {
 	@Test
 	void localizedWordNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			WordCreateRequest request = new WordCreateRequest();
 
 			request.setIdLesson(1L);
 			request.setName("car");

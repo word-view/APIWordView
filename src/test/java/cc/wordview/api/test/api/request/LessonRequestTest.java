@@ -3,7 +3,7 @@ package cc.wordview.api.test.api.request;
 import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.database.types.LessonDifficulty;
-import cc.wordview.api.request.lesson.CreateRequest;
+import cc.wordview.api.request.lesson.LessonCreateRequest;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
@@ -13,7 +13,7 @@ class LessonRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty(LessonDifficulty.STARTER);
@@ -25,7 +25,7 @@ class LessonRequestTest {
 	@Test
 	void titleEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("");
 			request.setDifficulty(LessonDifficulty.STARTER);
@@ -37,7 +37,7 @@ class LessonRequestTest {
 	@Test
 	void titleNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setDifficulty(LessonDifficulty.STARTER);
 
@@ -48,7 +48,7 @@ class LessonRequestTest {
 	@Test
 	void difficultyEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty("");
@@ -60,7 +60,7 @@ class LessonRequestTest {
 	@Test
 	void difficultyNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("Lesson 1");
 
@@ -71,7 +71,7 @@ class LessonRequestTest {
 	@Test
 	void authorizationEmpty() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty(LessonDifficulty.STARTER);
@@ -83,7 +83,7 @@ class LessonRequestTest {
 	@Test
 	void authorizationNull() throws Exception {
 		assertThrows(() -> {
-			CreateRequest request = new CreateRequest();
+			LessonCreateRequest request = new LessonCreateRequest();
 
 			request.setTitle("Lesson 1");
 			request.setDifficulty(LessonDifficulty.STARTER);

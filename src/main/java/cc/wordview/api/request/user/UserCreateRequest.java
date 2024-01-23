@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateRequest {
+public class UserCreateRequest {
 	public String username;
 	public String email;
 	public String password;
