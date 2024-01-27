@@ -4,6 +4,14 @@
   <artifactId>wordview</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>WordViewAPI</name>
+
+  	<repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
   
   	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -105,11 +113,22 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt</artifactId>
-        <version>0.9.1</version>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
         </dependency>
-
+		<dependency>
+			<groupId>cc.wordview</groupId>
+			<artifactId>ytm</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>/home/arthur/repos/wv-ytm/ytm/target/ytm-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
+		    <dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20231013</version> 
+			</dependency>
     </dependencies>
 
 	<build>
