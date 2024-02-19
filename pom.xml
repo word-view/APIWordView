@@ -117,13 +117,13 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
         </dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>cc.wordview</groupId>
 			<artifactId>ytm</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>/home/arthur/repos/wv-ytm/ytm/target/ytm-1.0-SNAPSHOT.jar</systemPath>
-		</dependency>
+			<systemPath>/home/arthur/repos/YTM/target/ytm-1.0-SNAPSHOT.jar</systemPath>
+		</dependency> -->
 		    <dependency>
 				<groupId>org.json</groupId>
 				<artifactId>json</artifactId>
