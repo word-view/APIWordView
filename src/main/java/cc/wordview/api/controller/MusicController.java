@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sapher.youtubedl.YoutubeDL;
 import com.sapher.youtubedl.YoutubeDLException;
 import com.sapher.youtubedl.YoutubeDLRequest;
+import com.sapher.youtubedl.YoutubeDLResponse;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.util.FileReader;
+import cc.wordview.api.util.StringUtil;
 import cc.wordview.ytm.YoutubeApi;
 import cc.wordview.ytm.response.SearchResult;
 
@@ -41,6 +43,27 @@ public class MusicController {
 
         @Value("${wordview.ytm.api-key}")
         private String API_KEY;
+
+        @GetMapping("/lyrics/list")
+        public ResponseEntity<?> lyrics(@RequestParam String id) {
+                return response(() -> {
+                        String musicUrl = "https://www.youtube.com/watch?v=" + id;
+                        String directory = System.getProperty("java.io.tmpdir");
+
+                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
+
+                        request.setOption("ignore-errors");
+                        request.setOption("list-subs");
+                        request.setOption("skip-download");
+                        request.setOption("retries", 10);
+
+                        YoutubeDLResponse response = YoutubeDL.execute(request);
+
+                        String result = StringUtil.cutString(response.getOut(), "[info] Available subtitles for");
+
+                        return ok(result);
+                });
+        }
 
         @GetMapping("/lyrics")
         public ResponseEntity<?> lyrics(@RequestParam String id, @RequestParam String lang,
