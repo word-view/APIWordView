@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "wordview.ytm.api-key",
+  "type": "java.lang.String",
+  "description": "A description for 'wordview.ytm.api-key'"
+}]}

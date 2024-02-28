@@ -30,6 +30,10 @@ public class Response {
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
 
+	public static <T> ResponseEntity<?> badGateway(@Nullable T body) {
+		return new ResponseEntity<>(body, HttpStatus.BAD_GATEWAY);
+	}
+
 	public static <T> ResponseEntity<?> created(@Nullable T body) {
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}

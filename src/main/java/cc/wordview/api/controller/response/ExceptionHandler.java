@@ -1,5 +1,6 @@
 package cc.wordview.api.controller.response;
 
+import static cc.wordview.api.controller.response.Response.badGateway;
 import static cc.wordview.api.controller.response.Response.badRequest;
 import static cc.wordview.api.controller.response.Response.forbidden;
 import static cc.wordview.api.controller.response.Response.internalServerError;
@@ -17,6 +18,7 @@ import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.exception.PermissionDeniedException;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.exception.ValueTakenException;
+import io.jsonwebtoken.io.IOException;
 
 /**
  * Globally handles exceptions for API responses
@@ -70,6 +72,8 @@ public class ExceptionHandler {
 			return forbidden(e.getMessage());
 		} catch (PermissionDeniedException e) {
 			return unauthorized(e.getMessage());
+		} catch (IOException e) {
+			return badGateway(e.getMessage());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return internalServerError(e.getCause());
