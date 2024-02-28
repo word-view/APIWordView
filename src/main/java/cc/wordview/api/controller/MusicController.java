@@ -31,6 +31,7 @@ import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
 import cc.wordview.ytm.YoutubeApi;
 import cc.wordview.ytm.response.SearchResult;
+import cc.wordview.ytm.response.Video;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,26 @@ public class MusicController {
 
         @Value("${wordview.ytm.api-key}")
         private String API_KEY;
+
+        // History is just being a placeholder here it does not provide the inteded
+        // functionality yet
+        @GetMapping("/history")
+        public ResponseEntity<?> history() {
+                return response(() -> {
+                        ytapi.setApiKey(API_KEY);
+
+                        SearchResult result = ytapi.search("ano-yume-wo-nazotte", 1).get(0);
+
+                        Video video = new Video();
+
+                        video.setId(result.getId().getVideoId());
+                        video.setTitle(result.getSnippet().getTitle());
+                        video.setArtist(result.getSnippet().getChannelTitle());
+                        video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
+
+                        return ok(video);
+                });
+        }
 
         @GetMapping("/lyrics/list")
         public ResponseEntity<?> lyrics(@RequestParam String id) {

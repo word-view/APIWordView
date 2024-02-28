@@ -20,6 +20,11 @@ class MusicControllerTest {
         private MockMvc request;
 
         @Test
+        void history() throws Exception {
+                TestRequest.get(request, "/music/history", status().isOk());
+        }
+
+        @Test
         void lyrics() throws Exception {
                 TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
         }

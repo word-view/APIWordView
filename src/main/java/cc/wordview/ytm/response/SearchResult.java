@@ -1,7 +1,5 @@
 package cc.wordview.ytm.response;
 
-import com.google.gson.annotations.SerializedName;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,13 +10,4 @@ public class SearchResult {
     private String kind;
     private String etag;
     private Id id;
-}
-
-@Getter
-@Setter
-class Id {
-    private String kind;
-
-    @SerializedName("videoId")
-    private String videoId;
 }

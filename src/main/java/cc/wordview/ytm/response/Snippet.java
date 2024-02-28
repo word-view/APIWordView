@@ -23,19 +23,3 @@ public class Snippet {
     @SerializedName("liveBroadcastContent")
     private String liveBroadcastContent;
 }
-
-@Getter
-@Setter
-class Thumbnails {
-    private Thumbnail defaultThumbnail;
-    private Thumbnail high;
-    private Thumbnail medium;
-}
-
-@Getter
-@Setter
-class Thumbnail {
-    private int width;
-    private String url;
-    private int height;
-}
