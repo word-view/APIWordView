@@ -26,6 +26,7 @@ import com.sapher.youtubedl.YoutubeDLException;
 import com.sapher.youtubedl.YoutubeDLRequest;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.util.FileReader;
 import cc.wordview.ytm.YoutubeApi;
 import cc.wordview.ytm.response.SearchResult;
 
@@ -40,6 +41,31 @@ public class MusicController {
 
         @Value("${wordview.ytm.api-key}")
         private String API_KEY;
+
+        @GetMapping("/lyrics")
+        public ResponseEntity<?> lyrics(@RequestParam String id, @RequestParam String lang,
+                        HttpServletResponse response) {
+                return response(() -> {
+                        String musicUrl = "https://www.youtube.com/watch?v=" + id;
+                        String directory = System.getProperty("java.io.tmpdir");
+
+                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
+
+                        request.setOption("ignore-errors");
+                        request.setOption("write-sub");
+                        request.setOption("sub-lang", lang);
+                        request.setOption("skip-download");
+                        request.setOption("output", "%(id)s");
+                        request.setOption("retries", 10);
+
+                        YoutubeDL.execute(request);
+
+                        String lyricsFile = FileReader.read(directory + "/" + id + "." + lang + ".vtt");
+
+                        return ok(lyricsFile);
+                });
+
+        }
 
         @GetMapping("/search")
         public ResponseEntity<?> search(@RequestParam String q) {
@@ -58,11 +84,11 @@ public class MusicController {
 
                 YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
 
-                request.setOption("ignore-errors"); // --ignore-errors
+                request.setOption("ignore-errors");
                 request.setOption("extract-audio");
                 request.setOption("audio-format", "mp3");
-                request.setOption("output", "%(id)s"); // --output "%(id)s"
-                request.setOption("retries", 10); // --retries 10
+                request.setOption("output", "%(id)s");
+                request.setOption("retries", 10);
 
                 YoutubeDL.execute(request);
 
