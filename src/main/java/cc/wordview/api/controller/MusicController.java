@@ -30,6 +30,7 @@ import cc.wordview.api.Constants;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
 import cc.wordview.ytm.YoutubeApi;
+import cc.wordview.ytm.response.LyricEntry;
 import cc.wordview.ytm.response.SearchResult;
 import cc.wordview.ytm.response.Video;
 
@@ -80,9 +81,10 @@ public class MusicController {
 
                         YoutubeDLResponse response = YoutubeDL.execute(request);
 
-                        String result = StringUtil.cutString(response.getOut(), "[info] Available subtitles for");
+                        String result = StringUtil.cutString(response.getOut(), "[info] Available subtitles for")
+                                        .replaceAll("vtt, ttml, srv3, srv2, srv1, json3", "");
 
-                        return ok(result);
+                        return ok(LyricEntry.parse(result));
                 });
         }
 
