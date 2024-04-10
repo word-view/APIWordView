@@ -22,11 +22,14 @@ import static cc.wordview.api.Constants.CORS_ORIGIN_ALL;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+import cc.wordview.api.config.WordViewConfig;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "cc.wordview.api" })
@@ -34,16 +37,23 @@ public class Application implements ApplicationRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
+	@Autowired
+	private WordViewConfig config;
+
 	public static void main(String... args) throws Exception {
 		SpringApplication.run(Application.class, args);
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		if (args.containsOption("production")) {
+		config.setProduction(args.containsOption("production"));
+
+		if (config.isProduction()) {
 			if (CORS_ORIGIN == CORS_ORIGIN_ALL) {
 				logger.warn("CORS_ORIGIN is set to all.");
 			}
+		} else {
+			logger.info("All requests to YouTube's API are being mocked");
 		}
 	}
 }

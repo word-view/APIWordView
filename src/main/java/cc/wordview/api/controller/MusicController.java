@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,7 @@ import com.sapher.youtubedl.YoutubeDLRequest;
 import com.sapher.youtubedl.YoutubeDLResponse;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.config.WordViewConfig;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
 import cc.wordview.ytm.YoutubeApi;
@@ -46,21 +48,30 @@ public class MusicController {
         @Value("${wordview.ytm.api-key}")
         private String API_KEY;
 
+        @Autowired
+        private WordViewConfig config;
+
         // History is just being a placeholder here it does not provide the inteded
         // functionality yet
         @GetMapping("/history")
         public ResponseEntity<?> history() {
                 return response(() -> {
-                        ytapi.setApiKey(API_KEY);
-
-                        SearchResult result = ytapi.search("ano-yume-wo-nazotte", 1).get(0);
-
                         Video video = new Video();
 
-                        video.setId(result.getId().getVideoId());
-                        video.setTitle(result.getSnippet().getTitle());
-                        video.setArtist(result.getSnippet().getChannelTitle());
-                        video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
+                        if (config.isProduction()) {
+                                ytapi.setApiKey(API_KEY);
+                                SearchResult result = ytapi.search("ano-yume-wo-nazotte", 1).get(0);
+
+                                video.setId(result.getId().getVideoId());
+                                video.setTitle(result.getSnippet().getTitle());
+                                video.setArtist(result.getSnippet().getChannelTitle());
+                                video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
+                        } else {
+                                video.setId("sAuEeM_6zpk");
+                                video.setTitle("YOASOBI「あの夢をなぞって」 Official Music Video");
+                                video.setArtist("YOASOBI");
+                                video.setCover("https://img.youtube.com/vi/sAuEeM_6zpk/0.jpg");
+                        }
 
                         return ok(video);
                 });
