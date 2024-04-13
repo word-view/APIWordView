@@ -13,6 +13,10 @@ import cc.wordview.api.Application;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.MethodName.class)
@@ -32,17 +36,41 @@ class MusicControllerTest {
         }
 
         @Test
+        void lyricsNoCache() throws Exception {
+                String directory = System.getProperty("java.io.tmpdir");
+                Path file = Paths.get(directory + "/KEg6FXrvHys.ja.vtt");
+
+                if (Files.exists(file))
+                        Files.delete(file);
+
+                TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
+        }
+
+        @Test
         void lyrics() throws Exception {
                 TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
         }
 
         @Test
         void search() throws Exception {
-                TestRequest.get(request, "/music/search?q=pandora101", status().isOk());
+                // We expect this to return 500 since searching is now disabled in testing.
+                TestRequest.get(request, "/music/search?q=pandora101", status().isInternalServerError());
+        }
+
+        @Test
+        void downloadNoCache() throws Exception {
+                String directory = System.getProperty("java.io.tmpdir");
+                Path file = Paths.get(directory + "/KEg6FXrvHys.mp3");
+
+                if (Files.exists(file))
+                        Files.delete(file);
+
+                TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
 
         @Test
         void download() throws Exception {
                 TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
+
 }

@@ -106,16 +106,20 @@ public class MusicController {
                         String musicUrl = "https://www.youtube.com/watch?v=" + id;
                         String directory = System.getProperty("java.io.tmpdir");
 
-                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
+                        Path path = Paths.get(directory + "/" + id + "." + lang + ".vtt");
 
-                        request.setOption("ignore-errors");
-                        request.setOption("write-sub");
-                        request.setOption("sub-lang", lang);
-                        request.setOption("skip-download");
-                        request.setOption("output", "%(id)s");
-                        request.setOption("retries", 10);
+                        if (!Files.exists(path)) {
+                                YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
 
-                        YoutubeDL.execute(request);
+                                request.setOption("ignore-errors");
+                                request.setOption("write-sub");
+                                request.setOption("sub-lang", lang);
+                                request.setOption("skip-download");
+                                request.setOption("output", "%(id)s");
+                                request.setOption("retries", 10);
+
+                                YoutubeDL.execute(request);
+                        }
 
                         String lyricsFile = FileReader.read(directory + "/" + id + "." + lang + ".vtt");
 
@@ -139,17 +143,19 @@ public class MusicController {
                 String musicUrl = "https://www.youtube.com/watch?v=" + id;
                 String directory = System.getProperty("java.io.tmpdir");
 
-                YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
-
-                request.setOption("ignore-errors");
-                request.setOption("extract-audio");
-                request.setOption("audio-format", "mp3");
-                request.setOption("output", "%(id)s");
-                request.setOption("retries", 10);
-
-                YoutubeDL.execute(request);
-
                 Path file = Paths.get(directory + "/" + id + ".mp3");
+
+                if (!Files.exists(file)) {
+                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
+
+                        request.setOption("ignore-errors");
+                        request.setOption("extract-audio");
+                        request.setOption("audio-format", "mp3");
+                        request.setOption("output", "%(id)s");
+                        request.setOption("retries", 10);
+
+                        YoutubeDL.execute(request);
+                }
 
                 String contentType = Files.probeContentType(file);
                 if (contentType == null) {
