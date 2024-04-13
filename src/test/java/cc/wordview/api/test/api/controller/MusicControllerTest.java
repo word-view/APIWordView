@@ -31,6 +31,12 @@ class MusicControllerTest {
         }
 
         @Test
+        void lyricsListCached() throws Exception {
+                TestRequest.get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
+                TestRequest.get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
+        }
+
+        @Test
         void history() throws Exception {
                 TestRequest.get(request, "/music/history", status().isOk());
         }
@@ -48,6 +54,7 @@ class MusicControllerTest {
 
         @Test
         void lyrics() throws Exception {
+                TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
                 TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
         }
 
@@ -70,6 +77,7 @@ class MusicControllerTest {
 
         @Test
         void download() throws Exception {
+                TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
                 TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
 

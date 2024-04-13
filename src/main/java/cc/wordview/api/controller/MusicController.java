@@ -8,7 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,6 +53,8 @@ public class MusicController {
         @Autowired
         private WordViewConfig config;
 
+        private Map<String, String> availableLyricsCache = new HashMap<>();
+
         // History is just being a placeholder here it does not provide the inteded
         // functionality yet
         @GetMapping("/history")
@@ -78,21 +82,31 @@ public class MusicController {
         }
 
         @GetMapping("/lyrics/list")
-        public ResponseEntity<?> lyrics(@RequestParam String id) {
+        public ResponseEntity<?> lyricsList(@RequestParam String id) {
                 return response(() -> {
                         String musicUrl = "https://www.youtube.com/watch?v=" + id;
                         String directory = System.getProperty("java.io.tmpdir");
 
-                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
+                        String availableLyrics;
 
-                        request.setOption("ignore-errors");
-                        request.setOption("list-subs");
-                        request.setOption("skip-download");
-                        request.setOption("retries", 10);
+                        if (!availableLyricsCache.containsKey(id)) {
+                                YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
 
-                        YoutubeDLResponse response = YoutubeDL.execute(request);
+                                request.setOption("ignore-errors");
+                                request.setOption("list-subs");
+                                request.setOption("skip-download");
+                                request.setOption("retries", 10);
 
-                        String result = StringUtil.cutString(response.getOut(), "[info] Available subtitles for")
+                                YoutubeDLResponse response = YoutubeDL.execute(request);
+
+                                availableLyrics = response.getOut();
+
+                                availableLyricsCache.put(id, availableLyrics);
+                        } else {
+                                availableLyrics = availableLyricsCache.get(id);
+                        }
+
+                        String result = StringUtil.cutString(availableLyrics, "[info] Available subtitles for")
                                         .replaceAll("vtt, ttml, srv3, srv2, srv1, json3", "");
 
                         return ok(LyricEntry.parse(result));
