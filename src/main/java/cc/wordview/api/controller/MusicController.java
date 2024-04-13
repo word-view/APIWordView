@@ -67,10 +67,10 @@ public class MusicController {
                                 video.setArtist(result.getSnippet().getChannelTitle());
                                 video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
                         } else {
-                                video.setId("sAuEeM_6zpk");
-                                video.setTitle("YOASOBI「あの夢をなぞって」 Official Music Video");
-                                video.setArtist("YOASOBI");
-                                video.setCover("https://img.youtube.com/vi/sAuEeM_6zpk/0.jpg");
+                                video.setId("BCt9lS_Uv_Y");
+                                video.setTitle("Kutsu no hanabi");
+                                video.setArtist("Yorushika");
+                                video.setCover("https://img.youtube.com/vi/BCt9lS_Uv_Y/0.jpg");
                         }
 
                         return ok(video);
