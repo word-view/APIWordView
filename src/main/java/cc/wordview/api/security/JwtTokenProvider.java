@@ -3,7 +3,7 @@ package cc.wordview.api.security;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +36,8 @@ public class JwtTokenProvider {
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-		return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity).signWith(secretKey).compact();
+		return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity).signWith(secretKey)
+				.compact();
 	}
 
 	public Authentication getAuthentication(String token) {
