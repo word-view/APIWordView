@@ -3,7 +3,7 @@ package cc.wordview.api.controller;
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
 import static cc.wordview.api.controller.response.ResponseTemplate.*;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

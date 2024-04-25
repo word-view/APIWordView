@@ -2,7 +2,7 @@ package cc.wordview.api.service.specification;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.IncorrectCredentialsException;
