@@ -46,7 +46,8 @@ public class JwtTokenProvider {
 	}
 
 	public String getUsername(String token) {
-		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody()
+				.getSubject();
 	}
 
 	public String resolveToken(HttpServletRequest req) {
@@ -59,7 +60,7 @@ public class JwtTokenProvider {
 
 	public boolean validateToken(String token) throws Exception {
 		try {
-			Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+			Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
 			throw new Exception("JWT Token inválido ou já expirou.");
