@@ -1,6 +1,6 @@
 package cc.wordview.api.controller.response;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
