@@ -36,6 +36,6 @@ class WordControllerTest {
 
 		String jwt = MockValues.getUserJwt(request);
 
-		TestRequest.post(request, "/word/", word.toJson(), status().isUnauthorized(), jwt);
+		TestRequest.post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
 	}
 }

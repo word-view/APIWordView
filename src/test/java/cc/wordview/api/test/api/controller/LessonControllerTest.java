@@ -31,7 +31,7 @@ class LessonControllerTest {
 
 		String jwt = MockValues.getAdmJwt(request);
 
-		TestRequest.post(request, "/lesson/", lesson.toJson(), status().isCreated(), jwt);
+		TestRequest.post(request, "/lesson", lesson.toJson(), status().isCreated(), jwt);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ class LessonControllerTest {
 
 		String jwt = MockValues.getUserJwt(request);
 
-		TestRequest.post(request, "/lesson/", lesson.toJson(), status().isUnauthorized(), jwt);
+		TestRequest.post(request, "/lesson", lesson.toJson(), status().isUnauthorized(), jwt);
 	}
 
 	// READ
