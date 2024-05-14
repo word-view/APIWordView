@@ -164,6 +164,7 @@ public class MusicController {
 
                         request.setOption("ignore-errors");
                         request.setOption("extract-audio");
+                        request.setOption("audio-quality", 6);
                         request.setOption("audio-format", "mp3");
                         request.setOption("output", "%(id)s");
                         request.setOption("retries", 10);
