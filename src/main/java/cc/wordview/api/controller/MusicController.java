@@ -72,7 +72,7 @@ public class MusicController {
                                 video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
                         } else {
                                 video.setId("BCt9lS_Uv_Y");
-                                video.setTitle("Kutsu no hanabi");
+                                video.setTitle("Firework of Shoes");
                                 video.setArtist("Yorushika");
                                 video.setCover("https://img.youtube.com/vi/BCt9lS_Uv_Y/0.jpg");
                         }
