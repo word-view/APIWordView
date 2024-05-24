@@ -14,6 +14,8 @@ import java.util.Map;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
@@ -45,6 +47,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/music")
 public class MusicController {
+        private static final Logger logger = LoggerFactory.getLogger(MusicController.class);
+
         YoutubeApi ytapi = new YoutubeApi();
 
         @Value("${wordview.ytm.api-key}")
@@ -158,6 +162,8 @@ public class MusicController {
                 String directory = System.getProperty("java.io.tmpdir");
 
                 Path file = Paths.get(directory + "/" + id + ".mp3");
+
+                logger.info("Started streaming '" + id + "'");
 
                 if (!Files.exists(file)) {
                         YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
