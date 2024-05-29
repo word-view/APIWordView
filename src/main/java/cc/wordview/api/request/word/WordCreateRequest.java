@@ -40,10 +40,6 @@ public class WordCreateRequest {
 			throw emptyOrNull("name");
 		}
 
-		if (isNull(idLesson)) {
-			throw emptyOrNull("difficulty");
-		}
-
 		if (isNull(lang) || lang.isEmpty()) {
 			throw emptyOrNull("lang");
 		}
