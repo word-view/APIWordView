@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class UserUpdateRequest {
         public String username;
-        public String email;
 
         public User toEntity() throws RequestValidationException {
                 this.validate();
@@ -19,7 +18,6 @@ public class UserUpdateRequest {
                 User user = new User();
 
                 user.setUsername(username);
-                user.setEmail(email);
 
                 return user;
         }
@@ -27,11 +25,6 @@ public class UserUpdateRequest {
         private void validate() throws RequestValidationException {
                 if (!isNull(username)) {
                         if (!username.isEmpty())
-                                return;
-                }
-
-                if (!isNull(email)) {
-                        if (!email.isEmpty())
                                 return;
                 }
 

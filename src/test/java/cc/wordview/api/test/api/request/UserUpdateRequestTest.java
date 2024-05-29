@@ -10,29 +10,6 @@ import cc.wordview.api.request.user.UserUpdateRequest;
 
 public class UserUpdateRequestTest {
         @Test
-        void updateAllFields() throws Exception {
-                assertDoesNotThrow(() -> {
-                        UserUpdateRequest request = new UserUpdateRequest();
-
-                        request.setEmail("arthur@gmail.com");
-                        request.setUsername("arthur");
-
-                        request.toEntity();
-                });
-        }
-
-        @Test
-        void updateEmail() throws Exception {
-                assertDoesNotThrow(() -> {
-                        UserUpdateRequest request = new UserUpdateRequest();
-
-                        request.setEmail("arthur@gmail.com");
-
-                        request.toEntity();
-                });
-        }
-
-        @Test
         void updateUsername() throws Exception {
                 assertDoesNotThrow(() -> {
                         UserUpdateRequest request = new UserUpdateRequest();
@@ -48,7 +25,6 @@ public class UserUpdateRequestTest {
                 assertThrows(() -> {
                         UserUpdateRequest request = new UserUpdateRequest();
 
-                        request.setEmail("");
                         request.setUsername("");
 
                         request.toEntity();

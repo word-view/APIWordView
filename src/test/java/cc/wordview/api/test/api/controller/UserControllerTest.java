@@ -83,18 +83,9 @@ class UserControllerTest {
 	}
 
 	@Test
-	@Order(9)
-	void updateMeEmail() throws Exception {
-		String jwt = MockValues.getUserJwt(request);
-
-		TestRequest.put(request, "/user/me", "{\"email\": \"new.email.new@gmail.com\"}", status().isOk(),
-				jwt);
-	}
-
-	@Test
 	@Order(10)
 	void deleteMe() throws Exception {
-		String jwt = MockValues.getUserJwt(request, "new.email.new@gmail.com");
+		String jwt = MockValues.getUserJwt(request);
 		TestRequest.delete(request, "/user/me", status().isOk(), jwt);
 	}
 }
