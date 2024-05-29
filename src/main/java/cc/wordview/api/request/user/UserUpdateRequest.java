@@ -25,8 +25,16 @@ public class UserUpdateRequest {
         }
 
         private void validate() throws RequestValidationException {
-                if (isNull(username) || username.isEmpty() && isNull(email) || email.isEmpty()) {
-                        throw new RequestValidationException("Specify at least 1 field");
+                if (!isNull(username)) {
+                        if (!username.isEmpty())
+                                return;
                 }
+
+                if (!isNull(email)) {
+                        if (!email.isEmpty())
+                                return;
+                }
+
+                throw new RequestValidationException("Specify at least 1 field");
         }
 }
