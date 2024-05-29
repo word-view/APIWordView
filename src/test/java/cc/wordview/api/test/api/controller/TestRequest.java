@@ -16,6 +16,24 @@ public class TestRequest {
 				.andExpect(status).andReturn();
 	}
 
+	public static void put(MockMvc request, String url, String content, ResultMatcher status, String jwt)
+			throws Exception {
+		request.perform(
+				MockMvcRequestBuilders.put(REQUEST_PATH + url)
+						.header("Authorization", "Bearer " + jwt)
+						.contentType("application/json")
+						.content(content))
+				.andExpect(status);
+	}
+
+	public static void delete(MockMvc request, String url, ResultMatcher status, String jwt)
+			throws Exception {
+		request.perform(
+				MockMvcRequestBuilders.delete(REQUEST_PATH + url)
+						.header("Authorization", "Bearer " + jwt))
+				.andExpect(status);
+	}
+
 	public static void post(MockMvc request, String url, String content, ResultMatcher status) throws Exception {
 		request.perform(
 				MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json")

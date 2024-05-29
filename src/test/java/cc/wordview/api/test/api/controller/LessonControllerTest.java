@@ -50,6 +50,11 @@ class LessonControllerTest {
 	}
 
 	@Test
+	void getById() throws Exception {
+		TestRequest.get(request, "/lesson/1", status().isOk());
+	}
+
+	@Test
 	void getByNonExistentTitle() throws Exception {
 		TestRequest.get(request, "/lesson/search?title=sd", status().isNotFound());
 	}

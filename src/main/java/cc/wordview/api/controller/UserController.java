@@ -62,7 +62,7 @@ public class UserController {
 		return okResponse(() -> service.getByIdWithoutCredentials(id));
 	}
 
-	@PutMapping
+	@PutMapping("/me")
 	public ResponseEntity<?> update(@RequestBody UserUpdateRequest request, HttpServletRequest req) {
 		return response(() -> {
 			User user = service.getMe(req);
@@ -77,7 +77,7 @@ public class UserController {
 	}
 
 	// DELETE
-	@DeleteMapping
+	@DeleteMapping("/me")
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		return response(() -> {
 			User user = service.getMe(request);
