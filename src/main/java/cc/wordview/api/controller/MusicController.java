@@ -26,15 +26,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sapher.youtubedl.YoutubeDL;
 import com.sapher.youtubedl.YoutubeDLException;
-import com.sapher.youtubedl.YoutubeDLRequest;
-import com.sapher.youtubedl.YoutubeDLResponse;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.config.WordViewConfig;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
+import cc.wordview.api.util.ytdl.DLClient;
 import cc.wordview.ytm.YoutubeApi;
 import cc.wordview.ytm.response.LyricEntry;
 import cc.wordview.ytm.response.SearchResult;
@@ -88,23 +86,10 @@ public class MusicController {
         @GetMapping("/lyrics/list")
         public ResponseEntity<?> lyricsList(@RequestParam String id) {
                 return response(() -> {
-                        String musicUrl = "https://www.youtube.com/watch?v=" + id;
-                        String directory = System.getProperty("java.io.tmpdir");
-
                         String availableLyrics;
 
                         if (!availableLyricsCache.containsKey(id)) {
-                                YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
-
-                                request.setOption("ignore-errors");
-                                request.setOption("list-subs");
-                                request.setOption("skip-download");
-                                request.setOption("retries", 10);
-
-                                YoutubeDLResponse response = YoutubeDL.execute(request);
-
-                                availableLyrics = response.getOut();
-
+                                availableLyrics = DLClient.listSubtitles(id);
                                 availableLyricsCache.put(id, availableLyrics);
                         } else {
                                 availableLyrics = availableLyricsCache.get(id);
@@ -121,25 +106,14 @@ public class MusicController {
         public ResponseEntity<?> lyrics(@RequestParam String id, @RequestParam String lang,
                         HttpServletResponse response) {
                 return response(() -> {
-                        String musicUrl = "https://www.youtube.com/watch?v=" + id;
-                        String directory = System.getProperty("java.io.tmpdir");
-
-                        Path path = Paths.get(directory + "/" + id + "." + lang + ".vtt");
+                        Path path = Paths.get(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
 
                         if (!Files.exists(path)) {
-                                YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
-
-                                request.setOption("ignore-errors");
-                                request.setOption("write-sub");
-                                request.setOption("sub-lang", lang);
-                                request.setOption("skip-download");
-                                request.setOption("output", "%(id)s");
-                                request.setOption("retries", 10);
-
-                                YoutubeDL.execute(request);
+                                DLClient.downloadSubtitle(id, lang);
                         }
 
-                        String lyricsFile = FileReader.read(directory + "/" + id + "." + lang + ".vtt");
+                        String lyricsFile = FileReader
+                                        .read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
 
                         return ok(lyricsFile);
                 });
@@ -158,24 +132,13 @@ public class MusicController {
         @GetMapping("/download")
         public void download(@RequestParam String id, HttpServletResponse response)
                         throws YoutubeDLException, IOException {
-                String musicUrl = "https://www.youtube.com/watch?v=" + id;
-                String directory = System.getProperty("java.io.tmpdir");
 
-                Path file = Paths.get(directory + "/" + id + ".mp3");
+                Path file = Paths.get(DLClient.getDefaultDirectory() + "/" + id + ".mp3");
 
                 logger.info("Started streaming '" + id + "'");
 
                 if (!Files.exists(file)) {
-                        YoutubeDLRequest request = new YoutubeDLRequest(musicUrl, directory);
-
-                        request.setOption("ignore-errors");
-                        request.setOption("extract-audio");
-                        request.setOption("audio-quality", 6);
-                        request.setOption("audio-format", "mp3");
-                        request.setOption("output", "%(id)s");
-                        request.setOption("retries", 10);
-
-                        YoutubeDL.execute(request);
+                        DLClient.downloadVideo(id);
                 }
 
                 String contentType = Files.probeContentType(file);
