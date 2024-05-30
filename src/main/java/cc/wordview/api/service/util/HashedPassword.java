@@ -1,5 +1,7 @@
 package cc.wordview.api.service.util;
 
+import static java.util.Objects.isNull;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -18,7 +20,7 @@ public class HashedPassword {
 
 	private String password;
 
-	public HashedPassword(User entity) {
+	public HashedPassword(User entity) throws InvalidKeySpecException {
 		this.email = entity.getEmail();
 		this.password = entity.getPassword();
 
@@ -29,7 +31,13 @@ public class HashedPassword {
 		this.setHashedPassword(generatedHashedPassword);
 	}
 
-	private PBEKeySpec getKeySpecifications() {
+	private PBEKeySpec getKeySpecifications() throws InvalidKeySpecException {
+		if (isNull(email) || isNull(password))
+			throw new InvalidKeySpecException("Neither email or password should be null");
+
+		if (email.isEmpty() || password.isEmpty())
+			throw new InvalidKeySpecException("Neither email or password should be empty");
+
 		byte[] salt = (email + password).getBytes();
 
 		return new PBEKeySpec(password.toCharArray(), salt, 65536, 128);

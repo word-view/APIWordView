@@ -1,5 +1,6 @@
 package cc.wordview.api.service;
 
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class UserService implements UserServiceInterface {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@Override
-	public String register(User entity) throws ValueTakenException {
+	public String register(User entity) throws ValueTakenException, InvalidKeySpecException {
 		Optional<User> userWithSameEmail = repository.findByEmail(entity.getEmail());
 
 		if (userWithSameEmail.isPresent()) {
@@ -81,7 +82,8 @@ public class UserService implements UserServiceInterface {
 		return repository.save(entity);
 	}
 
-	public String login(User entity) throws NoSuchEntryException, IncorrectCredentialsException {
+	public String login(User entity)
+			throws NoSuchEntryException, IncorrectCredentialsException, InvalidKeySpecException {
 		String hashedPasswd = new HashedPassword(entity).getValue();
 		User user = this.getByEmail(entity.getEmail());
 
