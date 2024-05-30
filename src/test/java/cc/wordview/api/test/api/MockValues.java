@@ -20,6 +20,17 @@ public class MockValues {
 		return result.getResponse().getContentAsString();
 	}
 
+	public static String getDisposableJwt(MockMvc request) throws Exception {
+		MockUser mock = new MockUser("mock.disposable@gmail.com", "S_enha64");
+		MvcResult result = request
+				.perform(MockMvcRequestBuilders.post("/api/v1/user/login")
+						.contentType("application/json")
+						.content(mock.toJson()))
+				.andExpect(status().isOk()).andReturn();
+
+		return result.getResponse().getContentAsString();
+	}
+
 	public static String getAdmJwt(MockMvc request) throws Exception {
 		MockUser mock = new MockUser("mock.admin@gmail.com", "S_enha64");
 		MvcResult result = request

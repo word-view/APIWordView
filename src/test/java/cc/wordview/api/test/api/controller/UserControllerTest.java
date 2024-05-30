@@ -85,7 +85,7 @@ class UserControllerTest {
 	@Test
 	@Order(10)
 	void deleteMe() throws Exception {
-		String jwt = MockValues.getUserJwt(request);
+		String jwt = MockValues.getDisposableJwt(request);
 		TestRequest.delete(request, "/user/me", status().isOk(), jwt);
 	}
 }
