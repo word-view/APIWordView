@@ -28,7 +28,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryCreateRequest {
-	public String title;
+	private String title;
 
 	public Category toEntity() throws RequestValidationException {
 		this.validate();

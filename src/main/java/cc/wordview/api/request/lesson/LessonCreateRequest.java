@@ -28,8 +28,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LessonCreateRequest {
-	public String title;
-	public String difficulty;
+	private String title;
+	private String difficulty;
 
 	public Lesson toEntity() throws RequestValidationException {
 		this.validate();

@@ -27,7 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserUpdateRequest {
-        public String username;
+        private String username;
 
         public User toEntity() throws RequestValidationException {
                 this.validate();

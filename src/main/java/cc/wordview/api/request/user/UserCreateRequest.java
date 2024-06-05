@@ -31,9 +31,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserCreateRequest {
-	public String username;
-	public String email;
-	public String password;
+	private String username;
+	private String email;
+	private String password;
 
 	public User toEntity() throws RequestValidationException {
 		this.validate();

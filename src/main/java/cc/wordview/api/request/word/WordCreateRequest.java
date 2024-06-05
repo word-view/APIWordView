@@ -28,11 +28,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WordCreateRequest {
-	public Long idLesson;
-	public String name;
-	public String lang;
-	public String localizedWord;
-	public String romanizedWord;
+	private Long idLesson;
+	private String name;
+	private String lang;
+	private String localizedWord;
+	private String romanizedWord;
 
 	public Word toEntity() throws RequestValidationException {
 		this.validate();
