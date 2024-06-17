@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
 
-class LoginRequestTest {
+class UserCreateRequestTest {
 	@Test
 	void noException() throws Exception {
 		assertDoesNotThrow(() -> {
