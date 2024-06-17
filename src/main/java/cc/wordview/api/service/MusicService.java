@@ -35,7 +35,7 @@ import cc.wordview.api.config.WordViewConfig;
 import cc.wordview.api.service.specification.MusicServiceInterface;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
-import cc.wordview.api.util.ytdl.DLClient;
+import cc.wordview.api.util.DLClient;
 import cc.wordview.ytm.YoutubeApi;
 import cc.wordview.ytm.response.LyricEntry;
 import cc.wordview.ytm.response.SearchResult;
