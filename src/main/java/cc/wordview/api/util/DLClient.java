@@ -75,4 +75,13 @@ public class DLClient {
 
                 YoutubeDL.execute(request);
         }
+
+        public static String search(String query, int maxResults) throws YoutubeDLException {
+                YoutubeDLRequest request = new YoutubeDLRequest("ytsearch" + maxResults + ":" + query);
+
+                request.setOption("dump-json");
+
+                YoutubeDLResponse response = YoutubeDL.execute(request);
+                return response.getOut();
+        }
 }

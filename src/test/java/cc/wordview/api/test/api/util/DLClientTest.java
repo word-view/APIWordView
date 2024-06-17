@@ -54,6 +54,16 @@ public class DLClientTest {
         });
     }
 
+    @Test
+    void search() throws Exception {
+        assertDoesNotThrow(() -> {
+            String result = DLClient.search("pandora101", 1);
+            assertNotNull(result);
+        });
+
+
+    }
+
     private static final String actualSubtitle = "WEBVTT\n" +
             "Kind: captions\n" +
             "Language: ja\n" +
@@ -687,4 +697,5 @@ public class DLClientTest {
             "zh-Hant  Chinese (Traditional) vtt, ttml, srv3, srv2, srv1, json3\n" +
             "en       English               vtt, ttml, srv3, srv2, srv1, json3\n" +
             "ja       Japanese              vtt, ttml, srv3, srv2, srv1, json3\n";
+
 }
