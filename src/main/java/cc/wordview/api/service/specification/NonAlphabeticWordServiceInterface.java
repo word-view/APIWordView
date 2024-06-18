@@ -15,15 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.repository;
+package cc.wordview.api.service.specification;
 
-import java.util.List;
-import java.util.Optional;
+import cc.wordview.api.database.entity.NonAlphabeticWord;
+import cc.wordview.api.exception.NoSuchEntryException;
 
-import org.springframework.data.repository.CrudRepository;
-
-import cc.wordview.api.database.entity.Word;
-
-public interface WordRepository extends CrudRepository<Word, Long> {
-	Optional<Word> findByName(String name);
+public interface NonAlphabeticWordServiceInterface extends ServiceInterface<NonAlphabeticWord> {
+    NonAlphabeticWord getByName(String name) throws NoSuchEntryException;
 }

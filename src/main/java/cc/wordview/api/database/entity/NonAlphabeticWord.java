@@ -17,37 +17,34 @@
 
 package cc.wordview.api.database.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import lombok.Data;
-
 /**
- * Represents any word in alphabetic in any language.
+ * Represents all non-alphabetic words,
+ * it has an additional field to the romanized version of the word.
  */
 @Entity
 @Data
-@Table(name = "word")
-public class Word implements Serializable {
-	private static final long serialVersionUID = 4235915241326436355L;
+@Table(name = "non_alphabetic_word")
+public class NonAlphabeticWord implements Serializable {
+    private static final long serialVersionUID = 7755915248916629355L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@Column(name = "lang")
-	private String lang;
+    @Column(name = "lang")
+    private String lang;
 
-	@Column(name = "translated_word")
-	private String translatedWord;
+    @Column(name = "translated_word")
+    private String translatedWord;
+
+    @Column(name = "romanized_word")
+    private String romanizedWord;
 }

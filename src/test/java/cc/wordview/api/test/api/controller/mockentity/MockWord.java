@@ -26,8 +26,6 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class MockWord extends MockEntity {
 	private String name;
-	private String idLesson;
 	private String lang;
-	private String localizedWord;
-	private String romanizedWord;
+	private String translatedWord;
 }

@@ -13,6 +13,8 @@ INSERT INTO member (username, email, password, role) VALUES
 INSERT INTO member (username, email, password, role) VALUES
     ('mock.admin', 'mock.admin@gmail.com', '061cf224cffe1951e32ffaa1c414544a', 'ADMIN');
 
+INSERT INTO word (name, lang, translated_word)
+VALUES ('noite', 'pt-br', 'night');
 
-INSERT INTO word (id_lesson, name, lang, localized_word, romanized_word)
-VALUES (1, 'night', 'jp', '夜', 'yoru');
+INSERT INTO non_alphabetic_word (name, lang, translated_word, romanized_word)
+VALUES ('夜', 'ja', 'night', 'yoru');

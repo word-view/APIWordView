@@ -28,30 +28,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WordCreateRequest {
-	private Long idLesson;
 	private String name;
 	private String lang;
-	private String localizedWord;
-	private String romanizedWord;
+	private String translatedWord;
 
 	public Word toEntity() throws RequestValidationException {
 		this.validate();
 
 		Word newWord = new Word();
 
-		newWord.setIdLesson(idLesson);
 		newWord.setName(name);
 		newWord.setLang(lang);
-		newWord.setLocalizedWord(localizedWord);
-		newWord.setRomanizedWord(romanizedWord);
+		newWord.setTranslatedWord(translatedWord);
 
 		return newWord;
 	}
 
 	private void validate() throws RequestValidationException {
-		if (isNull(idLesson)) {
-			throw emptyOrNull("idLesson");
-		}
 
 		if (isNull(name) || name.isEmpty()) {
 			throw emptyOrNull("name");
@@ -61,8 +54,8 @@ public class WordCreateRequest {
 			throw emptyOrNull("lang");
 		}
 
-		if (isNull(localizedWord) || localizedWord.isEmpty()) {
-			throw emptyOrNull("localizedWord");
+		if (isNull(translatedWord) || translatedWord.isEmpty()) {
+			throw emptyOrNull("translatedWord");
 		}
 	}
 }

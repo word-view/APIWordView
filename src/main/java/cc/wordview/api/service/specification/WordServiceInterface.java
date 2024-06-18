@@ -24,6 +24,4 @@ import cc.wordview.api.exception.NoSuchEntryException;
 
 public interface WordServiceInterface extends ServiceInterface<Word> {
 	Word getByName(String name) throws NoSuchEntryException;
-
-	List<Word> getByIdLesson(Long idLesson) throws NoSuchEntryException;
 }

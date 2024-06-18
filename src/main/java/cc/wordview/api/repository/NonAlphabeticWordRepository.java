@@ -17,13 +17,12 @@
 
 package cc.wordview.api.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import cc.wordview.api.database.entity.NonAlphabeticWord;
+import cc.wordview.api.database.entity.Word;
 import org.springframework.data.repository.CrudRepository;
 
-import cc.wordview.api.database.entity.Word;
+import java.util.Optional;
 
-public interface WordRepository extends CrudRepository<Word, Long> {
-	Optional<Word> findByName(String name);
+public interface NonAlphabeticWordRepository extends CrudRepository<NonAlphabeticWord, Long> {
+    Optional<NonAlphabeticWord> findByName(String name);
 }

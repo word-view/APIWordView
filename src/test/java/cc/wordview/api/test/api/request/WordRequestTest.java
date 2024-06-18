@@ -30,28 +30,12 @@ class WordRequestTest {
 		assertDoesNotThrow(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setName("car");
-			request.setLang("jp");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
+			request.setName("carro");
+			request.setLang("pt-BR");
+			request.setTranslatedWord("car");
 
 			request.toEntity();
 		});
-	}
-
-	@Test
-	void idLessonEmpty() throws Exception {
-		assertThrows(() -> {
-			WordCreateRequest request = new WordCreateRequest();
-
-			request.setName("car");
-			request.setLang("jp");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
-
-			request.toEntity();
-		}, emptyOrNull("idLesson").getMessage());
 	}
 
 	@Test
@@ -59,11 +43,9 @@ class WordRequestTest {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
 			request.setName("");
-			request.setLang("jp");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
+			request.setLang("pt-BR");
+			request.setTranslatedWord("car");
 
 			request.toEntity();
 		}, emptyOrNull("name").getMessage());
@@ -74,10 +56,8 @@ class WordRequestTest {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setLang("jp");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
+			request.setLang("pt-BR");
+			request.setTranslatedWord("car");
 
 			request.toEntity();
 		}, emptyOrNull("name").getMessage());
@@ -88,11 +68,9 @@ class WordRequestTest {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setName("car");
+			request.setName("carro");
 			request.setLang("");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
+			request.setTranslatedWord("car");
 
 			request.toEntity();
 		}, emptyOrNull("lang").getMessage());
@@ -103,42 +81,35 @@ class WordRequestTest {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setName("car");
-			request.setLocalizedWord("車");
-			request.setRomanizedWord("Kuruma");
+			request.setName("carro");
+			request.setTranslatedWord("car");
 
 			request.toEntity();
 		}, emptyOrNull("lang").getMessage());
 	}
 
 	@Test
-	void localizedWordEmpty() throws Exception {
+	void translatedWordEmpty() throws Exception {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setName("car");
-			request.setLang("jp");
-			request.setLocalizedWord("");
-			request.setRomanizedWord("Kuruma");
+			request.setName("carro");
+			request.setLang("pt-BR");
+			request.setTranslatedWord("");
 
 			request.toEntity();
-		}, emptyOrNull("localizedWord").getMessage());
+		}, emptyOrNull("translatedWord").getMessage());
 	}
 
 	@Test
-	void localizedWordNull() throws Exception {
+	void translatedWordNull() throws Exception {
 		assertThrows(() -> {
 			WordCreateRequest request = new WordCreateRequest();
 
-			request.setIdLesson(1L);
-			request.setName("car");
-			request.setLang("jp");
-			request.setRomanizedWord("Kuruma");
+			request.setName("carro");
+			request.setLang("pt-BR");
 
 			request.toEntity();
-		}, emptyOrNull("localizedWord").getMessage());
+		}, emptyOrNull("translatedWord").getMessage());
 	}
-
 }

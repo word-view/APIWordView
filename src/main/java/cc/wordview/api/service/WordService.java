@@ -60,16 +60,4 @@ public class WordService implements WordServiceInterface {
 
 		return word.get();
 	}
-
-	@Override
-	public List<Word> getByIdLesson(Long idLesson) throws NoSuchEntryException {
-		List<Word> words = repository.findByIdLesson(idLesson);
-
-		if (words.isEmpty()) {
-			throw new NoSuchEntryException("Unable to find any word with this id_lesson");
-		}
-
-		return words;
-	}
-
 }
