@@ -20,6 +20,8 @@ package cc.wordview.api.controller;
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.ResponseTemplate.*;
 
+import cc.wordview.api.request.word.NonAlphabeticWordCreateRequest;
+import cc.wordview.api.service.specification.NonAlphabeticWordServiceInterface;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
@@ -47,6 +49,9 @@ public class WordController {
 	private WordServiceInterface service;
 
 	@Autowired
+	private NonAlphabeticWordServiceInterface nonAlphabeticWordService;
+
+	@Autowired
 	private UserServiceInterface userService;
 
 	// CREATE
@@ -62,5 +67,19 @@ public class WordController {
 			service.insert(request.toEntity());
 			return created();
 		});
+	}
+
+	@PostMapping(value = "/non-alphabetic", consumes = "application/json")
+	public ResponseEntity<?> createNonAlphabetic(@RequestBody NonAlphabeticWordCreateRequest request, HttpServletRequest req) {
+		return response(() -> {
+			User user = userService.getMe(req);
+
+			if (!user.getRole().equals("ADMIN")) {
+				throw new PermissionDeniedException(NOT_ADMIN_MESSAGE);
+			}
+
+			nonAlphabeticWordService.insert(request.toEntity());
+            return created();
+        });
 	}
 }

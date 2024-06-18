@@ -17,6 +17,7 @@
 
 package cc.wordview.api.test.api.controller;
 
+import cc.wordview.api.test.api.controller.mockentity.MockNonAlphabeticWord;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,25 +35,43 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class WordControllerTest {
-	@Autowired
-	private MockMvc request;
+    @Autowired
+    private MockMvc request;
 
-	// CREATE
-	@Test
-	void create() throws Exception {
-		MockWord word = new MockWord("車", "ja", "kuruma");
+    // CREATE
+    @Test
+    void create() throws Exception {
+        MockWord word = new MockWord("carro", "pt-BR", "car");
 
-		String jwt = MockValues.getAdmJwt(request);
+        String jwt = MockValues.getAdmJwt(request);
 
-		TestRequest.post(request, "/word", word.toJson(), status().isCreated(), jwt);
-	}
+        TestRequest.post(request, "/word", word.toJson(), status().isCreated(), jwt);
+    }
 
-	@Test
-	void createByNonAdmin() throws Exception {
-		MockWord word = new MockWord("車", "ja", "kuruma");
+    @Test
+    void createNonAlphabetic() throws Exception {
+        MockNonAlphabeticWord word = new MockNonAlphabeticWord("車", "ja", "car", "kuruma");
 
-		String jwt = MockValues.getUserJwt(request);
+        String jwt = MockValues.getAdmJwt(request);
 
-		TestRequest.post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
-	}
+        TestRequest.post(request, "/word/non-alphabetic", word.toJson(), status().isCreated(), jwt);
+    }
+
+    @Test
+    void createByNonAdmin() throws Exception {
+        MockWord word = new MockWord("carro", "pt-BR", "car");
+
+        String jwt = MockValues.getUserJwt(request);
+
+        TestRequest.post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
+    }
+
+    @Test
+    void createNonAlphabeticByNonAdmin() throws Exception {
+        MockNonAlphabeticWord word = new MockNonAlphabeticWord("車", "ja", "car", "kuruma");
+
+        String jwt = MockValues.getUserJwt(request);
+
+        TestRequest.post(request, "/word/non-alphabetic", word.toJson(), status().isUnauthorized(), jwt);
+    }
 }
