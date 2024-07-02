@@ -18,13 +18,18 @@
 package cc.wordview.api.service;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cc.wordview.api.util.VideoSearchResult;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -88,7 +93,7 @@ public class MusicService implements MusicServiceInterface {
                 }
 
                 String result = StringUtil.cutString(availableLyrics, "[info] Available subtitles for")
-                                .replaceAll("vtt, ttml, srv3, srv2, srv1, json3", "");
+                        .replaceAll("vtt, ttml, srv3, srv2, srv1, json3", "");
 
                 return LyricEntry.parse(result);
         }
@@ -117,9 +122,18 @@ public class MusicService implements MusicServiceInterface {
         }
 
         @Override
-        public List<SearchResult> search(String query, int maxResults) throws IOException {
-                ytapi.setApiKey(API_KEY);
-                return ytapi.search(query, 10);
-        }
+        public List<VideoSearchResult> search(String query, int maxResults) throws YoutubeDLException {
+                String[] results = DLClient.search(query, maxResults).split("\n");
+                Gson gson = new Gson();
 
+                List<VideoSearchResult> videoSearchResults = new ArrayList<>();
+
+                for (String result : results) {
+                        JsonReader reader = new JsonReader(new StringReader(result));
+                        reader.setLenient(true);
+                        videoSearchResults.add(gson.fromJson(reader, VideoSearchResult.class));
+                }
+
+                return videoSearchResults;
+        }
 }

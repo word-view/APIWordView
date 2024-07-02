@@ -74,4 +74,14 @@ class WordControllerTest {
 
         TestRequest.post(request, "/word/non-alphabetic", word.toJson(), status().isUnauthorized(), jwt);
     }
+
+    @Test
+    void getByName() throws Exception {
+        TestRequest.get(request, "/word?name=noite", status().isOk());
+    }
+
+    @Test
+    void getByNameNonAlphabetic() throws Exception {
+        TestRequest.get(request, "/word/non-alphabetic?name=夜", status().isOk());
+    }
 }

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import cc.wordview.api.util.VideoSearchResult;
 import com.sapher.youtubedl.YoutubeDLException;
 
 import cc.wordview.ytm.response.LyricEntry;
@@ -36,5 +37,5 @@ public interface MusicServiceInterface {
 
         Path download(String id) throws YoutubeDLException;
 
-        List<SearchResult> search(String query, int maxResults) throws IOException;
+        List<VideoSearchResult> search(String query, int maxResults) throws YoutubeDLException;
 }

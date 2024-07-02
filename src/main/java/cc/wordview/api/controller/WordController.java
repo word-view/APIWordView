@@ -20,6 +20,7 @@ package cc.wordview.api.controller;
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.ResponseTemplate.*;
 
+import cc.wordview.api.database.entity.NonAlphabeticWord;
 import cc.wordview.api.request.word.NonAlphabeticWordCreateRequest;
 import cc.wordview.api.service.specification.NonAlphabeticWordServiceInterface;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,11 +29,7 @@ import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
@@ -81,5 +78,16 @@ public class WordController {
 			nonAlphabeticWordService.insert(request.toEntity());
             return created();
         });
+	}
+
+	// READ
+	@GetMapping
+	public ResponseEntity<?> getByName(@RequestParam String name) {
+		return okResponse(() -> service.getByName(name));
+	}
+
+	@GetMapping(value = "/non-alphabetic")
+	public ResponseEntity<?> getByNameNonAlphabetic(@RequestParam String name) {
+		return okResponse(() -> nonAlphabeticWordService.getByName(name));
 	}
 }

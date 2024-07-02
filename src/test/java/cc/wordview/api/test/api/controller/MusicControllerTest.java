@@ -77,7 +77,6 @@ class MusicControllerTest {
 
         @Test
         void search() throws Exception {
-                // We expect this to return 500 since searching is now disabled in testing.
                 TestRequest.get(request, "/music/search?q=pandora101", status().isOk());
         }
 

@@ -29,7 +29,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
- * Represents any word in alphabetic in any language.
+ * Represents any word in alphabetic languages.
  */
 @Entity
 @Data

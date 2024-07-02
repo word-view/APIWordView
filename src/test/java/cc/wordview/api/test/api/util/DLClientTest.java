@@ -60,8 +60,6 @@ public class DLClientTest {
             String result = DLClient.search("pandora101", 1);
             assertNotNull(result);
         });
-
-
     }
 
     private static final String actualSubtitle = "WEBVTT\n" +
