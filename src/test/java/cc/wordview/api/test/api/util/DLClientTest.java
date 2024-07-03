@@ -17,7 +17,7 @@
 
 package cc.wordview.api.test.api.util;
 
-import cc.wordview.api.util.DLClient;
+import cc.wordview.api.service.util.DLClient;
 import cc.wordview.api.util.FileReader;
 import org.junit.jupiter.api.Test;
 

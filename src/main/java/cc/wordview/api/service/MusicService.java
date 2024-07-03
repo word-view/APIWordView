@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import cc.wordview.api.response.VideoResponse;
-import cc.wordview.api.util.VideoSearchResult;
+import cc.wordview.api.service.util.VideoSearchResult;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.springframework.stereotype.Service;
@@ -36,8 +36,8 @@ import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.specification.MusicServiceInterface;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
-import cc.wordview.api.util.DLClient;
-import cc.wordview.api.util.LyricEntry;
+import cc.wordview.api.service.util.DLClient;
+import cc.wordview.api.service.util.LyricEntry;
 
 @Service
 public class MusicService implements MusicServiceInterface {
@@ -79,9 +79,7 @@ public class MusicService implements MusicServiceInterface {
                 if (!Files.exists(path))
                         DLClient.downloadSubtitle(id, lang);
 
-                String lyricsFile = FileReader.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
-
-                return lyricsFile;
+                return FileReader.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
         }
 
         @Override
@@ -92,7 +90,6 @@ public class MusicService implements MusicServiceInterface {
                         DLClient.downloadVideo(id);
 
                 return file;
-
         }
 
         @Override

@@ -22,10 +22,10 @@ import java.nio.file.Path;
 import java.util.List;
 
 import cc.wordview.api.response.VideoResponse;
-import cc.wordview.api.util.VideoSearchResult;
+import cc.wordview.api.service.util.VideoSearchResult;
 import com.sapher.youtubedl.YoutubeDLException;
 
-import cc.wordview.api.util.LyricEntry;
+import cc.wordview.api.service.util.LyricEntry;
 
 public interface MusicServiceInterface {
         VideoResponse getHistory() throws IOException;

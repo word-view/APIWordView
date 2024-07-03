@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.util;
+package cc.wordview.api.service.util;
 
 import java.util.ArrayList;
 import java.util.List;
