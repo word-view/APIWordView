@@ -27,56 +27,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cc.wordview.api.response.VideoResponse;
 import cc.wordview.api.util.VideoSearchResult;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.sapher.youtubedl.YoutubeDLException;
-
-import cc.wordview.api.config.WordViewConfig;
 import cc.wordview.api.service.specification.MusicServiceInterface;
 import cc.wordview.api.util.FileReader;
 import cc.wordview.api.util.StringUtil;
 import cc.wordview.api.util.DLClient;
-import cc.wordview.ytm.YoutubeApi;
-import cc.wordview.ytm.response.LyricEntry;
-import cc.wordview.ytm.response.SearchResult;
-import cc.wordview.ytm.response.Video;
+import cc.wordview.api.util.LyricEntry;
 
 @Service
 public class MusicService implements MusicServiceInterface {
-
-        @Autowired
-        private WordViewConfig config;
-
-        YoutubeApi ytapi = new YoutubeApi();
-
-        @Value("${wordview.ytm.api-key}")
-        private String API_KEY;
-
-        private Map<String, String> availableLyricsCache = new HashMap<>();
+        private final Map<String, String> availableLyricsCache = new HashMap<>();
 
         @Override
-        public Video getHistory() throws IOException {
-                Video video = new Video();
+        public VideoResponse getHistory() throws IOException {
+                VideoResponse video = new VideoResponse();
 
-                if (config.isProduction()) {
-                        ytapi.setApiKey(API_KEY);
-                        SearchResult result = ytapi.search("ano-yume-wo-nazotte", 1).get(0);
-
-                        video.setId(result.getId().getVideoId());
-                        video.setTitle(result.getSnippet().getTitle());
-                        video.setArtist(result.getSnippet().getChannelTitle());
-                        video.setCover(result.getSnippet().getThumbnails().getHigh().getUrl());
-                } else {
-                        video.setId("BCt9lS_Uv_Y");
-                        video.setTitle("Firework of Shoes");
-                        video.setArtist("Yorushika");
-                        video.setCover("https://img.youtube.com/vi/BCt9lS_Uv_Y/0.jpg");
-                }
+                video.setId("BCt9lS_Uv_Y");
+                video.setTitle("Firework of Shoes");
+                video.setArtist("Yorushika");
+                video.setCover("https://img.youtube.com/vi/BCt9lS_Uv_Y/0.jpg");
 
                 return video;
         }

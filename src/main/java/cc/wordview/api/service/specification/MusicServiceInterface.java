@@ -21,15 +21,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import cc.wordview.api.response.VideoResponse;
 import cc.wordview.api.util.VideoSearchResult;
 import com.sapher.youtubedl.YoutubeDLException;
 
-import cc.wordview.ytm.response.LyricEntry;
-import cc.wordview.ytm.response.SearchResult;
-import cc.wordview.ytm.response.Video;
+import cc.wordview.api.util.LyricEntry;
 
 public interface MusicServiceInterface {
-        Video getHistory() throws IOException;
+        VideoResponse getHistory() throws IOException;
 
         List<LyricEntry> getSubtitlesList(String id) throws YoutubeDLException;
 

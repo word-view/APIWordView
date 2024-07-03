@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.ytm.response;
+package cc.wordview.api.util;
 
 import java.util.ArrayList;
 import java.util.List;

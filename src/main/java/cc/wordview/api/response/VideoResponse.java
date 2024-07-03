@@ -15,28 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.ytm.response;
+package cc.wordview.api.response;
 
-import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-public class Snippet {
-    @SerializedName("publishTime")
-    private String publishTime;
-
-    @SerializedName("publishedAt")
-    private String publishedAt;
-
-    private String description;
-    private String title;
-    private Thumbnails thumbnails;
-    private String channelId;
-    private String channelTitle;
-
-    @SerializedName("liveBroadcastContent")
-    private String liveBroadcastContent;
+@Data
+public class VideoResponse {
+        private String id;
+        private String title;
+        private String artist;
+        private String cover;
 }
