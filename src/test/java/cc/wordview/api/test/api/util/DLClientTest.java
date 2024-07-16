@@ -62,6 +62,14 @@ public class DLClientTest {
         });
     }
 
+    @Test
+    void searchWithSpaces() throws Exception {
+        assertDoesNotThrow(() -> {
+            String result = DLClient.search("pandora 101", 1);
+            assertNotNull(result);
+        });
+    }
+
     private static final String actualSubtitle = "WEBVTT\n" +
             "Kind: captions\n" +
             "Language: ja\n" +

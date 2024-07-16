@@ -24,6 +24,8 @@ import com.sapher.youtubedl.YoutubeDLResponse;
 
 import lombok.Getter;
 
+import java.net.URLEncoder;
+
 /**
  * Provides a better API to the ytdl library
  */
@@ -77,7 +79,7 @@ public class DLClient {
         }
 
         public static String search(String query, int maxResults) throws YoutubeDLException {
-                YoutubeDLRequest request = new YoutubeDLRequest("ytsearch" + maxResults + ":" + query);
+                YoutubeDLRequest request = new YoutubeDLRequest("ytsearch" + maxResults + ":" + URLEncoder.encode(query));
 
                 request.setOption("dump-json");
 
