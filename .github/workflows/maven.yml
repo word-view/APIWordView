@@ -27,7 +27,28 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+
+    - uses: actions/checkout@v3
+      with:
+        repository: word-view/WordFind
+        path: ./WordFind
+
+    - name: List dirs
+      run: ls
+
+    - name: Enter WordFind directory
+      run: cd ./WordFind
+
+    - name: Package and install WordFind
+      run: mvn -DskipTests package install
+
+    - name: Leave WordFind directory
+      run: cd ..
+
+
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
     - name: Test with Maven
       run: mvn test
