@@ -26,6 +26,7 @@ import static cc.wordview.api.controller.response.Response.unauthorized;
 
 import java.util.concurrent.Callable;
 
+import cc.wordview.wordfind.LyricsNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class ExceptionHandler {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException e) {
+		} catch (NoSuchEntryException | LyricsNotFoundException e) {
 			return notFound(e.getMessage());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -74,12 +75,12 @@ public class ExceptionHandler {
 	}
 
 	/**
-	 * In this method the return value is not incapsulated in a existing response
+	 * In this method the return value is not encapsulated in an existing response
 	 */
 	public static <T> ResponseEntity<?> response(Callable<T> callable) {
 		try {
 			return (ResponseEntity<?>) callable.call();
-		} catch (IncorrectCredentialsException e) {
+		} catch (IncorrectCredentialsException | PermissionDeniedException e) {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
@@ -87,8 +88,6 @@ public class ExceptionHandler {
 			return notFound(e.getMessage());
 		} catch (ValueTakenException e) {
 			return forbidden(e.getMessage());
-		} catch (PermissionDeniedException e) {
-			return unauthorized(e.getMessage());
 		} catch (IOException e) {
 			return badGateway(e.getMessage());
 		} catch (Exception e) {

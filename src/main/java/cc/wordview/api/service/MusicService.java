@@ -29,8 +29,14 @@ import java.util.Map;
 
 import cc.wordview.api.response.VideoResponse;
 import cc.wordview.api.service.util.VideoSearchResult;
+import cc.wordview.wordfind.Lrc2Vtt;
+import cc.wordview.wordfind.LyricsNotFoundException;
+import cc.wordview.wordfind.LyricsProvider;
+import cc.wordview.wordfind.WordFindClient;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.specification.MusicServiceInterface;
@@ -42,6 +48,8 @@ import cc.wordview.api.service.util.LyricEntry;
 @Service
 public class MusicService implements MusicServiceInterface {
         private final Map<String, String> availableLyricsCache = new HashMap<>();
+        private static final Logger logger = LoggerFactory.getLogger(MusicService.class);
+
 
         @Override
         public VideoResponse getHistory() throws IOException {
@@ -80,6 +88,23 @@ public class MusicService implements MusicServiceInterface {
                         DLClient.downloadSubtitle(id, lang);
 
                 return FileReader.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
+        }
+
+        @Override
+        public String getSubtitleWordFind(String title) throws IOException, LyricsNotFoundException {
+                String result;
+
+                try {
+                        result = WordFindClient.search(title);
+                } catch (LyricsNotFoundException e) {
+                        logger.warn("Unable to find any lyrics for \"%s\" in Musixmatch, retrying with NetEase.".formatted(title));
+                        // netease is a decent fallback for japanese songs that can't
+                        // be found on musixmatch due to their title not being romanised.
+                        result = WordFindClient.search(title, LyricsProvider.NETEASE);
+                }
+
+                StringBuffer vttLyrics = Lrc2Vtt.convert(result);
+                return vttLyrics.toString();
         }
 
         @Override

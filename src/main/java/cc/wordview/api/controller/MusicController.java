@@ -20,6 +20,7 @@ package cc.wordview.api.controller;
 import static cc.wordview.api.controller.response.ExceptionHandler.okResponse;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -68,6 +69,12 @@ public class MusicController {
                         HttpServletResponse response) {
                 return okResponse(() -> service.getSubtitle(id, lang));
 
+        }
+
+        @GetMapping("/lyrics/find")
+        public ResponseEntity<?> lyricsFind(@RequestParam String title) {
+                String query = URLDecoder.decode(title);
+                return okResponse(() -> service.getSubtitleWordFind(query));
         }
 
         @GetMapping("/search")

@@ -30,6 +30,7 @@ import cc.wordview.api.Application;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,6 +77,21 @@ class MusicControllerTest {
         }
 
         @Test
+        void lyricsWordFind() throws Exception {
+                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("tuyu if there was an endpoint")), status().isOk());
+        }
+
+        @Test
+        void lyricsWordFindFallbackToNetEase() throws Exception {
+                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("終点の先が在るとするなら")), status().isOk());
+        }
+
+        @Test
+        void lyricsWordFindNoResults() throws Exception {
+                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted("a_song_that_probably_doesnt_exist3311"), status().isNotFound());
+        }
+
+        @Test
         void search() throws Exception {
                 TestRequest.get(request, "/music/search?q=pandora101", status().isOk());
         }
@@ -96,5 +112,4 @@ class MusicControllerTest {
                 TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
                 TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
-
 }
