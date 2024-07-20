@@ -92,11 +92,6 @@ class MusicControllerTest {
         }
 
         @Test
-        void search() throws Exception {
-                TestRequest.get(request, "/music/search?q=pandora101", status().isOk());
-        }
-
-        @Test
         void downloadNoCache() throws Exception {
                 String directory = System.getProperty("java.io.tmpdir");
                 Path file = Paths.get(directory + "/KEg6FXrvHys.mp3");

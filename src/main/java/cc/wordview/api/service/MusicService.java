@@ -18,23 +18,18 @@
 package cc.wordview.api.service;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cc.wordview.api.response.VideoResponse;
-import cc.wordview.api.service.util.VideoSearchResult;
 import cc.wordview.wordfind.Lrc2Vtt;
 import cc.wordview.wordfind.LyricsNotFoundException;
 import cc.wordview.wordfind.LyricsProvider;
 import cc.wordview.wordfind.WordFindClient;
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -115,21 +110,5 @@ public class MusicService implements MusicServiceInterface {
                         DLClient.downloadVideo(id);
 
                 return file;
-        }
-
-        @Override
-        public List<VideoSearchResult> search(String query, int maxResults) throws YoutubeDLException {
-                String[] results = DLClient.search(query, maxResults).split("\n");
-                Gson gson = new Gson();
-
-                List<VideoSearchResult> videoSearchResults = new ArrayList<>();
-
-                for (String result : results) {
-                        JsonReader reader = new JsonReader(new StringReader(result));
-                        reader.setLenient(true);
-                        videoSearchResults.add(gson.fromJson(reader, VideoSearchResult.class));
-                }
-
-                return videoSearchResults;
         }
 }

@@ -22,7 +22,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import cc.wordview.api.response.VideoResponse;
-import cc.wordview.api.service.util.VideoSearchResult;
 import cc.wordview.wordfind.LyricsNotFoundException;
 import com.sapher.youtubedl.YoutubeDLException;
 
@@ -38,6 +37,4 @@ public interface MusicServiceInterface {
         String getSubtitleWordFind(String title) throws IOException, LyricsNotFoundException;
 
         Path download(String id) throws YoutubeDLException;
-
-        List<VideoSearchResult> search(String query, int maxResults) throws YoutubeDLException;
 }

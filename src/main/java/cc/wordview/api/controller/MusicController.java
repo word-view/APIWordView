@@ -77,11 +77,6 @@ public class MusicController {
                 return okResponse(() -> service.getSubtitleWordFind(query));
         }
 
-        @GetMapping("/search")
-        public ResponseEntity<?> search(@RequestParam String q) {
-                return okResponse(() -> service.search(q, 10));
-        }
-
         @GetMapping("/download")
         public void download(@RequestParam String id, HttpServletResponse response)
                         throws YoutubeDLException, IOException {
