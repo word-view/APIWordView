@@ -40,20 +40,18 @@ public class Application implements ApplicationRunner {
 	@Autowired
 	private WordViewConfig config;
 
-	public static void main(String... args) throws Exception {
+	public static void main(String... args) {
 		SpringApplication.run(Application.class, args);
 	}
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
+	public void run(ApplicationArguments args) {
 		config.setProduction(args.containsOption("production"));
 
 		if (config.isProduction()) {
 			if (CORS_ORIGIN == CORS_ORIGIN_ALL) {
 				logger.warn("CORS_ORIGIN is set to all.");
 			}
-		} else {
-			logger.info("All requests to YouTube's API are being mocked");
 		}
 	}
 }
