@@ -24,6 +24,7 @@ import static cc.wordview.api.controller.response.Response.internalServerError;
 import static cc.wordview.api.controller.response.Response.notFound;
 import static cc.wordview.api.controller.response.Response.unauthorized;
 
+import java.io.FileNotFoundException;
 import java.util.concurrent.Callable;
 
 import cc.wordview.wordfind.LyricsNotFoundException;
@@ -51,7 +52,7 @@ public class ExceptionHandler {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException | LyricsNotFoundException e) {
+		} catch (NoSuchEntryException | LyricsNotFoundException | FileNotFoundException e) {
 			return notFound(e.getMessage());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

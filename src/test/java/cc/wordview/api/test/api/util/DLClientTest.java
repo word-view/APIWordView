@@ -18,7 +18,7 @@
 package cc.wordview.api.test.api.util;
 
 import cc.wordview.api.service.util.DLClient;
-import cc.wordview.api.util.FileReader;
+import cc.wordview.api.util.FileHelper;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -32,7 +32,7 @@ public class DLClientTest {
     void downloadSubtitle() throws Exception {
         assertDoesNotThrow(() -> {
             DLClient.downloadSubtitle("gqiRJn7me-s", "ja");
-            String subtitle = FileReader.read("/tmp/gqiRJn7me-s.ja.vtt");
+            String subtitle = FileHelper.read("/tmp/gqiRJn7me-s.ja.vtt");
             assertEquals(actualSubtitle, subtitle);
         });
     }

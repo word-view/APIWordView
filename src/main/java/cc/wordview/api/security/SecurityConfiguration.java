@@ -41,13 +41,15 @@ public class SecurityConfiguration {
                 http.csrf(AbstractHttpConfigurer::disable);
 
                 http.sessionManagement(management -> management
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
                 http.authorizeHttpRequests(requests -> requests
-                                .requestMatchers("/api/v1/**").permitAll()
-                                .requestMatchers("/swagger-ui").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .anyRequest().authenticated());
+                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/swagger-ui").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/dictionaries/**").permitAll()
+                        .anyRequest().authenticated());
 
                 http.exceptionHandling(handling -> handling.accessDeniedPage("/login"));
 
@@ -59,12 +61,12 @@ public class SecurityConfiguration {
         @Bean
         public WebSecurityCustomizer webSecurityCustomizer() {
                 return (web) -> web.ignoring().requestMatchers("/public", "/v2/api-docs", "/swagger-resources/**",
-                                "/swagger-ui.html", "/swagger-ui", "/configuration/**", "/webjars/**");
+                        "/swagger-ui.html", "/swagger-ui", "/configuration/**", "/webjars/**");
         }
 
         @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-                        throws Exception {
+                throws Exception {
                 return authenticationConfiguration.getAuthenticationManager();
         }
 }
