@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.specification.MusicServiceInterface;
-import cc.wordview.api.util.FileReader;
+import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.StringUtil;
 import cc.wordview.api.service.util.DLClient;
 import cc.wordview.api.service.util.LyricEntry;
@@ -82,7 +82,7 @@ public class MusicService implements MusicServiceInterface {
                 if (!Files.exists(path))
                         DLClient.downloadSubtitle(id, lang);
 
-                return FileReader.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
+                return FileHelper.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
         }
 
         @Override
