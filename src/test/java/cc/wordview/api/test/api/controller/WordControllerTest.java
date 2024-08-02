@@ -46,7 +46,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getAdmJwt(request);
 
-        post(request, "/word", word.toJson(), status().isCreated(), jwt);
+        post(request, "/word", word.toJson(), jwt).andExpect(status().isCreated());
     }
 
     @Test
@@ -55,7 +55,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getAdmJwt(request);
 
-        post(request, "/word/non-alphabetic", word.toJson(), status().isCreated(), jwt);
+        post(request, "/word/non-alphabetic", word.toJson(), jwt).andExpect(status().isCreated());
     }
 
     @Test
@@ -64,7 +64,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getUserJwt(request);
 
-        post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
+        post(request, "/word", word.toJson(), jwt).andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -73,16 +73,16 @@ class WordControllerTest {
 
         String jwt = MockValues.getUserJwt(request);
 
-        post(request, "/word/non-alphabetic", word.toJson(), status().isUnauthorized(), jwt);
+        post(request, "/word/non-alphabetic", word.toJson(), jwt).andExpect(status().isUnauthorized());
     }
 
     @Test
     void getByName() throws Exception {
-        get(request, "/word?name=noite", status().isOk());
+        get(request, "/word?name=noite").andExpect(status().isOk());
     }
 
     @Test
     void getByNameNonAlphabetic() throws Exception {
-        get(request, "/word/non-alphabetic?name=夜", status().isOk());
+        get(request, "/word/non-alphabetic?name=夜").andExpect(status().isOk());
     }
 }

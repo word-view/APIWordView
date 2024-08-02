@@ -27,6 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
@@ -40,13 +41,22 @@ public class DictionaryControllerTest {
 
         @Test
         void getDictionary() throws Exception {
-                get(request, "/dictionary?lang=kanji", status().isOk());
-                get(request, "/dictionary?lang=english", status().isOk());
-                get(request, "/dictionary?lang=portuguese", status().isOk());
+                get(request, "/dictionary?lang=kanji")
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
+
+
+                get(request, "/dictionary?lang=english")
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
+
+                get(request, "/dictionary?lang=portuguese")
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         @Test
         void getNonexistentDictionary() throws Exception {
-                get(request, "/dictionary?lang=aaaaaa", status().isNotFound());
+                get(request, "/dictionary?lang=aaaaaa").andExpect(status().isNotFound());
         }
 }

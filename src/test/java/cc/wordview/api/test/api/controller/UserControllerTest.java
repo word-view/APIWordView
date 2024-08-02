@@ -47,7 +47,7 @@ class UserControllerTest {
 	void create() throws Exception {
 		MockUser user = new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64");
 
-		post(request, "/user/register", user.toJson(), status().isCreated());
+		post(request, "/user/register", user.toJson()).andExpect(status().isCreated());
 	}
 
 	@Test
@@ -55,26 +55,26 @@ class UserControllerTest {
 	void createUserExistingEmail() throws Exception {
 		MockUser user = new MockUser("aaaaaaaa", "arthur.araujo@tutanota.com", "S_enha64");
 
-		post(request, "/user/register", user.toJson(), status().isForbidden());
+		post(request, "/user/register", user.toJson()).andExpect(status().isForbidden());
 	}
 
 	@Test
 	@Order(3)
 	void getById() throws Exception {
-		get(request, "/user/1", status().isOk());
+		get(request, "/user/1").andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(4)
 	void getMe() throws Exception {
 		String jwt = MockValues.getUserJwt(request);
-		get(request, "/user/me", status().isOk(), jwt);
+		get(request, "/user/me", jwt).andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(5)
 	void getByInexistentId() throws Exception {
-		get(request, "/user/64", status().isNotFound());
+		get(request, "/user/64").andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -82,7 +82,7 @@ class UserControllerTest {
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
-		post(request, "/user/login", user.toJson(), status().isOk());
+		post(request, "/user/login", user.toJson()).andExpect(status().isOk());
 	}
 
 	@Test
@@ -90,20 +90,20 @@ class UserControllerTest {
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
-		post(request, "/user/login", user.toJson(), status().isUnauthorized());
+		post(request, "/user/login", user.toJson()).andExpect(status().isUnauthorized());
 	}
 
 	@Test
 	@Order(8)
 	void updateMeUsername() throws Exception {
 		String jwt = MockValues.getUserJwt(request);
-		put(request, "/user/me", "{\"username\": \"uuu\"}", status().isOk(), jwt);
+		put(request, "/user/me", "{\"username\": \"uuu\"}", jwt).andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(10)
 	void deleteMe() throws Exception {
 		String jwt = MockValues.getDisposableJwt(request);
-		delete(request, "/user/me", status().isOk(), jwt);
+		delete(request, "/user/me", jwt).andExpect(status().isOk());
 	}
 }
