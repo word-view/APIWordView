@@ -30,6 +30,7 @@ import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockWord;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -45,7 +46,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getAdmJwt(request);
 
-        TestRequest.post(request, "/word", word.toJson(), status().isCreated(), jwt);
+        post(request, "/word", word.toJson(), status().isCreated(), jwt);
     }
 
     @Test
@@ -54,7 +55,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getAdmJwt(request);
 
-        TestRequest.post(request, "/word/non-alphabetic", word.toJson(), status().isCreated(), jwt);
+        post(request, "/word/non-alphabetic", word.toJson(), status().isCreated(), jwt);
     }
 
     @Test
@@ -63,7 +64,7 @@ class WordControllerTest {
 
         String jwt = MockValues.getUserJwt(request);
 
-        TestRequest.post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
+        post(request, "/word", word.toJson(), status().isUnauthorized(), jwt);
     }
 
     @Test
@@ -72,16 +73,16 @@ class WordControllerTest {
 
         String jwt = MockValues.getUserJwt(request);
 
-        TestRequest.post(request, "/word/non-alphabetic", word.toJson(), status().isUnauthorized(), jwt);
+        post(request, "/word/non-alphabetic", word.toJson(), status().isUnauthorized(), jwt);
     }
 
     @Test
     void getByName() throws Exception {
-        TestRequest.get(request, "/word?name=noite", status().isOk());
+        get(request, "/word?name=noite", status().isOk());
     }
 
     @Test
     void getByNameNonAlphabetic() throws Exception {
-        TestRequest.get(request, "/word/non-alphabetic?name=夜", status().isOk());
+        get(request, "/word/non-alphabetic?name=夜", status().isOk());
     }
 }

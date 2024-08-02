@@ -32,6 +32,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -46,7 +47,7 @@ class UserControllerTest {
 	void create() throws Exception {
 		MockUser user = new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64");
 
-		TestRequest.post(request, "/user/register", user.toJson(), status().isCreated());
+		post(request, "/user/register", user.toJson(), status().isCreated());
 	}
 
 	@Test
@@ -54,26 +55,26 @@ class UserControllerTest {
 	void createUserExistingEmail() throws Exception {
 		MockUser user = new MockUser("aaaaaaaa", "arthur.araujo@tutanota.com", "S_enha64");
 
-		TestRequest.post(request, "/user/register", user.toJson(), status().isForbidden());
+		post(request, "/user/register", user.toJson(), status().isForbidden());
 	}
 
 	@Test
 	@Order(3)
 	void getById() throws Exception {
-		TestRequest.get(request, "/user/1", status().isOk());
+		get(request, "/user/1", status().isOk());
 	}
 
 	@Test
 	@Order(4)
 	void getMe() throws Exception {
 		String jwt = MockValues.getUserJwt(request);
-		TestRequest.get(request, "/user/me", status().isOk(), jwt);
+		get(request, "/user/me", status().isOk(), jwt);
 	}
 
 	@Test
 	@Order(5)
 	void getByInexistentId() throws Exception {
-		TestRequest.get(request, "/user/64", status().isNotFound());
+		get(request, "/user/64", status().isNotFound());
 	}
 
 	@Test
@@ -81,7 +82,7 @@ class UserControllerTest {
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
-		TestRequest.post(request, "/user/login", user.toJson(), status().isOk());
+		post(request, "/user/login", user.toJson(), status().isOk());
 	}
 
 	@Test
@@ -89,20 +90,20 @@ class UserControllerTest {
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
-		TestRequest.post(request, "/user/login", user.toJson(), status().isUnauthorized());
+		post(request, "/user/login", user.toJson(), status().isUnauthorized());
 	}
 
 	@Test
 	@Order(8)
 	void updateMeUsername() throws Exception {
 		String jwt = MockValues.getUserJwt(request);
-		TestRequest.put(request, "/user/me", "{\"username\": \"uuu\"}", status().isOk(), jwt);
+		put(request, "/user/me", "{\"username\": \"uuu\"}", status().isOk(), jwt);
 	}
 
 	@Test
 	@Order(10)
 	void deleteMe() throws Exception {
 		String jwt = MockValues.getDisposableJwt(request);
-		TestRequest.delete(request, "/user/me", status().isOk(), jwt);
+		delete(request, "/user/me", status().isOk(), jwt);
 	}
 }

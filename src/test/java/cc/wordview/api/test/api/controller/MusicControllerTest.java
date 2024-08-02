@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import cc.wordview.api.Application;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -45,18 +46,18 @@ class MusicControllerTest {
 
         @Test
         void lyricsList() throws Exception {
-                TestRequest.get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
+                get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
         }
 
         @Test
         void lyricsListCached() throws Exception {
-                TestRequest.get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
-                TestRequest.get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
+                get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
+                get(request, "/music/lyrics/list?id=sAuEeM_6zpk", status().isOk());
         }
 
         @Test
         void history() throws Exception {
-                TestRequest.get(request, "/music/history", status().isOk());
+                get(request, "/music/history", status().isOk());
         }
 
         @Test
@@ -67,28 +68,28 @@ class MusicControllerTest {
                 if (Files.exists(file))
                         Files.delete(file);
 
-                TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
+                get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
         }
 
         @Test
         void lyrics() throws Exception {
-                TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
-                TestRequest.get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
+                get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
+                get(request, "/music/lyrics?id=sAuEeM_6zpk&lang=ja", status().isOk());
         }
 
         @Test
         void lyricsWordFind() throws Exception {
-                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("tuyu if there was an endpoint")), status().isOk());
+                get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("tuyu if there was an endpoint")), status().isOk());
         }
 
         @Test
         void lyricsWordFindFallbackToNetEase() throws Exception {
-                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("終点の先が在るとするなら")), status().isOk());
+                get(request, "/music/lyrics/find?title=%s".formatted(URLEncoder.encode("終点の先が在るとするなら")), status().isOk());
         }
 
         @Test
         void lyricsWordFindNoResults() throws Exception {
-                TestRequest.get(request, "/music/lyrics/find?title=%s".formatted("a_song_that_probably_doesnt_exist3311"), status().isNotFound());
+                get(request, "/music/lyrics/find?title=%s".formatted("a_song_that_probably_doesnt_exist3311"), status().isNotFound());
         }
 
         @Test
@@ -99,12 +100,12 @@ class MusicControllerTest {
                 if (Files.exists(file))
                         Files.delete(file);
 
-                TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
+                get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
 
         @Test
         void download() throws Exception {
-                TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
-                TestRequest.get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
+                get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
+                get(request, "/music/download?id=KEg6FXrvHys", status().isOk());
         }
 }

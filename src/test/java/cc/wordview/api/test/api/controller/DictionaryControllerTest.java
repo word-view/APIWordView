@@ -28,6 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -39,13 +40,13 @@ public class DictionaryControllerTest {
 
         @Test
         void getDictionary() throws Exception {
-                TestRequest.get(request, "/dictionary?lang=kanji", status().isOk());
-                TestRequest.get(request, "/dictionary?lang=english", status().isOk());
-                TestRequest.get(request, "/dictionary?lang=portuguese", status().isOk());
+                get(request, "/dictionary?lang=kanji", status().isOk());
+                get(request, "/dictionary?lang=english", status().isOk());
+                get(request, "/dictionary?lang=portuguese", status().isOk());
         }
 
         @Test
         void getNonexistentDictionary() throws Exception {
-                TestRequest.get(request, "/dictionary?lang=aaaaaa", status().isNotFound());
+                get(request, "/dictionary?lang=aaaaaa", status().isNotFound());
         }
 }

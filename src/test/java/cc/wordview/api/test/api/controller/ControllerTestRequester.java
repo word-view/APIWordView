@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static cc.wordview.api.Constants.REQUEST_PATH;
 
-public class TestRequest {
+public class ControllerTestRequester {
 	public static void get(MockMvc request, String url, ResultMatcher status) throws Exception {
 		request.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url)).andExpect(status).andReturn();
 	}
