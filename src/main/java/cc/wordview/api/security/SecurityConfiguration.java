@@ -59,12 +59,6 @@ public class SecurityConfiguration {
         }
 
         @Bean
-        public WebSecurityCustomizer webSecurityCustomizer() {
-                return (web) -> web.ignoring().requestMatchers("/public", "/v2/api-docs", "/swagger-resources/**",
-                        "/swagger-ui.html", "/swagger-ui", "/configuration/**", "/webjars/**");
-        }
-
-        @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
                 throws Exception {
                 return authenticationConfiguration.getAuthenticationManager();
