@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,11 +46,7 @@ import cc.wordview.api.util.ClassMerger;
 @RestController
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/user")
-public class UserController {
-	@Autowired
-	private UserServiceInterface service;
-
-	// CREATE
+public class UserController extends ServiceController<UserServiceInterface> {
 	@PostMapping(path = "/register", consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody UserCreateRequest request) {
 		return response(() -> {
@@ -60,7 +55,6 @@ public class UserController {
 		});
 	}
 
-	// READ
 	@PostMapping(path = "/login", consumes = "application/json")
 	public ResponseEntity<?> login(@RequestBody UserLoginRequest request) {
 		return response(() -> {
@@ -93,7 +87,6 @@ public class UserController {
 		});
 	}
 
-	// DELETE
 	@DeleteMapping("/me")
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		return response(() -> {

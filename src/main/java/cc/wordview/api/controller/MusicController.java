@@ -29,7 +29,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -48,11 +47,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/music")
-public class MusicController {
+public class MusicController extends ServiceController<MusicServiceInterface> {
         private static final Logger logger = LoggerFactory.getLogger(MusicController.class);
-
-        @Autowired
-        private MusicServiceInterface service;
 
         @GetMapping("/history")
         public ResponseEntity<?> history() {
