@@ -17,38 +17,18 @@
 
 package cc.wordview.api.test.api.controller;
 
-import cc.wordview.api.Application;
 import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockUser;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = Application.class)
-@AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
-@ActiveProfiles("test")
-class UserControllerTest {
-	@Autowired
-	private MockMvc mockMvc;
-
-    private final ControllerTestRequester req = new ControllerTestRequester();
-
-    @BeforeEach
-    public void setup() {
-            req.setMockMvc(mockMvc);
-    }
-
+class UserControllerTest extends ControllerTest {
 	@Test
 	@Order(1)
 	void create() throws Exception {

@@ -17,17 +17,9 @@
 
 package cc.wordview.api.test.api.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-
-import cc.wordview.api.Application;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,21 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@SpringBootTest(classes = Application.class)
-@AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.MethodName.class)
-@ActiveProfiles("test")
-class MusicControllerTest {
-        @Autowired
-        private MockMvc mockMvc;
-
-        private final ControllerTestRequester req = new ControllerTestRequester();
-
-        @BeforeEach
-        public void setup() {
-                req.setMockMvc(mockMvc);
-        }
-
+class MusicControllerTest extends ControllerTest {
         @Test
         void lyricsList() throws Exception {
                 req.get("/music/lyrics/list?id=sAuEeM_6zpk").andExpect(status().isOk());
