@@ -17,7 +17,8 @@
 
 package cc.wordview.api.controller;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.okResponse;
+import static cc.wordview.api.controller.response.ExceptionHandler.response;
+import static cc.wordview.api.controller.response.Response.ok;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -52,25 +53,25 @@ public class MusicController extends ServiceController<MusicServiceInterface> {
 
         @GetMapping("/history")
         public ResponseEntity<?> history() {
-                return okResponse(() -> service.getHistory());
+                return response(() -> ok(service.getHistory()));
         }
 
         @GetMapping("/lyrics/list")
         public ResponseEntity<?> lyricsList(@RequestParam String id) {
-                return okResponse(() -> service.getSubtitlesList(id));
+                return response(() -> ok(service.getSubtitlesList(id)));
         }
 
         @GetMapping("/lyrics")
         public ResponseEntity<?> lyrics(@RequestParam String id, @RequestParam String lang,
                         HttpServletResponse response) {
-                return okResponse(() -> service.getSubtitle(id, lang));
+                return response(() -> ok(service.getSubtitle(id, lang)));
 
         }
 
         @GetMapping("/lyrics/find")
         public ResponseEntity<?> lyricsFind(@RequestParam String title) {
                 String query = URLDecoder.decode(title);
-                return okResponse(() -> service.getSubtitleWordFind(query));
+                return response(() -> ok(service.getSubtitleWordFind(query)));
         }
 
         @GetMapping("/download")

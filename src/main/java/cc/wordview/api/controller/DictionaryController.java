@@ -22,7 +22,8 @@ import cc.wordview.api.service.specification.DictionaryServiceInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.okResponse;
+import static cc.wordview.api.controller.response.ExceptionHandler.response;
+import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
@@ -31,7 +32,7 @@ public class DictionaryController extends ServiceController<DictionaryServiceInt
 
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getDictionary(@RequestParam String lang) {
-                return okResponse(() -> service.getDictionary(lang));
+                return response(() -> ok(service.getDictionary(lang)));
         }
 
 }

@@ -65,12 +65,12 @@ public class UserController extends ServiceController<UserServiceInterface> {
 
 	@GetMapping("/me")
 	public ResponseEntity<?> getMe(HttpServletRequest request) {
-		return okResponse(() -> service.getMe(request));
+		return response(() -> ok(service.getMe(request)));
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) {
-		return okResponse(() -> service.getByIdWithoutCredentials(id));
+		return response(() -> ok(service.getByIdWithoutCredentials(id)));
 	}
 
 	@PutMapping("/me")

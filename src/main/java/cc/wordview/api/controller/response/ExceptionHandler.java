@@ -40,52 +40,19 @@ import cc.wordview.api.exception.ValueTakenException;
 import io.jsonwebtoken.io.IOException;
 
 /**
- * Globally handles exceptions for API responses
+ * Handles exceptions for API endpoints.
  */
 public class ExceptionHandler {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
-	public static <T> ResponseEntity<?> okResponse(Callable<T> callable) {
+	public static <T> ResponseEntity<?> response(Callable<T> runnable) {
 		try {
-			return Response.ok(callable.call());
-		} catch (IncorrectCredentialsException e) {
-			return unauthorized(e.getMessage());
-		} catch (RequestValidationException e) {
-			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException | LyricsNotFoundException | FileNotFoundException e) {
-			return notFound(e.getMessage());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			return internalServerError(e.getStackTrace());
-		}
-	}
-
-	public static <T> ResponseEntity<?> createdResponse(Callable<T> callable) {
-		try {
-			return Response.created(callable.call());
-		} catch (IncorrectCredentialsException e) {
-			return unauthorized(e.getMessage());
-		} catch (RequestValidationException e) {
-			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException e) {
-			return notFound(e.getMessage());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			return internalServerError(e.getStackTrace());
-		}
-	}
-
-	/**
-	 * In this method the return value is not encapsulated in an existing response
-	 */
-	public static <T> ResponseEntity<?> response(Callable<T> callable) {
-		try {
-			return (ResponseEntity<?>) callable.call();
+			return (ResponseEntity<?>) runnable.call();
 		} catch (IncorrectCredentialsException | PermissionDeniedException e) {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException e) {
+		} catch (NoSuchEntryException | FileNotFoundException | LyricsNotFoundException e) {
 			return notFound(e.getMessage());
 		} catch (ValueTakenException e) {
 			return forbidden(e.getMessage());
