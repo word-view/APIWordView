@@ -18,6 +18,7 @@
 package cc.wordview.api.test.api.controller;
 
 import cc.wordview.api.Application;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -29,34 +30,40 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @ActiveProfiles("test")
-public class DictionaryControllerTest {
+class DictionaryControllerTest {
         @Autowired
-        private MockMvc request;
+        private MockMvc mockMvc;
+
+        private final ControllerTestRequester req = new ControllerTestRequester();
+
+        @BeforeEach
+        public void setup() {
+                req.setMockMvc(mockMvc);
+        }
 
         @Test
         void getDictionary() throws Exception {
-                get(request, "/dictionary?lang=kanji")
+                req.get("/dictionary?lang=kanji")
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
 
 
-                get(request, "/dictionary?lang=english")
+                req.get("/dictionary?lang=english")
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
 
-                get(request, "/dictionary?lang=portuguese")
+                req.get("/dictionary?lang=portuguese")
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         @Test
         void getNonexistentDictionary() throws Exception {
-                get(request, "/dictionary?lang=aaaaaa").andExpect(status().isNotFound());
+                req.get("/dictionary?lang=aaaaaa").andExpect(status().isNotFound());
         }
 }

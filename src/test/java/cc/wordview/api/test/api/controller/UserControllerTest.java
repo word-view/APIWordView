@@ -21,6 +21,7 @@ import cc.wordview.api.Application;
 import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockUser;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
@@ -40,14 +40,21 @@ import static cc.wordview.api.test.api.controller.ControllerTestRequester.*;
 @ActiveProfiles("test")
 class UserControllerTest {
 	@Autowired
-	private MockMvc request;
+	private MockMvc mockMvc;
+
+    private final ControllerTestRequester req = new ControllerTestRequester();
+
+    @BeforeEach
+    public void setup() {
+            req.setMockMvc(mockMvc);
+    }
 
 	@Test
 	@Order(1)
 	void create() throws Exception {
 		MockUser user = new MockUser("arthur", "arthur.araujo@gmail.com", "S_enha64");
 
-		post(request, "/user/register", user.toJson()).andExpect(status().isCreated());
+		req.post("/user/register", user.toJson()).andExpect(status().isCreated());
 	}
 
 	@Test
@@ -55,26 +62,26 @@ class UserControllerTest {
 	void createUserExistingEmail() throws Exception {
 		MockUser user = new MockUser("aaaaaaaa", "arthur.araujo@tutanota.com", "S_enha64");
 
-		post(request, "/user/register", user.toJson()).andExpect(status().isForbidden());
+		req.post("/user/register", user.toJson()).andExpect(status().isForbidden());
 	}
 
 	@Test
 	@Order(3)
 	void getById() throws Exception {
-		get(request, "/user/1").andExpect(status().isOk());
+		req.get("/user/1").andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(4)
 	void getMe() throws Exception {
-		String jwt = MockValues.getUserJwt(request);
-		get(request, "/user/me", jwt).andExpect(status().isOk());
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.get("/user/me", jwt).andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(5)
 	void getByInexistentId() throws Exception {
-		get(request, "/user/64").andExpect(status().isNotFound());
+		req.get("/user/64").andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -82,7 +89,7 @@ class UserControllerTest {
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
-		post(request, "/user/login", user.toJson()).andExpect(status().isOk());
+		req.post("/user/login", user.toJson()).andExpect(status().isOk());
 	}
 
 	@Test
@@ -90,20 +97,20 @@ class UserControllerTest {
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
-		post(request, "/user/login", user.toJson()).andExpect(status().isUnauthorized());
+		req.post("/user/login", user.toJson()).andExpect(status().isUnauthorized());
 	}
 
 	@Test
 	@Order(8)
 	void updateMeUsername() throws Exception {
-		String jwt = MockValues.getUserJwt(request);
-		put(request, "/user/me", "{\"username\": \"uuu\"}", jwt).andExpect(status().isOk());
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.put("/user/me", "{\"username\": \"uuu\"}", jwt).andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(10)
 	void deleteMe() throws Exception {
-		String jwt = MockValues.getDisposableJwt(request);
-		delete(request, "/user/me", jwt).andExpect(status().isOk());
+		String jwt = MockValues.getDisposableJwt(mockMvc);
+		req.delete("/user/me", jwt).andExpect(status().isOk());
 	}
 }

@@ -17,6 +17,8 @@
 
 package cc.wordview.api.test.api.controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,76 +26,74 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static cc.wordview.api.Constants.REQUEST_PATH;
 
 public class ControllerTestRequester {
+        @Getter
+        @Setter
+        private MockMvc mockMvc;
+
         /**
          * Performs a GET request in an API endpoint that uses JWT authentication.
-         * @param request
          * @param url The endpoint
          * @param jwt The authentication token
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions get(MockMvc request, String url, String jwt) throws Exception {
-                return request.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
+        public ResultActions get(String url, String jwt) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
         }
 
         /**
          * Performs a GET request in an API endpoint.
-         * @param request
          * @param url The endpoint
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions get(MockMvc request, String url) throws Exception {
-                return request.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url));
+        public ResultActions get(String url) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url));
         }
 
         /**
          * Performs a PUT request in an API endpoint that uses JWT authentication.
-         * @param request
          * @param url The endpoint
          * @param content The content of the request
          * @param jwt The authentication token
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions put(MockMvc request, String url, String content, String jwt) throws Exception {
-                return request.perform(MockMvcRequestBuilders.put(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
+        public ResultActions put(String url, String content, String jwt) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.put(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
         }
 
         /**
          * Performs a DELETE request in an API endpoint that uses JWT authentication.
-         * @param request
          * @param url The endpoint
          * @param jwt The authentication token
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions delete(MockMvc request, String url, String jwt) throws Exception {
-                return request.perform(MockMvcRequestBuilders.delete(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
+        public ResultActions delete(String url, String jwt) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.delete(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
         }
 
         /**
          * Performs a POST request in an API endpoint.
-         * @param request
          * @param url The endpoint
          * @param content The content of the request
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions post(MockMvc request, String url, String content) throws Exception {
-                return request.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json").content(content));
+        public ResultActions post(String url, String content) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json").content(content));
         }
 
         /**
          * Performs a POST request in an API endpoint that uses JWT authentication.
-         * @param request
          * @param url The endpoint
          * @param content The content of the request
          * @param jwt The authentication token
          * @return The result of the request
          * @throws Exception If the request fails
          */
-        public static ResultActions post(MockMvc request, String url, String content, String jwt) throws Exception {
-                return request.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
+        public ResultActions post(String url, String content, String jwt) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
         }
 }
