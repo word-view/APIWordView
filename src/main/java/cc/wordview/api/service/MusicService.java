@@ -45,19 +45,6 @@ public class MusicService implements MusicServiceInterface {
         private final Map<String, String> availableLyricsCache = new HashMap<>();
         private static final Logger logger = LoggerFactory.getLogger(MusicService.class);
 
-
-        @Override
-        public VideoResponse getHistory() throws IOException {
-                VideoResponse video = new VideoResponse();
-
-                video.setId("BCt9lS_Uv_Y");
-                video.setTitle("Firework of Shoes");
-                video.setArtist("Yorushika");
-                video.setCover("https://img.youtube.com/vi/BCt9lS_Uv_Y/0.jpg");
-
-                return video;
-        }
-
         @Override
         public List<LyricEntry> getSubtitlesList(String id) throws YoutubeDLException {
                 String availableLyrics;

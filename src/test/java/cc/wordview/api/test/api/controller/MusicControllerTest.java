@@ -42,11 +42,6 @@ class MusicControllerTest extends ControllerTest {
         }
 
         @Test
-        void history() throws Exception {
-                req.get("/music/history").andExpect(status().isOk());
-        }
-
-        @Test
         void lyricsNoCache() throws Exception {
                 String directory = System.getProperty("java.io.tmpdir");
                 Path file = Paths.get(directory + "/KEg6FXrvHys.ja.vtt");

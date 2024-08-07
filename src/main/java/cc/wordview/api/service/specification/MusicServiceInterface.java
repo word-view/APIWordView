@@ -28,8 +28,6 @@ import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.util.LyricEntry;
 
 public interface MusicServiceInterface {
-        VideoResponse getHistory() throws IOException;
-
         List<LyricEntry> getSubtitlesList(String id) throws YoutubeDLException;
 
         String getSubtitle(String id, String lang) throws YoutubeDLException, IOException;
