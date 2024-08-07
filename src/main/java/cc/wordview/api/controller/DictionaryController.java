@@ -19,6 +19,7 @@ package cc.wordview.api.controller;
 
 import cc.wordview.api.Constants;
 import cc.wordview.api.service.specification.DictionaryServiceInterface;
+import cc.wordview.api.util.Json;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class DictionaryController extends ServiceController<DictionaryServiceInt
 
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getDictionary(@RequestParam String lang) {
-                return response(() -> ok(service.getDictionary(lang)));
+                return response(() -> ok(Json.minifyJson(service.getDictionary(lang))));
         }
 
 }
