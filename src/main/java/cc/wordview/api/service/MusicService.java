@@ -21,11 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import cc.wordview.api.response.VideoResponse;
 import cc.wordview.wordfind.Lrc2Vtt;
 import cc.wordview.wordfind.LyricsNotFoundException;
 import cc.wordview.wordfind.LyricsProvider;
@@ -35,42 +31,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.specification.MusicServiceInterface;
-import cc.wordview.api.util.FileHelper;
-import cc.wordview.api.util.StringUtil;
 import cc.wordview.api.service.util.DLClient;
-import cc.wordview.api.service.util.LyricEntry;
 
 @Service
 public class MusicService implements MusicServiceInterface {
-        private final Map<String, String> availableLyricsCache = new HashMap<>();
         private static final Logger logger = LoggerFactory.getLogger(MusicService.class);
-
-        @Override
-        public List<LyricEntry> getSubtitlesList(String id) throws YoutubeDLException {
-                String availableLyrics;
-
-                if (!availableLyricsCache.containsKey(id)) {
-                        availableLyrics = DLClient.listSubtitles(id);
-                        availableLyricsCache.put(id, availableLyrics);
-                } else {
-                        availableLyrics = availableLyricsCache.get(id);
-                }
-
-                String result = StringUtil.cutString(availableLyrics, "[info] Available subtitles for")
-                        .replaceAll("vtt, ttml, srv3, srv2, srv1, json3", "");
-
-                return LyricEntry.parse(result);
-        }
-
-        @Override
-        public String getSubtitle(String id, String lang) throws YoutubeDLException, IOException {
-                Path path = Paths.get(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
-
-                if (!Files.exists(path))
-                        DLClient.downloadSubtitle(id, lang);
-
-                return FileHelper.read(DLClient.getDefaultDirectory() + "/" + id + "." + lang + ".vtt");
-        }
 
         @Override
         public String getSubtitleWordFind(String title) throws IOException, LyricsNotFoundException {

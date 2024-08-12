@@ -31,34 +31,6 @@ import java.nio.file.Paths;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class MusicControllerTest extends ControllerTest {
         @Test
-        void lyricsList() throws Exception {
-                req.get("/music/lyrics/list?id=sAuEeM_6zpk").andExpect(status().isOk());
-        }
-
-        @Test
-        void lyricsListCached() throws Exception {
-                req.get("/music/lyrics/list?id=sAuEeM_6zpk").andExpect(status().isOk());
-                req.get("/music/lyrics/list?id=sAuEeM_6zpk").andExpect(status().isOk());
-        }
-
-        @Test
-        void lyricsNoCache() throws Exception {
-                String directory = System.getProperty("java.io.tmpdir");
-                Path file = Paths.get(directory + "/KEg6FXrvHys.ja.vtt");
-
-                if (Files.exists(file))
-                        Files.delete(file);
-
-                req.get("/music/lyrics?id=sAuEeM_6zpk&lang=ja").andExpect(status().isOk());
-        }
-
-        @Test
-        void lyrics() throws Exception {
-                req.get("/music/lyrics?id=sAuEeM_6zpk&lang=ja").andExpect(status().isOk());
-                req.get("/music/lyrics?id=sAuEeM_6zpk&lang=ja").andExpect(status().isOk());
-        }
-
-        @Test
         void lyricsWordFind() throws Exception {
                 req.get("/music/lyrics/find?title=%s".formatted(URLEncoder.encode("tuyu if there was an endpoint")))
                         .andExpect(status().isOk());

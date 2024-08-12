@@ -51,18 +51,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MusicController extends ServiceController<MusicServiceInterface> {
         private static final Logger logger = LoggerFactory.getLogger(MusicController.class);
 
-        @GetMapping("/lyrics/list")
-        public ResponseEntity<?> lyricsList(@RequestParam String id) {
-                return response(() -> ok(service.getSubtitlesList(id)));
-        }
-
-        @GetMapping("/lyrics")
-        public ResponseEntity<?> lyrics(@RequestParam String id, @RequestParam String lang,
-                        HttpServletResponse response) {
-                return response(() -> ok(service.getSubtitle(id, lang)));
-
-        }
-
         @GetMapping("/lyrics/find")
         public ResponseEntity<?> lyricsFind(@RequestParam String title) {
                 String query = URLDecoder.decode(title);
