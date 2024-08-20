@@ -1,8 +1,194 @@
 [
   {
-    "kanji": "走",
+    "parent": "run",
+    "word": "走",
     "derivations": [
-      "走る", "走ってた", "走っています", "走ってる"
+      {
+        "parent": "run",
+        "word": "走る"
+      },
+      {
+        "parent": "ran",
+        "word": "走ってた"
+      },
+      {
+        "parent": "running",
+        "word": "走っています"
+      },
+      {
+        "parent": "run",
+        "word": "走ってる"
+      }
+    ]
+  },
+  {
+    "parent": "listen",
+    "word": "聞",
+    "derivations": [
+      {
+        "parent": "listen",
+        "word": "聞いて"
+      }
+    ]
+  },
+  {
+    "parent": "i",
+    "word": "私",
+    "derivations": []
+  },
+  {
+    "parent": "tear",
+    "word": "涙",
+    "derivations": []
+  },
+  {
+    "parent": "night",
+    "word": "夜",
+    "derivations": []
+  },
+  {
+    "parent": "warm",
+    "word": "温",
+    "derivations": [
+      {
+        "parent": "warmth",
+        "word": "温もり"
+      }
+    ]
+  },
+  {
+    "parent": "say",
+    "word": "言",
+    "derivations": [
+      {
+        "parent": "words",
+        "word": "言葉"
+      }
+    ]
+  },
+  {
+    "parent": "rain",
+    "word": "雨",
+    "derivations": []
+  },
+  {
+    "parent": "sky",
+    "word": "空",
+    "derivations": []
+  },
+  {
+    "parent": "voice",
+    "word": "声",
+    "derivations": []
+  },
+  {
+    "parent": "i",
+    "word": "僕",
+    "derivations": []
+  },
+  {
+    "parent": "name",
+    "word": "名",
+    "derivations": [
+      {
+        "parent": "name",
+        "word": "名前"
+      }
+    ]
+  },
+  {
+    "parent": "love",
+    "word": "恋",
+    "derivations": []
+  },
+  {
+    "parent": "cloud",
+    "word": "雲",
+    "derivations": []
+  },
+  {
+    "parent": "umbrella",
+    "word": "傘",
+    "derivations": []
+  },
+  {
+    "parent": "shine",
+    "word": "輝",
+    "derivations": [
+      {
+        "parent": "shine",
+        "word": "輝く"
+      }
+    ]
+  },
+  {
+    "parent": "404",
+    "word": "通",
+    "derivations": [
+      {
+        "parent": "street",
+        "word": "通り"
+      }
+    ]
+  },
+  {
+    "parent": "road",
+    "word": "道",
+    "derivations": []
+  },
+  {
+    "parent": "star",
+    "word": "星",
+    "derivations": []
+  },
+  {
+    "parent": "two",
+    "word": "二",
+    "derivations": [
+      {
+        "parent": "two_people",
+        "word": "二人"
+      }
+    ]
+  },
+  {
+    "parent": "one",
+    "word": "一",
+    "derivations": [
+      {
+        "parent": "one_person",
+        "word": "一人"
+      }
+    ]
+  },
+  {
+    "parent": "look",
+    "word": "見",
+    "derivations": [
+      {
+        "parent": "cant_see",
+        "word": "見えない"
+      }
+    ]
+  },
+  {
+    "parent": "break",
+    "word": "壊",
+    "derivations": [
+      {
+        "parent": "destroy",
+        "word": "壊して"
+      }
+    ]
+  },
+  {
+    "parent": "step",
+    "word": "歩",
+    "derivations": [
+      {
+        "parent": "walk",
+        "word": "歩く"
+      }
     ]
   }
 ]
