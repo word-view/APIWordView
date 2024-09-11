@@ -29,6 +29,4 @@ import cc.wordview.api.service.util.LyricEntry;
 
 public interface MusicServiceInterface {
         String getSubtitleWordFind(String title) throws IOException, LyricsNotFoundException;
-
-        Path download(String id) throws YoutubeDLException;
 }

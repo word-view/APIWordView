@@ -24,9 +24,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class MusicControllerTest extends ControllerTest {
@@ -46,22 +43,5 @@ class MusicControllerTest extends ControllerTest {
         void lyricsWordFindNoResults() throws Exception {
                 req.get("/music/lyrics/find?title=%s".formatted("a_song_that_probably_doesnt_exist3311"))
                         .andExpect(status().isNotFound());
-        }
-
-        @Test
-        void downloadNoCache() throws Exception {
-                String directory = System.getProperty("java.io.tmpdir");
-                Path file = Paths.get(directory + "/KEg6FXrvHys.mp3");
-
-                if (Files.exists(file))
-                        Files.delete(file);
-
-                req.get("/music/download?id=KEg6FXrvHys").andExpect(status().isOk());
-        }
-
-        @Test
-        void download() throws Exception {
-                req.get("/music/download?id=KEg6FXrvHys").andExpect(status().isOk());
-                req.get("/music/download?id=KEg6FXrvHys").andExpect(status().isOk());
         }
 }

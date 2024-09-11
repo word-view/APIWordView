@@ -18,9 +18,6 @@
 package cc.wordview.api.service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import cc.wordview.wordfind.Lrc2Vtt;
 import cc.wordview.wordfind.LyricsNotFoundException;
@@ -29,9 +26,7 @@ import cc.wordview.wordfind.WordFindClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.sapher.youtubedl.YoutubeDLException;
 import cc.wordview.api.service.specification.MusicServiceInterface;
-import cc.wordview.api.service.util.DLClient;
 
 @Service
 public class MusicService implements MusicServiceInterface {
@@ -52,15 +47,5 @@ public class MusicService implements MusicServiceInterface {
 
                 StringBuffer vttLyrics = Lrc2Vtt.convert(result);
                 return vttLyrics.toString();
-        }
-
-        @Override
-        public Path download(String id) throws YoutubeDLException {
-                Path file = Paths.get(DLClient.getDefaultDirectory() + "/" + id + ".mp3");
-
-                if (!Files.exists(file))
-                        DLClient.downloadVideo(id);
-
-                return file;
         }
 }
