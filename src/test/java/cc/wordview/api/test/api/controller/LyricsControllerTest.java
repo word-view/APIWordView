@@ -17,31 +17,29 @@
 
 package cc.wordview.api.test.api.controller;
 
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URLEncoder;
 
-@TestMethodOrder(MethodOrderer.MethodName.class)
-class MusicControllerTest extends ControllerTest {
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class LyricsControllerTest extends ControllerTest {
         @Test
-        void lyricsWordFind() throws Exception {
-                req.get("/music/lyrics/find?title=%s".formatted(URLEncoder.encode("tuyu if there was an endpoint")))
+        public void getLyrics() throws Exception {
+                req.get("/lyrics?id=1cGQotpn8r4&lang=ja&query=%s".formatted(URLEncoder.encode("a")))
                         .andExpect(status().isOk());
         }
 
         @Test
-        void lyricsWordFindFallbackToNetEase() throws Exception {
-                req.get("/music/lyrics/find?title=%s".formatted(URLEncoder.encode("終点の先が在るとするなら")))
+        public void getLyricsWordFind() throws Exception {
+                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&query=%s".formatted(URLEncoder.encode("ツユ 終点の先が在るとするならば。")))
                         .andExpect(status().isOk());
         }
 
+
         @Test
-        void lyricsWordFindNoResults() throws Exception {
-                req.get("/music/lyrics/find?title=%s".formatted("a_song_that_probably_doesnt_exist3311"))
+        public void getLyricsNotFound() throws Exception {
+                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&query=%s".formatted(URLEncoder.encode("a_song_that_probably_doesnt_exist")))
                         .andExpect(status().isNotFound());
         }
 }
