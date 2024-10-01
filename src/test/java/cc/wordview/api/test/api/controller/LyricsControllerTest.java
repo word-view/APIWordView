@@ -21,19 +21,22 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URLEncoder;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LyricsControllerTest extends ControllerTest {
         @Test
         public void getLyrics() throws Exception {
                 req.get("/lyrics?id=1cGQotpn8r4&lang=ja&query=%s".formatted(URLEncoder.encode("a")))
-                        .andExpect(status().isOk());
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         @Test
         public void getLyricsWordFind() throws Exception {
                 req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&query=%s".formatted(URLEncoder.encode("ツユ 終点の先が在るとするならば。")))
-                        .andExpect(status().isOk());
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
 

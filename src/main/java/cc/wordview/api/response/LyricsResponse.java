@@ -15,14 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.util;
+package cc.wordview.api.response;
 
-public class StringUtil {
-        public static String cutString(String input, String delimiter) {
-                int index = input.indexOf(delimiter);
-                if (index != -1) {
-                        return input.substring(index);
-                }
-                return "";
-        }
+import cc.wordview.gengolex.languages.Word;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+public class LyricsResponse {
+     private String lyrics;
+     private List<Word> songDictionary;
 }
