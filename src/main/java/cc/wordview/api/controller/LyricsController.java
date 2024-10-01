@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -55,7 +56,11 @@ public class LyricsController extends ServiceController<LyricsService> {
                         String lyrics;
 
                         try {
-                                lyrics = service.getLyrics(id, lang);
+                                String lyricsURL = service.getLyrics(id, lang);
+
+                                RestTemplate restTemplate = new RestTemplate();
+
+                                lyrics = restTemplate.getForObject(lyricsURL, String.class);
                         } catch (LyricsNotFoundException e) {
                                 logger.warn("Unable to find any lyrics for '%s' with lang '%s' on youtube.".formatted(id, lang));
                                 lyrics = service.getLyricsExternal(q);
