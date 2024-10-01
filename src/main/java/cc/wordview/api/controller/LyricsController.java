@@ -18,14 +18,22 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.LyricsService;
+import cc.wordview.api.util.ArrayUtil;
+import cc.wordview.gengolex.Language;
+import cc.wordview.gengolex.Parser;
+import cc.wordview.gengolex.languages.Word;
 import cc.wordview.wordfind.LyricsNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
@@ -36,7 +44,10 @@ import static cc.wordview.api.controller.response.Response.ok;
 public class LyricsController extends ServiceController<LyricsService> {
         private static final Logger logger = LoggerFactory.getLogger(LyricsController.class);
 
-        @GetMapping
+        @Autowired
+        private ResourceLoader resourceLoader;
+
+        @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String query) {
                 return response(() -> {
                         String q = URLDecoder.decode(query);
@@ -50,7 +61,22 @@ public class LyricsController extends ServiceController<LyricsService> {
                                 lyrics = service.getLyricsExternal(q);
                         }
 
-                        return ok(lyrics);
+                        String dictionariesPath = resourceLoader.getResource("classpath:/dictionaries").getURI().getPath();
+
+                        Parser parser = new Parser(getLanguageForTag(lang), dictionariesPath);
+
+                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics));
+
+                        return ok(new LyricsResponse(lyrics, words));
                 });
+        }
+
+        private Language getLanguageForTag(String langTag) throws Exception {
+                return switch (langTag) {
+                        case "ja" -> Language.JAPANESE;
+                        case "en" -> Language.ENGLISH;
+                        case "pt" -> Language.PORTUGUESE;
+                        default -> throw new Exception("No language found for tag '%s'".formatted(langTag));
+                };
         }
 }

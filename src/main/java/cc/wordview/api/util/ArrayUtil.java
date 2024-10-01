@@ -15,10 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.util;
 
-import java.io.IOException;
+import java.util.*;
 
-public interface DictionaryServiceInterface {
-        String getDictionary(String lang) throws IOException;
+public class ArrayUtil {
+        public static <T> ArrayList<T> withoutDuplicates(ArrayList<T> list) {
+                Set<T> set = new HashSet<>(list);
+                return new ArrayList<>(set);
+        }
 }
