@@ -27,5 +27,5 @@ import java.util.List;
 @AllArgsConstructor
 public class LyricsResponse {
      private String lyrics;
-     private List<Word> songDictionary;
+     private List<Word> dictionary;
 }
