@@ -15,21 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.util;
+package cc.wordview.api.service.util;
 
-import java.util.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public class ArrayUtil {
-        public static <T> ArrayList<T> withoutDuplicates(ArrayList<T> list) {
-                Set<T> set = new HashSet<>(list);
-                return new ArrayList<>(set);
-        }
+import java.util.List;
 
-        public static <T> T random(ArrayList<T> list) {
-                if (list.isEmpty()) {
-                        return null;
-                }
-                Random random = new Random();
-                return list.get(random.nextInt(list.size()));
-        }
+@Data
+@AllArgsConstructor
+public class SimplePhrase {
+        private String phrase;
+        private List<String> words;
 }

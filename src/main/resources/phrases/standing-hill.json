@@ -1,0 +1,35 @@
+{
+  "phrases": {
+    "en": "He is standing on the hill.",
+    "pt": "Ele está de pé na montanha."
+  },
+  "words": [
+    {
+      "jp": [
+        "彼",
+        "は",
+        "丘",
+        "の",
+        "上",
+        "に",
+        "立っている"
+      ],
+      "en": [
+        "He",
+        "is",
+        "standing",
+        "on",
+        "the",
+        "hill"
+      ],
+      "pt": [
+        "Ele",
+        "está",
+        "de",
+        "pé",
+        "na",
+        "montanha"
+      ]
+    }
+  ]
+}

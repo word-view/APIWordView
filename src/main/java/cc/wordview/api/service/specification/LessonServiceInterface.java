@@ -15,21 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.util;
+package cc.wordview.api.service.specification;
 
-import java.util.*;
+import cc.wordview.api.exception.NoSuchEntryException;
 
-public class ArrayUtil {
-        public static <T> ArrayList<T> withoutDuplicates(ArrayList<T> list) {
-                Set<T> set = new HashSet<>(list);
-                return new ArrayList<>(set);
-        }
+import java.io.IOException;
 
-        public static <T> T random(ArrayList<T> list) {
-                if (list.isEmpty()) {
-                        return null;
-                }
-                Random random = new Random();
-                return list.get(random.nextInt(list.size()));
-        }
+public interface LessonServiceInterface {
+        String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
 }
