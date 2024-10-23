@@ -79,7 +79,9 @@ public class LessonService implements LessonServiceInterface {
                 List<Path> phraseFiles = Files.list(resources.getFile().toPath()).toList();
 
                 for (Path filePath : phraseFiles) {
-                        logger.info("Loading phrase '%s'".formatted(filePath.toFile().getPath()));
+                        String path = filePath.toFile().getPath();
+
+                        logger.info("Loading phrase '%s'".formatted(path.substring(path.indexOf("/phrases/"))));
                         String content = FileHelper.read(filePath.toFile());
 
                         phrases.add(new Gson().fromJson(content, Phrase.class));
