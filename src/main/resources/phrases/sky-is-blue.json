@@ -1,0 +1,13 @@
+{
+  "phrases": {
+    "en": "The sky is blue",
+    "pt": "O céu e azul"
+  },
+  "words": [
+    {
+      "ja": ["空", "は", "青い", "です"],
+      "pt": ["O", "céu", "e", "azul"],
+      "en": ["The", "sky", "is", "blue"]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "phrases": {
+    "en": "It's raining",
+    "pt": "Esta chovendo"
+  },
+  "words": [
+    {
+      "ja": ["雨", "は", "降る"],
+      "pt": ["Esta", "chovendo"],
+      "en": ["It's", "raining"]
+    }
+  ]
+}

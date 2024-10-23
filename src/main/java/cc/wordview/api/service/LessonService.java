@@ -56,18 +56,15 @@ public class LessonService implements LessonServiceInterface {
                         List<String> words = phrase.getWords().getFirst().get(wordsLang);
                         String phraseText = phrase.getPhrases().get(phraseLang);
 
-                        if (phraseText == null)
-                                throw new NoSuchEntryException("This phrase is not available in this language.");
-
-                        if (words == null)
-                                throw new NoSuchEntryException("Could not find any words for this phrase in this language");
-
-                        if (!words.contains(keyword))
-                                throw new NoSuchEntryException("Unable to find a phrase for the word '%s'".formatted(keyword));
-
+                        if (phraseText == null) continue;
+                        if (words == null) continue;
+                        if (!words.contains(keyword)) continue;
 
                         availablePhrases.add(new SimplePhrase(phraseText, words));
                 }
+
+                if (availablePhrases.isEmpty())
+                        throw new NoSuchEntryException("Could not find any phrases matching these parameters");
 
                 SimplePhrase chosen = ArrayUtil.random(availablePhrases);
 
