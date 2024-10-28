@@ -15,25 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.request;
+package cc.wordview.api.service.specification;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import cc.wordview.api.database.entity.Email;
 
-public class RequestValidation {
-	public static boolean hasSpecialCharacters(String string) {
-		String padrao = "[a-zA-Z\\s\\u00C0-\\u00FF]+";
-		Pattern pattern = Pattern.compile(padrao);
-		Matcher matcher = pattern.matcher(string);
-
-		return !matcher.matches();
-	}
-
-	public static boolean invalidEmail(String email) {
-		String padrao = "[a-zA-Z0-9._%+-]+@(gmail|hotmail|outlook|yahoo|tutanota|tuta)\\.(com|br|net)";
-		Pattern pattern = Pattern.compile(padrao);
-		Matcher matcher = pattern.matcher(email);
-
-		return !matcher.matches();
-	}
+public interface EmailServiceInterface extends ServiceInterface<Email> {
 }

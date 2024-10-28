@@ -12,3 +12,5 @@ INSERT INTO member (username, email, password, role) VALUES
 
 INSERT INTO member (username, email, password, role) VALUES
     ('mock.admin', 'mock.admin@gmail.com', '061cf224cffe1951e32ffaa1c414544a', 'ADMIN');
+
+INSERT INTO email (email) VALUES ('mock.user@gmail.com');
