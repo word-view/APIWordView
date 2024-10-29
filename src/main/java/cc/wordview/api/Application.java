@@ -21,10 +21,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+import java.util.Objects;
+
 @SpringBootApplication
-@ComponentScan(basePackages = { "cc.wordview.api" })
+@ComponentScan(basePackages = {"cc.wordview.api"})
 public class Application {
-	public static void main(String... args) {
-		SpringApplication.run(Application.class, args);
-	}
+        public static void main(String... args) {
+                if (args.length > 0 && Objects.equals(args[0], "--prod"))
+                        System.setProperty("spring.profiles.active", "prod");
+                else
+                        System.setProperty("spring.profiles.active", "dev");
+
+                SpringApplication.run(Application.class, args);
+        }
 }
