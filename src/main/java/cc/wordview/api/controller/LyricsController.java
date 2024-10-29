@@ -24,14 +24,13 @@ import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.languages.Word;
-import cc.wordview.wordfind.LyricsNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -48,27 +47,23 @@ public class LyricsController extends ServiceController<LyricsService> {
         @Autowired
         private ResourceLoader resourceLoader;
 
+        @Value("${wordview.gengolex.dictionaries_path}")
+        private String dictionariesPath;
+
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String query) {
                 return response(() -> {
                         String q = URLDecoder.decode(query);
 
-                        String lyrics;
+                        String lyrics = service.getLyrics(id, lang, q);
 
-                        try {
-                                String lyricsURL = service.getLyrics(id, lang);
+                        String activeDictionaryPath = dictionariesPath;
 
-                                RestTemplate restTemplate = new RestTemplate();
-
-                                lyrics = restTemplate.getForObject(lyricsURL, String.class);
-                        } catch (LyricsNotFoundException e) {
-                                logger.warn("Unable to find any lyrics for '%s' with lang '%s' on youtube.".formatted(id, lang));
-                                lyrics = service.getLyricsExternal(q);
+                        if (dictionariesPath.startsWith("classpath:")) {
+                                activeDictionaryPath = resourceLoader.getResource(dictionariesPath).getURI().getPath();
                         }
 
-                        String dictionariesPath = resourceLoader.getResource("classpath:/dictionaries").getURI().getPath();
-
-                        Parser parser = new Parser(getLanguageForTag(lang), dictionariesPath);
+                        Parser parser = new Parser(getLanguageForTag(lang), activeDictionaryPath);
 
                         ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics));
 

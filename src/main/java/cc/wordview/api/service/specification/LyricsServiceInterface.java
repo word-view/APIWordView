@@ -23,7 +23,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import java.io.IOException;
 
 public interface LyricsServiceInterface {
-        String getLyrics(String id, String langTag) throws ExtractionException, IOException, LyricsNotFoundException;
+        String getLyrics(String id, String langTag, String query) throws ExtractionException, IOException, LyricsNotFoundException;
 
         String getLyricsExternal(String query) throws IOException, LyricsNotFoundException;
 }
