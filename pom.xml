@@ -138,7 +138,8 @@
         <dependency>
             <groupId>com.github.TeamNewPipe.NewPipeExtractor</groupId>
             <artifactId>NewPipeExtractor</artifactId>
-            <version>v0.24.2</version>
+            <!-- WORKAROUND: v0.24.2 can't be resolved by jitpack -> use git commit hash instead -->
+            <version>176da72cb4c3ec4679211339b0e59f6b01bf2f52</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
