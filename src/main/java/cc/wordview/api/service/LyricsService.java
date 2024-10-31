@@ -19,10 +19,10 @@ package cc.wordview.api.service;
 
 import cc.wordview.api.service.specification.LyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
-import cc.wordview.wordfind.Lrc2Vtt;
+import cc.wordview.wordfind.LrcToVtt;
 import cc.wordview.wordfind.LyricsNotFoundException;
-import cc.wordview.wordfind.LyricsProvider;
-import cc.wordview.wordfind.WordFindClient;
+import cc.wordview.wordfind.LyricsProviders;
+import cc.wordview.wordfind.WordFind;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
@@ -87,17 +87,17 @@ public class LyricsService implements LyricsServiceInterface {
 
         @Override
         public String getLyricsExternal(String query) throws IOException, LyricsNotFoundException {
+                WordFind client = new WordFind();
+
                 String result;
 
                 try {
-                        result = WordFindClient.search(query);
+                        result = client.search(query);
                 } catch (LyricsNotFoundException e) {
                         logger.warn("Unable to find any lyrics for \"%s\" in Musixmatch, retrying with NetEase.".formatted(query));
-                        result = WordFindClient.search(query, LyricsProvider.NETEASE);
+                        result = client.search(query, LyricsProviders.NETEASE);
                 }
 
-                StringBuffer vttLyrics = Lrc2Vtt.convert(result);
-
-                return vttLyrics.toString();
+            return new LrcToVtt().convert(result);
         }
 }
