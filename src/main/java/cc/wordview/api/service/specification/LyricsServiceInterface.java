@@ -17,14 +17,14 @@
 
 package cc.wordview.api.service.specification;
 
-import cc.wordview.wordfind.LyricsNotFoundException;
+import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 
 import java.io.IOException;
 
 public interface LyricsServiceInterface {
-        String getLyrics(String id, String langTag, String query) throws ExtractionException, IOException, LyricsNotFoundException;
+        String getLyrics(String id, String trackName, String artistName, String langTag) throws ExtractionException, IOException, LyricsNotFoundException;
 
-        String getLyricsExternal(String query) throws IOException, LyricsNotFoundException;
+        String getLyricsExternal(String trackName, String artistName) throws IOException, LyricsNotFoundException;
 }
 

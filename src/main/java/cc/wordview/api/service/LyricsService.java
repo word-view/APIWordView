@@ -19,9 +19,7 @@ package cc.wordview.api.service;
 
 import cc.wordview.api.service.specification.LyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
-import cc.wordview.wordfind.LrcToVtt;
-import cc.wordview.wordfind.LyricsNotFoundException;
-import cc.wordview.wordfind.LyricsProviders;
+import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
@@ -42,6 +40,8 @@ public class LyricsService implements LyricsServiceInterface {
 
         private static final StreamingService YTService;
 
+        private final WordFind client = new WordFind();
+
         static {
                 // initializing NewPipe here seems inappropriate, but I do it here anyway, so I don't have to initialize
                 // both in the Application class and the tests at the same time.
@@ -57,12 +57,12 @@ public class LyricsService implements LyricsServiceInterface {
 
 
         @Override
-        public String getLyrics(String id, String langTag, String query) throws ExtractionException, IOException, LyricsNotFoundException {
+        public String getLyrics(String id, String trackName, String artistName, String langTag) throws ExtractionException, IOException, LyricsNotFoundException {
                 String lyrics = getLyricsYT(id, langTag);
 
                 if (Objects.equals(lyrics, "")) {
                         logger.warn("Unable to find any lyrics for '%s' with lang '%s' on youtube.".formatted(id, langTag));
-                        lyrics = getLyricsExternal(query);
+                        lyrics = getLyricsExternal(trackName, artistName);
                 }
 
                 return lyrics;
@@ -86,18 +86,7 @@ public class LyricsService implements LyricsServiceInterface {
         }
 
         @Override
-        public String getLyricsExternal(String query) throws IOException, LyricsNotFoundException {
-                WordFind client = new WordFind();
-
-                String result;
-
-                try {
-                        result = client.search(query);
-                } catch (LyricsNotFoundException e) {
-                        logger.warn("Unable to find any lyrics for \"%s\" in Musixmatch, retrying with NetEase.".formatted(query));
-                        result = client.search(query, LyricsProviders.NETEASE);
-                }
-
-            return new LrcToVtt().convert(result);
+        public String getLyricsExternal(String trackName, String artistName) throws LyricsNotFoundException {
+            return client.find(trackName, artistName, true, null, null);
         }
 }

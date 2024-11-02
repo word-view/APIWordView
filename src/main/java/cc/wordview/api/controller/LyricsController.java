@@ -51,11 +51,9 @@ public class LyricsController extends ServiceController<LyricsService> {
         private String dictionariesPath;
 
         @GetMapping(produces = "application/json;charset=utf-8")
-        public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String query) {
+        public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) {
                 return response(() -> {
-                        String q = URLDecoder.decode(query);
-
-                        String lyrics = service.getLyrics(id, lang, q);
+                        String lyrics = service.getLyrics(id, URLDecoder.decode(trackName), URLDecoder.decode(artistName), lang);
 
                         String activeDictionaryPath = dictionariesPath;
 

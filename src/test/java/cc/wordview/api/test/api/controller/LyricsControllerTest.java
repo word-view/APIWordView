@@ -27,14 +27,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LyricsControllerTest extends ControllerTest {
         @Test
         public void getLyrics() throws Exception {
-                req.get("/lyrics?id=1cGQotpn8r4&lang=ja&query=%s".formatted(URLEncoder.encode("a")))
+                req.get("/lyrics?id=1cGQotpn8r4&lang=ja&trackName=a&artistName=a")
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         @Test
         public void getLyricsWordFind() throws Exception {
-                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&query=%s".formatted(URLEncoder.encode("ツユ 終点の先が在るとするならば。")))
+                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
+                                URLEncoder.encode("終点の先が在るとするならば。"),
+                                URLEncoder.encode("ツユ")
+                        ))
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
         }
@@ -42,7 +45,9 @@ public class LyricsControllerTest extends ControllerTest {
 
         @Test
         public void getLyricsNotFound() throws Exception {
-                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&query=%s".formatted(URLEncoder.encode("a_song_that_probably_doesnt_exist")))
-                        .andExpect(status().isNotFound());
+                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
+                        URLEncoder.encode("a_song_that_doesnt_exist"),
+                        URLEncoder.encode("aa")
+                )).andExpect(status().isNotFound());
         }
 }
