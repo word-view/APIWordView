@@ -17,15 +17,18 @@
 
 package cc.wordview.api.test.api.controller;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.net.URLEncoder;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 public class LyricsControllerTest extends ControllerTest {
         @Test
+        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
         public void getLyrics() throws Exception {
                 req.get("/lyrics?id=1cGQotpn8r4&lang=ja&trackName=a&artistName=a")
                         .andExpect(status().isOk())
@@ -33,6 +36,7 @@ public class LyricsControllerTest extends ControllerTest {
         }
 
         @Test
+        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
         public void getLyricsWordFind() throws Exception {
                 req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
                                 URLEncoder.encode("終点の先が在るとするならば。"),
@@ -44,6 +48,7 @@ public class LyricsControllerTest extends ControllerTest {
 
 
         @Test
+        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
         public void getLyricsNotFound() throws Exception {
                 req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
                         URLEncoder.encode("a_song_that_doesnt_exist"),
@@ -51,3 +56,4 @@ public class LyricsControllerTest extends ControllerTest {
                 )).andExpect(status().isNotFound());
         }
 }
+
