@@ -63,7 +63,8 @@ public class LyricsController extends ServiceController<LyricsService> {
 
                         Parser parser = new Parser(getLanguageForTag(lang), activeDictionaryPath);
 
-                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics));
+                        // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
+                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
                         return ok(new LyricsResponse(lyrics, words));
                 });
