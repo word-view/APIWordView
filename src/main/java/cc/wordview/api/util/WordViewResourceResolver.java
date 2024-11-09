@@ -38,6 +38,9 @@ public class WordViewResourceResolver {
         @Value("${wordview.lyrics_path}")
         private String lyricsPath;
 
+        @Value("${wordview.phrases_path}")
+        private String phrasesPath;
+
         public String getDictionariesPath() throws IOException {
                 return resolvePathOrClasspath(dictionariesPath);
         }
@@ -48,6 +51,10 @@ public class WordViewResourceResolver {
 
         public String getLyricsPath() throws IOException {
                 return resolvePathOrClasspath(lyricsPath);
+        }
+
+        public String getPhrasesPath() throws IOException {
+                return resolvePathOrClasspath(phrasesPath);
         }
 
         /**

@@ -23,6 +23,7 @@ import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
+import cc.wordview.api.util.WordViewResourceResolver;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class LessonService implements LessonServiceInterface {
         private static final Logger logger = LoggerFactory.getLogger(LessonService.class);
 
         @Autowired
-        private ResourceLoader resourceLoader;
+        private WordViewResourceResolver resourceResolver;
 
         private final ArrayList<Phrase> phrases = new ArrayList<>();
 
@@ -74,9 +75,9 @@ public class LessonService implements LessonServiceInterface {
         private void preloadAllPhrases() throws IOException {
                 if (!phrases.isEmpty()) return;
 
-                Resource resources = resourceLoader.getResource("classpath:/phrases");
+                String phrasesPath = resourceResolver.getPhrasesPath();
 
-                List<Path> phraseFiles = Files.list(resources.getFile().toPath()).toList();
+                List<Path> phraseFiles = Files.list(Path.of(phrasesPath)).toList();
 
                 for (Path filePath : phraseFiles) {
                         String path = filePath.toFile().getPath();
