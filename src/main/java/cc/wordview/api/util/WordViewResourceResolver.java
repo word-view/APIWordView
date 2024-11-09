@@ -29,7 +29,7 @@ public class WordViewResourceResolver {
         @Autowired
         private ResourceLoader resourceLoader;
 
-        @Value("${wordview.gengolex.dictionaries_path}")
+        @Value("${wordview.dictionaries_path}")
         private String dictionariesPath;
 
         @Value("${wordview.images_path}")
