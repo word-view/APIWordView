@@ -22,6 +22,7 @@ import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.service.specification.LyricsServiceInterface;
 import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
+import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
 import org.schabi.newpipe.extractor.NewPipe;
@@ -32,12 +33,14 @@ import org.schabi.newpipe.extractor.stream.SubtitlesStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -48,13 +51,10 @@ public class LyricsService implements LyricsServiceInterface {
 
         private final WordFind client = new WordFind();
 
-        private final WordViewProvider wordViewProvider = new WordViewProvider();
-
-        @Value("${wordview.lyrics_path}")
-        private String lyricsPath;
+        private final Map<String, String> lyrics = new HashMap<>();
 
         @Autowired
-        private ResourceLoader resourceLoader;
+        private WordViewResourceResolver resourceResolver;
 
         @Autowired
         private VideoLyricsServiceInterface videoLyricsService;
@@ -108,12 +108,40 @@ public class LyricsService implements LyricsServiceInterface {
         }
 
         private String getLyricsWordView(String id) throws IOException, LyricsNotFoundException, NoSuchEntryException {
-                VideoLyrics lyrics = videoLyricsService.getByVideoId(id);
-                return wordViewProvider.find(lyrics.getLyricsFile(), lyricsPath, resourceLoader);
+                init();
+
+                VideoLyrics videoLyrics = videoLyricsService.getByVideoId(id);
+
+                String res = lyrics.get(videoLyrics.getLyricsFile() + ".vtt");
+
+                if (res != null) return res;
+                else
+                        throw new LyricsNotFoundException("Could not find lyrics for %s".formatted(videoLyrics.getLyricsFile()));
+        }
+
+        private void init() throws IOException {
+                if (!lyrics.isEmpty()) return;
+
+                String lyricsPath = resourceResolver.getLyricsPath();
+
+                try {
+                        Files.walk(Path.of(lyricsPath))
+                                .filter(Files::isRegularFile)
+                                .forEach(file -> {
+                                        try {
+                                                lyrics.put(file.getFileName().toString(), Files.readString(file));
+                                                logger.info("Loaded lyrics %s".formatted(file.getFileName()));
+                                        } catch (IOException e) {
+                                                logger.error("Failed to read lyrics file", e);
+                                        }
+                                });
+                } catch (IOException e) {
+                        logger.error("Failed to read the lyrics directory", e);
+                }
         }
 
         @Override
         public String getLyricsExternal(String trackName, String artistName) throws LyricsNotFoundException {
-            return client.find(trackName, artistName, true, null, null);
+                return client.find(trackName, artistName, true, null, null);
         }
 }

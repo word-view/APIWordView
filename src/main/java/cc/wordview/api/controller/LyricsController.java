@@ -21,14 +21,11 @@ import cc.wordview.api.Constants;
 import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.LyricsService;
 import cc.wordview.api.util.ArrayUtil;
+import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.languages.Word;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,40 +39,22 @@ import static cc.wordview.api.controller.response.Response.ok;
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/lyrics")
 public class LyricsController extends ServiceController<LyricsService> {
-        private static final Logger logger = LoggerFactory.getLogger(LyricsController.class);
-
         @Autowired
-        private ResourceLoader resourceLoader;
-
-        @Value("${wordview.gengolex.dictionaries_path}")
-        private String dictionariesPath;
+        private WordViewResourceResolver resourceResolver;
 
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) {
                 return response(() -> {
                         String lyrics = service.getLyrics(id, URLDecoder.decode(trackName), URLDecoder.decode(artistName), lang);
 
-                        String activeDictionaryPath = dictionariesPath;
+                        String dictionariesPath = resourceResolver.getDictionariesPath();
 
-                        if (dictionariesPath.startsWith("classpath:")) {
-                                activeDictionaryPath = resourceLoader.getResource(dictionariesPath).getURI().getPath();
-                        }
-
-                        Parser parser = new Parser(getLanguageForTag(lang), activeDictionaryPath);
+                        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
 
                         // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
                         ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
                         return ok(new LyricsResponse(lyrics, words));
                 });
-        }
-
-        private Language getLanguageForTag(String langTag) throws Exception {
-                return switch (langTag) {
-                        case "ja" -> Language.JAPANESE;
-                        case "en" -> Language.ENGLISH;
-                        case "pt" -> Language.PORTUGUESE;
-                        default -> throw new Exception("No language found for tag '%s'".formatted(langTag));
-                };
         }
 }

@@ -18,10 +18,9 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.util.WordViewResourceResolver;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -37,20 +36,13 @@ import java.io.InputStream;
 @RequestMapping(path = Constants.REQUEST_PATH + "/image")
 public class ImageController {
         @Autowired
-        private ResourceLoader resourceLoader;
-
-        @Value("${wordview.images_path}")
-        private String imagesPath;
+        private WordViewResourceResolver resourceResolver;
 
         @GetMapping(produces = MediaType.IMAGE_PNG_VALUE)
         public @ResponseBody byte[] getImage(@RequestParam String parent) throws IOException {
-                String actualImagesPath = imagesPath;
+                String imagesPath = resourceResolver.getImagesPath();
 
-                if (imagesPath.startsWith("classpath:")) {
-                        actualImagesPath = resourceLoader.getResource(imagesPath).getURI().getPath();
-                }
-
-                try (InputStream stream = new FileInputStream(actualImagesPath + "/%s.png".formatted(parent))) {
+                try (InputStream stream = new FileInputStream(imagesPath + "/%s.png".formatted(parent))) {
                         return IOUtils.toByteArray(stream);
                 } catch (FileNotFoundException e) {
                         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found");
