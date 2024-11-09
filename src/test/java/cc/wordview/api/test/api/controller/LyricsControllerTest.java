@@ -17,8 +17,8 @@
 
 package cc.wordview.api.test.api.controller;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.net.URLEncoder;
 
@@ -26,18 +26,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class LyricsControllerTest extends ControllerTest {
+class LyricsControllerTest extends ControllerTest {
         @Test
-        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        public void getLyrics() throws Exception {
+        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+        void getLyrics() throws Exception {
                 req.get("/lyrics?id=1cGQotpn8r4&lang=ja&trackName=a&artistName=a")
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         @Test
-        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        public void getLyricsWordFind() throws Exception {
+        void getLyricsWordView() throws Exception {
+                req.get("/lyrics?id=ZnUEeXpxBJ0&lang=pt&trackName=aquarela&artistName=toquinho")
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
+        }
+
+        @Test
+        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+        void getLyricsWordFind() throws Exception {
                 req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
                                 URLEncoder.encode("終点の先が在るとするならば。"),
                                 URLEncoder.encode("ツユ")
@@ -48,8 +55,8 @@ public class LyricsControllerTest extends ControllerTest {
 
 
         @Test
-        @Ignore("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        public void getLyricsNotFound() throws Exception {
+        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+        void getLyricsNotFound() throws Exception {
                 req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
                         URLEncoder.encode("a_song_that_doesnt_exist"),
                         URLEncoder.encode("aa")

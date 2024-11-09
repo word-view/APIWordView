@@ -14,3 +14,5 @@ INSERT INTO member (username, email, password, role) VALUES
     ('mock.admin', 'mock.admin@gmail.com', '061cf224cffe1951e32ffaa1c414544a', 'ADMIN');
 
 INSERT INTO email (email) VALUES ('mock.user@gmail.com');
+
+INSERT INTO video_lyrics (video_id, lyrics_file, time_offset) VALUES ('ZnUEeXpxBJ0', 'aquarela', 0);

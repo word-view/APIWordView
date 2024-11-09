@@ -17,7 +17,10 @@
 
 package cc.wordview.api.service;
 
+import cc.wordview.api.database.entity.VideoLyrics;
+import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.service.specification.LyricsServiceInterface;
+import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
@@ -28,6 +31,9 @@ import org.schabi.newpipe.extractor.stream.StreamInfo;
 import org.schabi.newpipe.extractor.stream.SubtitlesStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,6 +47,17 @@ public class LyricsService implements LyricsServiceInterface {
         private static final StreamingService YTService;
 
         private final WordFind client = new WordFind();
+
+        private final WordViewProvider wordViewProvider = new WordViewProvider();
+
+        @Value("${wordview.lyrics_path}")
+        private String lyricsPath;
+
+        @Autowired
+        private ResourceLoader resourceLoader;
+
+        @Autowired
+        private VideoLyricsServiceInterface videoLyricsService;
 
         static {
                 // initializing NewPipe here seems inappropriate, but I do it here anyway, so I don't have to initialize
@@ -58,11 +75,16 @@ public class LyricsService implements LyricsServiceInterface {
 
         @Override
         public String getLyrics(String id, String trackName, String artistName, String langTag) throws ExtractionException, IOException, LyricsNotFoundException {
-                String lyrics = getLyricsYT(id, langTag);
+                String lyrics;
 
-                if (Objects.equals(lyrics, "")) {
-                        logger.warn("Unable to find any lyrics for '%s' with lang '%s' on youtube.".formatted(id, langTag));
-                        lyrics = getLyricsExternal(trackName, artistName);
+                try {
+                        lyrics = getLyricsWordView(id);
+                } catch (Exception e) {
+                        lyrics = getLyricsYT(id, langTag);
+
+                        if (Objects.equals(lyrics, "")) {
+                                lyrics = getLyricsExternal(trackName, artistName);
+                        }
                 }
 
                 return lyrics;
@@ -83,6 +105,11 @@ public class LyricsService implements LyricsServiceInterface {
                 }
 
                 return "";
+        }
+
+        private String getLyricsWordView(String id) throws IOException, LyricsNotFoundException, NoSuchEntryException {
+                VideoLyrics lyrics = videoLyricsService.getByVideoId(id);
+                return wordViewProvider.find(lyrics.getLyricsFile(), lyricsPath, resourceLoader);
         }
 
         @Override
