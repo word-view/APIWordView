@@ -33,18 +33,15 @@
   },
   {
     "parent": "i",
-    "word": "私",
-    "derivations": []
+    "word": "私"
   },
   {
     "parent": "tear",
-    "word": "涙",
-    "derivations": []
+    "word": "涙"
   },
   {
     "parent": "night",
-    "word": "夜",
-    "derivations": []
+    "word": "夜"
   },
   {
     "parent": "warm",
@@ -68,23 +65,19 @@
   },
   {
     "parent": "rain",
-    "word": "雨",
-    "derivations": []
+    "word": "雨"
   },
   {
     "parent": "sky",
-    "word": "空",
-    "derivations": []
+    "word": "空"
   },
   {
     "parent": "voice",
-    "word": "声",
-    "derivations": []
+    "word": "声"
   },
   {
     "parent": "i",
-    "word": "僕",
-    "derivations": []
+    "word": "僕"
   },
   {
     "parent": "name",
@@ -98,18 +91,15 @@
   },
   {
     "parent": "love",
-    "word": "恋",
-    "derivations": []
+    "word": "恋"
   },
   {
     "parent": "cloud",
-    "word": "雲",
-    "derivations": []
+    "word": "雲"
   },
   {
     "parent": "umbrella",
-    "word": "傘",
-    "derivations": []
+    "word": "傘"
   },
   {
     "parent": "shine",
@@ -133,13 +123,11 @@
   },
   {
     "parent": "road",
-    "word": "道",
-    "derivations": []
+    "word": "道"
   },
   {
     "parent": "star",
-    "word": "星",
-    "derivations": []
+    "word": "星"
   },
   {
     "parent": "two",
