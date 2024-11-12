@@ -37,7 +37,8 @@
   },
   {
     "parent": "tear",
-    "word": "涙"
+    "word": "涙",
+    "representable": true
   },
   {
     "parent": "night",
@@ -65,7 +66,8 @@
   },
   {
     "parent": "rain",
-    "word": "雨"
+    "word": "雨",
+    "representable": true
   },
   {
     "parent": "sky",
@@ -95,11 +97,13 @@
   },
   {
     "parent": "cloud",
-    "word": "雲"
+    "word": "雲",
+    "representable": true
   },
   {
     "parent": "umbrella",
-    "word": "傘"
+    "word": "傘",
+    "representable": true
   },
   {
     "parent": "shine",
@@ -127,7 +131,8 @@
   },
   {
     "parent": "star",
-    "word": "星"
+    "word": "星",
+    "representable": true
   },
   {
     "parent": "two",
