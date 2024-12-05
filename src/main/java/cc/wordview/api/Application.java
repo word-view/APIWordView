@@ -17,6 +17,8 @@
 
 package cc.wordview.api;
 
+import cc.wordview.gengolex.languages.japanese.JapaneseKanjiStrategy;
+import cc.wordview.gengolex.languages.japanese.JapaneseTokenizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -32,6 +34,7 @@ public class Application {
                 else
                         System.setProperty("spring.profiles.active", "dev");
 
+                JapaneseTokenizer.INSTANCE.setKanjiStrategy(JapaneseKanjiStrategy.PREFER_PARENT);
                 SpringApplication.run(Application.class, args);
         }
 }
