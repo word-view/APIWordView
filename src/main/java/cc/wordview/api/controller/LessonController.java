@@ -18,11 +18,12 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.request.lesson.PhrasesRequest;
+import cc.wordview.api.response.PhrasesResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URLDecoder;
+import java.util.ArrayList;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
@@ -31,13 +32,17 @@ import static cc.wordview.api.controller.response.Response.ok;
 @CrossOrigin(origins = Constants.CORS_ORIGIN)
 @RequestMapping(path = Constants.REQUEST_PATH + "/lesson")
 public class LessonController extends ServiceController<LessonServiceInterface> {
-        @GetMapping(path = "/phrase", produces = "application/json;charset=utf-8")
-        public ResponseEntity<?> getPhrase(@RequestParam String phraseLang, @RequestParam String wordsLang, @RequestParam String keyword) {
+        @PostMapping(path = "/phrase", produces = "application/json;charset=utf-8", consumes = "application/json")
+        public ResponseEntity<?> getPhrase(@RequestBody PhrasesRequest request) {
                 return response(() -> {
-                        String kword = URLDecoder.decode(keyword);
+                        ArrayList<String> phrases = new ArrayList<>();
 
-                        return ok(service.getPhrase(phraseLang, wordsLang, kword));
+                        for (String keyword : request.getKeywords()) {
+                                String phrase = service.getPhrase(request.getPhraseLang(), request.getWordsLang(), keyword);
+                                phrases.add(phrase);
+                        }
+
+                        return ok(new PhrasesResponse(phrases));
                 });
         }
-
 }
