@@ -18,6 +18,7 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Constants;
+import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.response.PhrasesResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
@@ -38,9 +39,14 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
                         ArrayList<String> phrases = new ArrayList<>();
 
                         for (String keyword : request.getKeywords()) {
-                                String phrase = service.getPhrase(request.getPhraseLang(), request.getWordsLang(), keyword);
-                                phrases.add(phrase);
+                                try {
+                                        String phrase = service.getPhrase(request.getPhraseLang(), request.getWordsLang(), keyword);
+                                        phrases.add(phrase);
+                                } catch (NoSuchEntryException ignored) {}
                         }
+
+                        if (phrases.isEmpty())
+                                throw new NoSuchEntryException("Couldn't find any phrases matching these keywords");
 
                         return ok(new PhrasesResponse(phrases));
                 });
