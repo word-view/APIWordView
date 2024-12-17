@@ -87,6 +87,10 @@ public class LyricsService implements LyricsServiceInterface {
                         }
                 }
 
+                if (Objects.equals(lyrics, "WEBVTT\n\n# This WEBVTT was converted from LRC and might contain errors\n\n")) {
+                        throw new LyricsNotFoundException("Unable to find lyrics for %s".formatted(trackName));
+                }
+
                 return lyrics;
         }
 
