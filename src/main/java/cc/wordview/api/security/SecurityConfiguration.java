@@ -43,13 +43,7 @@ public class SecurityConfiguration {
                 http.sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                http.authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/api/v1/**").permitAll()
-                        .requestMatchers("/swagger-ui").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/dictionaries/**").permitAll()
-                        .anyRequest().authenticated());
+                http.authorizeHttpRequests(requests -> requests.requestMatchers("**").permitAll());
 
                 http.exceptionHandling(handling -> handling.accessDeniedPage("/login"));
 
