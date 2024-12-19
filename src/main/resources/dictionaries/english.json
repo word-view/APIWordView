@@ -2,14 +2,17 @@
   {
     "parent": "run",
     "word": "run",
+    "representable": false,
     "derivations": [
       {
         "parent": "running",
-        "word": "running"
+        "word": "running",
+        "representable": false
       },
       {
         "parent": "ran",
-        "word": "ran"
+        "word": "ran",
+        "representable": false
       }
     ]
   }
