@@ -2,34 +2,28 @@
   {
     "parent": "run",
     "word": "走",
-    "representable": false,
     "derivations": [
       {
         "parent": "run",
-        "word": "走る",
-        "representable": false
+        "word": "走る"
       },
       {
         "parent": "ran",
-        "word": "走ってた",
-        "representable": false
+        "word": "走ってた"
       },
       {
         "parent": "running",
-        "word": "走っています",
-        "representable": false
+        "word": "走っています"
       },
       {
         "parent": "run",
-        "word": "走ってる",
-        "representable": false
+        "word": "走ってる"
       }
     ]
   },
   {
     "parent": "listen",
     "word": "聞",
-    "representable": false,
     "derivations": [
       {
         "parent": "listen",
@@ -39,176 +33,154 @@
   },
   {
     "parent": "i",
-    "word": "私",
-    "representable": false
+    "word": "私"
   },
   {
     "parent": "tear",
-    "word": "涙"
+    "word": "涙",
+    "representable": true
   },
   {
     "parent": "night",
-    "word": "夜",
-    "representable": false
+    "word": "夜"
   },
   {
     "parent": "warm",
     "word": "温",
-    "representable": false,
     "derivations": [
       {
         "parent": "warmth",
-        "word": "温もり",
-        "representable": false
+        "word": "温もり"
       }
     ]
   },
   {
     "parent": "say",
     "word": "言",
-    "representable": false,
     "derivations": [
       {
         "parent": "words",
-        "word": "言葉",
-        "representable": false
+        "word": "言葉"
       }
     ]
   },
   {
     "parent": "rain",
-    "word": "雨"
+    "word": "雨",
+    "representable": true
   },
   {
     "parent": "sky",
-    "word": "空",
-    "representable": false
+    "word": "空"
   },
   {
     "parent": "voice",
-    "word": "声",
-    "representable": false
+    "word": "声"
   },
   {
     "parent": "i",
-    "word": "僕",
-    "representable": false
+    "word": "僕"
   },
   {
     "parent": "name",
     "word": "名",
-    "representable": false,
     "derivations": [
       {
         "parent": "name",
-        "word": "名前",
-        "representable": false
+        "word": "名前"
       }
     ]
   },
   {
     "parent": "love",
-    "word": "恋",
-    "representable": false
+    "word": "恋"
   },
   {
     "parent": "cloud",
-    "word": "雲"
+    "word": "雲",
+    "representable": true
   },
   {
     "parent": "umbrella",
-    "word": "傘"
+    "word": "傘",
+    "representable": true
   },
   {
     "parent": "shine",
     "word": "輝",
-    "representable": false,
     "derivations": [
       {
         "parent": "shine",
-        "word": "輝く",
-        "representable": false
+        "word": "輝く"
       }
     ]
   },
   {
     "parent": "404",
     "word": "通",
-    "representable": false,
     "derivations": [
       {
         "parent": "street",
-        "word": "通り",
-        "representable": false
+        "word": "通り"
       }
     ]
   },
   {
     "parent": "road",
-    "word": "道",
-    "representable": false
+    "word": "道"
   },
   {
     "parent": "star",
-    "word": "星"
+    "word": "星",
+    "representable": true
   },
   {
     "parent": "two",
     "word": "二",
-    "representable": false,
     "derivations": [
       {
         "parent": "two_people",
-        "word": "二人",
-        "representable": false
+        "word": "二人"
       }
     ]
   },
   {
     "parent": "one",
     "word": "一",
-    "representable": false,
     "derivations": [
       {
         "parent": "one_person",
-        "word": "一人",
-        "representable": false
+        "word": "一人"
       }
     ]
   },
   {
     "parent": "look",
     "word": "見",
-    "representable": false,
     "derivations": [
       {
         "parent": "cant_see",
-        "word": "見えない",
-        "representable": false
+        "word": "見えない"
       }
     ]
   },
   {
     "parent": "break",
     "word": "壊",
-    "representable": false,
     "derivations": [
       {
         "parent": "destroy",
-        "word": "壊して",
-        "representable": false
+        "word": "壊して"
       }
     ]
   },
   {
     "parent": "step",
     "word": "歩",
-    "representable": false,
     "derivations": [
       {
         "parent": "walk",
-        "word": "歩く",
-        "representable": false
+        "word": "歩く"
       }
     ]
   }
