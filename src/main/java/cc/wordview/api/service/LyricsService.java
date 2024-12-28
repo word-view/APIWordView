@@ -134,11 +134,12 @@ public class LyricsService implements LyricsServiceInterface {
                                 .forEach(file -> {
                                         try {
                                                 lyrics.put(file.getFileName().toString(), Files.readString(file));
-                                                logger.info("Loaded lyrics %s".formatted(file.getFileName()));
                                         } catch (IOException e) {
                                                 logger.error("Failed to read lyrics file", e);
                                         }
                                 });
+
+                        logger.info("Loaded %s VTT files.".formatted(lyrics.size()));
                 } catch (IOException e) {
                         logger.error("Failed to read the lyrics directory", e);
                 }
