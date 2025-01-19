@@ -74,15 +74,20 @@ public class LyricsService implements LyricsServiceInterface {
 
 
         @Override
-        public String getLyrics(String id, String trackName, String artistName, String langTag) throws ExtractionException, IOException, LyricsNotFoundException {
+        public String getLyrics(String id, String trackName, String artistName, String langTag) throws IOException, LyricsNotFoundException {
                 String lyrics;
 
                 try {
                         lyrics = getLyricsWordView(id);
                 } catch (Exception e) {
-                        lyrics = getLyricsYT(id, langTag);
+                        try {
+                                lyrics = getLyricsYT(id, langTag);
 
-                        if (Objects.equals(lyrics, "")) {
+                                if (Objects.equals(lyrics, "")) {
+                                        lyrics = getLyricsExternal(trackName, artistName);
+                                }
+                        } catch (ExtractionException extractionException) {
+                                logger.error("Failed to retrieve lyrics from youtube", extractionException);
                                 lyrics = getLyricsExternal(trackName, artistName);
                         }
                 }
