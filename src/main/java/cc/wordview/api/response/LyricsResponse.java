@@ -17,7 +17,7 @@
 
 package cc.wordview.api.response;
 
-import cc.wordview.gengolex.languages.Word;
+import cc.wordview.gengolex.word.Word;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

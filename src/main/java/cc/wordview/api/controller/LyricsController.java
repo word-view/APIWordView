@@ -24,7 +24,7 @@ import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.Parser;
-import cc.wordview.gengolex.languages.Word;
+import cc.wordview.gengolex.word.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
