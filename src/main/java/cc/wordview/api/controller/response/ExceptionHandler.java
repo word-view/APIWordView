@@ -27,6 +27,7 @@ import static cc.wordview.api.controller.response.Response.unauthorized;
 import java.io.FileNotFoundException;
 import java.util.concurrent.Callable;
 
+import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class ExceptionHandler {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
-		} catch (NoSuchEntryException | FileNotFoundException | LyricsNotFoundException e) {
+		} catch (NoSuchEntryException | FileNotFoundException | LyricsNotFoundException | LanguageNotFoundException e) {
 			return notFound(e.getMessage());
 		} catch (ValueTakenException e) {
 			return forbidden(e.getMessage());
