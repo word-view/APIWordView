@@ -25,6 +25,7 @@ import cc.wordview.api.util.DownloaderImpl;
 import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
+import jakarta.annotation.PostConstruct;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
@@ -116,9 +117,7 @@ public class LyricsService implements LyricsServiceInterface {
                 return "";
         }
 
-        private String getLyricsWordView(String id) throws IOException, LyricsNotFoundException, NoSuchEntryException {
-                init();
-
+        private String getLyricsWordView(String id) throws LyricsNotFoundException, NoSuchEntryException {
                 VideoLyrics videoLyrics = videoLyricsService.getByVideoId(id);
 
                 String res = lyrics.get(videoLyrics.getLyricsFile() + ".vtt");
@@ -128,9 +127,8 @@ public class LyricsService implements LyricsServiceInterface {
                         throw new LyricsNotFoundException("Could not find lyrics for %s".formatted(videoLyrics.getLyricsFile()));
         }
 
-        private void init() throws IOException {
-                if (!lyrics.isEmpty()) return;
-
+        @PostConstruct
+        private void preloadLyrics() throws IOException {
                 String lyricsPath = resourceResolver.getLyricsPath();
 
                 try {
@@ -139,12 +137,11 @@ public class LyricsService implements LyricsServiceInterface {
                                 .forEach(file -> {
                                         try {
                                                 lyrics.put(file.getFileName().toString(), Files.readString(file));
+                                                logger.info("Loading lyrics file \"{}\"", file.getFileName().toString());
                                         } catch (IOException e) {
                                                 logger.error("Failed to read lyrics file", e);
                                         }
                                 });
-
-                        logger.info("Loaded %s VTT files.".formatted(lyrics.size()));
                 } catch (IOException e) {
                         logger.error("Failed to read the lyrics directory", e);
                 }

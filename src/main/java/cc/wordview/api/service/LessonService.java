@@ -25,11 +25,10 @@ import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.WordViewResourceResolver;
 import com.google.gson.Gson;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -49,8 +48,6 @@ public class LessonService implements LessonServiceInterface {
 
         @Override
         public String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException {
-                preloadAllPhrases();
-
                 ArrayList<SimplePhrase> availablePhrases = new ArrayList<>();
 
                 for (Phrase phrase : phrases) {
@@ -72,9 +69,8 @@ public class LessonService implements LessonServiceInterface {
                 return new Gson().toJson(chosen);
         }
 
-        private void preloadAllPhrases() throws IOException {
-                if (!phrases.isEmpty()) return;
-
+        @PostConstruct
+        private void preloadPhrases() throws IOException {
                 String phrasesPath = resourceResolver.getPhrasesPath();
 
                 List<Path> phraseFiles = Files.list(Path.of(phrasesPath)).toList();
@@ -82,9 +78,9 @@ public class LessonService implements LessonServiceInterface {
                 for (Path filePath : phraseFiles) {
                         String content = FileHelper.read(filePath.toFile());
 
+                        logger.info("Loading phrase file: \"{}\"", filePath.getFileName().toString());
+
                         phrases.add(new Gson().fromJson(content, Phrase.class));
                 }
-
-                logger.info("Loaded %s phrase files.".formatted(phraseFiles.size()));
         }
 }
