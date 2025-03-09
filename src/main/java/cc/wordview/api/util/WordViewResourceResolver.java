@@ -17,6 +17,9 @@
 
 package cc.wordview.api.util;
 
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -26,6 +29,8 @@ import java.io.IOException;
 
 @Component
 public class WordViewResourceResolver {
+        private static final Logger logger = LoggerFactory.getLogger(WordViewResourceResolver.class);
+
         @Autowired
         private ResourceLoader resourceLoader;
 
@@ -40,6 +45,18 @@ public class WordViewResourceResolver {
 
         @Value("${wordview.phrases_path}")
         private String phrasesPath;
+
+        @PostConstruct
+        public void debugShowPaths() {
+                logger.info("""
+                                Initialized with paths:
+                                        Dictionaries Path: {}
+                                        Images Path: {}
+                                        Lyrics Path: {}
+                                        Phrases Path: {}
+                                """,
+                        dictionariesPath, imagesPath, lyricsPath, phrasesPath);
+        }
 
         public String getDictionariesPath() throws IOException {
                 return resolvePathOrClasspath(dictionariesPath);
