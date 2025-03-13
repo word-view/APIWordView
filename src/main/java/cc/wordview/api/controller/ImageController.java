@@ -17,7 +17,7 @@
 
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Constants;
+import cc.wordview.api.Application;
 import cc.wordview.api.util.WordViewResourceResolver;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/image")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/image")
 public class ImageController {
         @Autowired
         private WordViewResourceResolver resourceResolver;

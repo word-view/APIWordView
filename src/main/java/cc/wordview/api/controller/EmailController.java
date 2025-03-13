@@ -17,7 +17,7 @@
 
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Constants;
+import cc.wordview.api.Application;
 import cc.wordview.api.database.entity.Email;
 import cc.wordview.api.request.RequestValidation;
 import cc.wordview.api.service.specification.EmailServiceInterface;
@@ -33,8 +33,8 @@ import static cc.wordview.api.controller.response.Response.ok;
 
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/email")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/email")
 public class EmailController extends ServiceController<EmailServiceInterface> {
         private static final Logger logger = LoggerFactory.getLogger(EmailController.class);
 

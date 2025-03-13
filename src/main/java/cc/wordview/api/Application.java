@@ -28,6 +28,9 @@ import java.util.Objects;
 @SpringBootApplication
 @ComponentScan(basePackages = {"cc.wordview.api"})
 public class Application {
+        public static final String API_PATH = "/api/v1";
+        public static final String CORS_ORIGIN = "*";
+
         public static void main(String... args) {
                 if (args.length > 0 && Objects.equals(args[0], "--prod"))
                         System.setProperty("spring.profiles.active", "prod");

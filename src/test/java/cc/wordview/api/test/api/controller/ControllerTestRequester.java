@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static cc.wordview.api.Constants.REQUEST_PATH;
+import static cc.wordview.api.Application.API_PATH;
 
 public class ControllerTestRequester {
         @Getter
@@ -38,7 +38,7 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions get(String url, String jwt) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
+                return mockMvc.perform(MockMvcRequestBuilders.get(API_PATH + url).header("Authorization", "Bearer " + jwt));
         }
 
         /**
@@ -48,7 +48,7 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions get(String url) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.get(REQUEST_PATH + url));
+                return mockMvc.perform(MockMvcRequestBuilders.get(API_PATH + url));
         }
 
         /**
@@ -60,7 +60,7 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions put(String url, String content, String jwt) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.put(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
+                return mockMvc.perform(MockMvcRequestBuilders.put(API_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
         }
 
         /**
@@ -71,7 +71,7 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions delete(String url, String jwt) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.delete(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt));
+                return mockMvc.perform(MockMvcRequestBuilders.delete(API_PATH + url).header("Authorization", "Bearer " + jwt));
         }
 
         /**
@@ -82,7 +82,7 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions post(String url, String content) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).contentType("application/json").content(content));
+                return mockMvc.perform(MockMvcRequestBuilders.post(API_PATH + url).contentType("application/json").content(content));
         }
 
         /**
@@ -94,6 +94,6 @@ public class ControllerTestRequester {
          * @throws Exception If the request fails
          */
         public ResultActions post(String url, String content, String jwt) throws Exception {
-                return mockMvc.perform(MockMvcRequestBuilders.post(REQUEST_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
+                return mockMvc.perform(MockMvcRequestBuilders.post(API_PATH + url).header("Authorization", "Bearer " + jwt).contentType("application/json").content(content));
         }
 }

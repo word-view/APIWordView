@@ -17,7 +17,7 @@
 
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Constants;
+import cc.wordview.api.Application;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.response.PhrasesResponse;
@@ -30,8 +30,8 @@ import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/lesson")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/lesson")
 public class LessonController extends ServiceController<LessonServiceInterface> {
         @PostMapping(path = "/phrase", produces = "application/json;charset=utf-8", consumes = "application/json")
         public ResponseEntity<?> getPhrase(@RequestBody PhrasesRequest request) {

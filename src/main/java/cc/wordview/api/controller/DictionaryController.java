@@ -17,7 +17,7 @@
 
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Constants;
+import cc.wordview.api.Application;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.dictionary.DictionaryRequest;
 import cc.wordview.api.response.DictionaryResponse;
@@ -26,7 +26,6 @@ import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.word.Word;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +36,8 @@ import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/dictionary")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/dictionary")
 public class DictionaryController {
     @Autowired
     private WordViewResourceResolver resourceResolver;

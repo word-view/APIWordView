@@ -17,7 +17,7 @@
 
 package cc.wordview.api.controller;
 
-import cc.wordview.api.Constants;
+import cc.wordview.api.Application;
 import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.LyricsService;
 import cc.wordview.api.util.ArrayUtil;
@@ -36,8 +36,8 @@ import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/lyrics")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/lyrics")
 public class LyricsController extends ServiceController<LyricsService> {
         @Autowired
         private WordViewResourceResolver resourceResolver;

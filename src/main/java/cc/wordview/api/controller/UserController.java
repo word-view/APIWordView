@@ -20,6 +20,7 @@ package cc.wordview.api.controller;
 import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.ok;
 
+import cc.wordview.api.Application;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
@@ -35,7 +36,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.wordview.api.Constants;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.user.UserCreateRequest;
 import cc.wordview.api.request.user.UserLoginRequest;
@@ -44,8 +44,8 @@ import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.util.ClassMerger;
 
 @RestController
-@CrossOrigin(origins = Constants.CORS_ORIGIN)
-@RequestMapping(path = Constants.REQUEST_PATH + "/user")
+@CrossOrigin(origins = Application.CORS_ORIGIN)
+@RequestMapping(path = Application.API_PATH + "/user")
 public class UserController extends ServiceController<UserServiceInterface> {
 	@PostMapping(path = "/register", consumes = "application/json")
 	public ResponseEntity<?> create(@RequestBody UserCreateRequest request) {
