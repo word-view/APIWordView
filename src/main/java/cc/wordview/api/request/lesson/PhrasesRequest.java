@@ -17,6 +17,7 @@
 
 package cc.wordview.api.request.lesson;
 
+import cc.wordview.api.exception.RequestValidationException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +29,14 @@ public class PhrasesRequest {
     private String phraseLang;
     private String wordsLang;
     private List<String> keywords;
+
+    public void validate() throws RequestValidationException {
+        if (keywords.isEmpty()) {
+            throw new RequestValidationException("Specify at least 1 keyword");
+        }
+
+        if (keywords.contains("")) {
+            throw new RequestValidationException("One or more of the specified keywords are a empty string");
+        }
+    }
 }

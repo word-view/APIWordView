@@ -36,6 +36,8 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
         @PostMapping(path = "/phrase", produces = "application/json;charset=utf-8", consumes = "application/json")
         public ResponseEntity<?> getPhrase(@RequestBody PhrasesRequest request) {
                 return response(() -> {
+                        request.validate();
+
                         ArrayList<String> phrases = new ArrayList<>();
 
                         for (String keyword : request.getKeywords()) {
