@@ -43,19 +43,13 @@ public class VideoLyricsService implements VideoLyricsServiceInterface {
         }
 
         @Override
-        public VideoLyrics getById(Long id) throws NoSuchEntryException {
-                Optional<VideoLyrics> videoLyrics = repository.findById(id);
-
-                if (!videoLyrics.isPresent()) {
-                        throw new NoSuchEntryException("Unable to find any video lyrics with this id");
-                }
-
-                return videoLyrics.get();
+        public VideoLyrics getById(Long id) {
+                throw new UnsupportedOperationException("getById is disabled for VideoLyricsService");
         }
 
         @Override
-        public VideoLyrics insert(VideoLyrics entity) throws Exception {
+        public VideoLyrics insert(VideoLyrics entity) {
                 // They should be manually added to the sql
-                throw new UnsupportedOperationException("Insert is disabled for video lyrics");
+                throw new UnsupportedOperationException("insert is disabled for VideoLyricsService");
         }
 }

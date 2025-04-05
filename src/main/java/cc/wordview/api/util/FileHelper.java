@@ -19,18 +19,9 @@ package cc.wordview.api.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class FileHelper {
-        public static String read(String fileName) throws IOException {
-                byte[] encodedBytes = Files.readAllBytes(Paths.get(fileName));
-                return new String(encodedBytes, StandardCharsets.UTF_8);
-        }
-
         public static String read(File file) throws FileNotFoundException {
                 StringBuilder fileContent = new StringBuilder();
 

@@ -67,19 +67,7 @@ public class Response {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	public static <T> ResponseEntity<?> noContent(@Nullable T body) {
-		return new ResponseEntity<>(body, HttpStatus.NO_CONTENT);
-	}
-
 	public static <T> ResponseEntity<?> internalServerError(@Nullable T body) {
 		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	public static <T> ResponseEntity<?> iAmATeapot(@Nullable T body) {
-		return new ResponseEntity<>(body, HttpStatus.I_AM_A_TEAPOT);
-	}
-
-	public static <T> ResponseEntity<?> notImplemented() {
-		return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 	}
 }

@@ -35,7 +35,6 @@ import org.springframework.http.ResponseEntity;
 
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
-import cc.wordview.api.exception.PermissionDeniedException;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.exception.ValueTakenException;
 import io.jsonwebtoken.io.IOException;
@@ -49,7 +48,7 @@ public class ExceptionHandler {
 	public static <T> ResponseEntity<?> response(Callable<T> runnable) {
 		try {
 			return (ResponseEntity<?>) runnable.call();
-		} catch (IncorrectCredentialsException | PermissionDeniedException e) {
+		} catch (IncorrectCredentialsException e) {
 			return unauthorized(e.getMessage());
 		} catch (RequestValidationException e) {
 			return badRequest(e.getMessage());
