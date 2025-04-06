@@ -33,7 +33,7 @@ class DictionaryControllerTest extends ControllerTest {
     @Test
     void getDictionaryInexistentLanguage() throws Exception {
         req.post("/dictionary", "{\"lang\":\"kr\", \"text\": \"走る, 聞いて\"}")
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test

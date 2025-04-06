@@ -183,13 +183,13 @@ class LessonControllerTest extends ControllerTest {
         @Test
         void getPhraseNonexistentPhraseLanguage() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("aaaaaaaaaaaaa", "en", keywordsOf("hill")).toJson())
-                        .andExpect(status().isNotFound());
+                        .andExpect(status().isBadRequest());
         }
 
         @Test
         void getPhraseNonexistentWordsLanguage() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "aaaaaaaaaa", keywordsOf("hill")).toJson())
-                        .andExpect(status().isNotFound());
+                        .andExpect(status().isBadRequest());
         }
 
         private ArrayList<String> keywordsOf(String... words) {
