@@ -17,12 +17,30 @@
 
 package cc.wordview.api.request.dictionary;
 
+import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.gengolex.Language;
+import cc.wordview.gengolex.LanguageNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
+
+import static cc.wordview.api.request.ExceptionTemplate.emptyOrNull;
+import static java.util.Objects.isNull;
 
 @Getter
 @Setter
 public class DictionaryRequest {
     private String lang;
     private String text;
+
+    public void validate() throws RequestValidationException {
+        try {
+            Language.Companion.byTag(lang);
+        } catch (LanguageNotFoundException e) {
+            throw new RequestValidationException("Specified language was not found");
+        }
+
+        if (isNull(text) || text.isEmpty()) {
+            throw emptyOrNull("text");
+        }
+    }
 }

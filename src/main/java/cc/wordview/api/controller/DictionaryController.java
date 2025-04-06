@@ -45,10 +45,9 @@ public class DictionaryController {
     @PostMapping(produces = "application/json;charset=utf-8", consumes = "application/json")
     public ResponseEntity<?> getLyrics(@RequestBody DictionaryRequest request) {
         return response(() -> {
-            String text = request.getText();
+            request.validate();
 
-            if (text.isBlank())
-                throw new RequestValidationException("Text field can't be blank");
+            String text = request.getText();
 
             String dictionariesPath = resourceResolver.getDictionariesPath();
 
