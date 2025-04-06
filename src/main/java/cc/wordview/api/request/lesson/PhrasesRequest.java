@@ -18,6 +18,8 @@
 package cc.wordview.api.request.lesson;
 
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.gengolex.Language;
+import cc.wordview.gengolex.LanguageNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +33,18 @@ public class PhrasesRequest {
     private List<String> keywords;
 
     public void validate() throws RequestValidationException {
+        try {
+            Language.Companion.byTag(phraseLang);
+        } catch (LanguageNotFoundException e) {
+            throw new RequestValidationException("Specified phrase language was not found");
+        }
+
+        try {
+            Language.Companion.byTag(wordsLang);
+        } catch (LanguageNotFoundException e) {
+            throw new RequestValidationException("Specified words language was not found");
+        }
+
         if (keywords.isEmpty()) {
             throw new RequestValidationException("Specify at least 1 keyword");
         }

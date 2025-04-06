@@ -96,4 +96,40 @@ public class PhrasesRequestTest {
             request.validate();
         }, "One or more of the specified keywords are a empty string");
     }
+
+    @Test
+    void invalidPhraseLang() throws Exception {
+        assertThrows(() -> {
+            PhrasesRequest request = new PhrasesRequest();
+
+            request.setPhraseLang("AaAaaA");
+            request.setWordsLang("ja");
+
+            ArrayList<String> keywords = new ArrayList<>();
+            keywords.add("a");
+            keywords.add("b");
+
+            request.setKeywords(keywords);
+
+            request.validate();
+        }, "Specified phrase language was not found");
+    }
+
+    @Test
+    void invalidWordsLang() throws Exception {
+        assertThrows(() -> {
+            PhrasesRequest request = new PhrasesRequest();
+
+            request.setPhraseLang("ja");
+            request.setWordsLang("AaAaaA");
+
+            ArrayList<String> keywords = new ArrayList<>();
+            keywords.add("a");
+            keywords.add("b");
+
+            request.setKeywords(keywords);
+
+            request.validate();
+        }, "Specified words language was not found");
+    }
 }
