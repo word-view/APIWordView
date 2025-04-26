@@ -41,89 +41,112 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserServiceInterface {
-	@Autowired
-	private UserRepository repository;
+    @Autowired
+    private UserRepository repository;
 
-	private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
-	@Override
-	public String register(User entity) throws ValueTakenException, InvalidKeySpecException {
-		Optional<User> userWithSameEmail = repository.findByEmail(entity.getEmail());
+    @Override
+    public String register(User entity) throws ValueTakenException, InvalidKeySpecException {
+        Optional<User> userWithSameEmail = repository.findByEmail(entity.getEmail());
 
-		if (userWithSameEmail.isPresent()) {
-			throw new ValueTakenException("This email is already in use");
-		}
+        if (userWithSameEmail.isPresent()) {
+            throw new ValueTakenException("This email is already in use");
+        }
 
-		String hash = new HashedPassword(entity).getValue();
+        String hash = new HashedPassword(entity).getValue();
 
-		entity.setPassword(hash);
-		entity.setRole("ROLE_USER");
-		repository.save(entity);
+        entity.setPassword(hash);
+        entity.setRole("ROLE_USER");
+        repository.save(entity);
 
-		return jwtTokenProvider.createToken(entity.getEmail(), entity.getRole());
-	}
+        return jwtTokenProvider.createToken(entity.getEmail(), entity.getRole());
+    }
 
-	@Override
-	public User getMe(HttpServletRequest request) throws NoSuchEntryException {
-		return getByEmail(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request)));
-	}
+    @Override
+    public User getMe(HttpServletRequest request) throws NoSuchEntryException {
+        return getByEmail(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(request)));
+    }
 
-	@Override
-	public User getById(Long id) throws NoSuchEntryException {
-		Optional<User> user = repository.findById(id);
+    @Override
+    public User getById(Long id) throws NoSuchEntryException {
+        Optional<User> user = repository.findById(id);
 
-		if (!user.isPresent()) {
-			throw new NoSuchEntryException("Unable to find a user with this id");
-		}
+        if (!user.isPresent()) {
+            throw new NoSuchEntryException("Unable to find a user with this id");
+        }
 
-		return user.get();
-	}
+        return user.get();
+    }
 
-	public NoCredentialsResponse getByIdWithoutCredentials(Long id) throws NoSuchEntryException {
-		return new NoCredentialsResponse(this.getById(id));
-	}
+    public NoCredentialsResponse getByIdWithoutCredentials(Long id) throws NoSuchEntryException {
+        return new NoCredentialsResponse(this.getById(id));
+    }
 
-	@Override
-	public User getByEmail(String email) throws NoSuchEntryException {
-		Optional<User> user = repository.findByEmail(email);
+    @Override
+    public User getByEmail(String email) throws NoSuchEntryException {
+        Optional<User> user = repository.findByEmail(email);
 
-		if (!user.isPresent()) {
-			throw new NoSuchEntryException("Unable to find a user with this email");
-		}
+        if (!user.isPresent()) {
+            throw new NoSuchEntryException("Unable to find a user with this email");
+        }
 
-		return user.get();
-	}
+        return user.get();
+    }
 
-	@Override
-	public User insert(User entity) throws ValueTakenException {
-		return repository.save(entity);
-	}
+    @Override
+    public User insertWithNewEmail(HttpServletRequest request, String newEmail, String oldEmail, String password) throws ValueTakenException, InvalidKeySpecException, NoSuchEntryException, IncorrectCredentialsException {
+        Optional<User> existingUserWithNewEmail = repository.findByEmail(newEmail);
 
-	public String login(User entity)
-			throws NoSuchEntryException, IncorrectCredentialsException, InvalidKeySpecException {
-		String hashedPasswd = new HashedPassword(entity).getValue();
-		User user = this.getByEmail(entity.getEmail());
+        if (existingUserWithNewEmail.isPresent()) {
+            throw new ValueTakenException("newEmail is already taken by another account.");
+        }
 
-		if (!user.getPassword().equals(hashedPasswd)) {
-			throw new IncorrectCredentialsException("Bad credentials");
-		}
+        User user = getMe(request);
 
-		return jwtTokenProvider.createToken(entity.getEmail(), user.getRole());
-	}
+        String oldHash = new HashedPassword(oldEmail, password).getValue();
+        String newHash = new HashedPassword(newEmail, password).getValue();
 
-	@Override
-	public List<NoCredentialsResponse> getAllUsers() {
-		List<NoCredentialsResponse> usersFiltered = new ArrayList<>();
+        if (user.getPassword().equals(oldHash)) {
+            user.setEmail(newEmail);
+            user.setPassword(newHash);
+        } else {
+            throw new IncorrectCredentialsException("Email or password did not match");
+        }
 
-		for (User entry : repository.findAll()) {
-			usersFiltered.add(new NoCredentialsResponse(entry));
-		}
+        return insert(user);
+    }
 
-		return usersFiltered;
-	}
+    @Override
+    public User insert(User entity) throws ValueTakenException {
+        return repository.save(entity);
+    }
 
-	@Override
-	public void delete(User entity) {
-		repository.delete(entity);
-	}
+    public String login(User entity)
+            throws NoSuchEntryException, IncorrectCredentialsException, InvalidKeySpecException {
+        String hashedPasswd = new HashedPassword(entity).getValue();
+        User user = this.getByEmail(entity.getEmail());
+
+        if (!user.getPassword().equals(hashedPasswd)) {
+            throw new IncorrectCredentialsException("Bad credentials");
+        }
+
+        return jwtTokenProvider.createToken(entity.getEmail(), user.getRole());
+    }
+
+    @Override
+    public List<NoCredentialsResponse> getAllUsers() {
+        List<NoCredentialsResponse> usersFiltered = new ArrayList<>();
+
+        for (User entry : repository.findAll()) {
+            usersFiltered.add(new NoCredentialsResponse(entry));
+        }
+
+        return usersFiltered;
+    }
+
+    @Override
+    public void delete(User entity) {
+        repository.delete(entity);
+    }
 }

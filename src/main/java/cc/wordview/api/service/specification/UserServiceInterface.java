@@ -39,6 +39,9 @@ public interface UserServiceInterface extends ServiceInterface<User> {
 
 	User getByEmail(String email) throws NoSuchEntryException;
 
+	@SuppressWarnings("UnusedReturnValue")
+    User insertWithNewEmail(HttpServletRequest request, String newEmail, String oldEmail, String password) throws ValueTakenException, InvalidKeySpecException, NoSuchEntryException, IncorrectCredentialsException;
+
 	String login(User entity) throws NoSuchEntryException, IncorrectCredentialsException, InvalidKeySpecException;
 
 	void delete(User entity) throws NoSuchEntryException, IncorrectCredentialsException;
