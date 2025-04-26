@@ -21,6 +21,7 @@ import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.ok;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.request.user.UserEmailUpdateRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
@@ -82,6 +83,17 @@ public class UserController extends ServiceController<UserServiceInterface> {
 			User merged = ClassMerger.merge(user, userAlter);
 
 			service.insert(merged);
+
+			return ok();
+		});
+	}
+
+	@PutMapping("/me/email")
+	public ResponseEntity<?> updateEmail(@RequestBody UserEmailUpdateRequest request, HttpServletRequest req) {
+		return response(() -> {
+			request.validate();
+
+			service.insertWithNewEmail(req, request.getNewEmail(), request.getOldEmail(), request.getPassword());
 
 			return ok();
 		});

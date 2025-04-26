@@ -48,6 +48,17 @@ public class HashedPassword {
 		this.setHashedPassword(generatedHashedPassword);
 	}
 
+	public HashedPassword(String email, String password) throws InvalidKeySpecException {
+		this.email = email;
+		this.password = password;
+
+		KeySpec hashSpecifications = getKeySpecifications();
+
+		String generatedHashedPassword = generateHash("PBKDF2WithHmacSHA512", hashSpecifications);
+
+		this.setHashedPassword(generatedHashedPassword);
+	}
+
 	private PBEKeySpec getKeySpecifications() throws InvalidKeySpecException {
 		if (isNull(email) || isNull(password))
 			throw new InvalidKeySpecException("Neither email or password should be null");
