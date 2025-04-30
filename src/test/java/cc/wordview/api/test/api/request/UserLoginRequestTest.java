@@ -35,7 +35,7 @@ public class UserLoginRequestTest extends RequestTest {
     }
 
     @Test
-    void emailEmpty() throws Exception {
+    void emailEmpty() {
         UserLoginRequest request = new UserLoginRequest();
 
         request.setEmail("");
@@ -45,7 +45,7 @@ public class UserLoginRequestTest extends RequestTest {
     }
 
     @Test
-    void emailNull() throws Exception {
+    void emailNull() {
         UserLoginRequest request = new UserLoginRequest();
 
         request.setPassword("senha23213");
@@ -54,7 +54,7 @@ public class UserLoginRequestTest extends RequestTest {
     }
 
     @Test
-    void emailInvalid() throws Exception {
+    void emailInvalid() {
         UserLoginRequest request = new UserLoginRequest();
 
         request.setEmail("invalidemail.com");
@@ -64,7 +64,7 @@ public class UserLoginRequestTest extends RequestTest {
     }
 
     @Test
-    void passwordEmpty() throws Exception {
+    void passwordEmpty() {
         UserLoginRequest request = new UserLoginRequest();
 
         request.setEmail("arthur@gmail.com");
@@ -74,7 +74,7 @@ public class UserLoginRequestTest extends RequestTest {
     }
 
     @Test
-    void passwordNull() throws Exception {
+    void passwordNull() {
         UserLoginRequest request = new UserLoginRequest();
 
         request.setEmail("arthur@gmail.com");

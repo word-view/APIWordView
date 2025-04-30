@@ -36,7 +36,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void emailsEqual() throws Exception {
+    void emailsEqual() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("arthur.araujo@hotmail.com");
@@ -47,7 +47,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void oldEmailEmpty() throws Exception {
+    void oldEmailEmpty() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("");
@@ -58,7 +58,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void oldEmailNull() throws Exception {
+    void oldEmailNull() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setNewEmail("arthur.araujo@hotmail.com");
@@ -68,7 +68,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void newEmailEmpty() throws Exception {
+    void newEmailEmpty() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("arthur.araujo@gmail.com");
@@ -79,7 +79,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void newEmailNull() throws Exception {
+    void newEmailNull() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("arthur.araujo@gmail.com");
@@ -89,7 +89,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void passwordEmpty() throws Exception {
+    void passwordEmpty() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("arthur.araujo@gmail.com");
@@ -100,7 +100,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void passwordNull() throws Exception {
+    void passwordNull() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("arthur.araujo@gmail.com");
@@ -111,7 +111,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
 
 
     @Test
-    void fieldsEmpty() throws Exception {
+    void fieldsEmpty() {
         UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
         request.setOldEmail("");
@@ -122,7 +122,7 @@ public class UserEmailUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void fieldsNull() throws Exception {
+    void fieldsNull() {
         assertValidationThrows(new UserEmailUpdateRequest(), emptyOrNull("oldEmail"));
     }
 }

@@ -34,7 +34,7 @@ public class DictionaryRequestTest extends RequestTest {
     }
 
     @Test
-    void nonExistentLanguage() throws Exception {
+    void nonExistentLanguage() {
         DictionaryRequest request = new DictionaryRequest();
 
         request.setLang("AAak");
@@ -44,7 +44,7 @@ public class DictionaryRequestTest extends RequestTest {
     }
 
     @Test
-    void textEmpty() throws Exception {
+    void textEmpty() {
         DictionaryRequest request = new DictionaryRequest();
 
         request.setLang("ja");
@@ -54,7 +54,7 @@ public class DictionaryRequestTest extends RequestTest {
     }
 
     @Test
-    void textNull() throws Exception {
+    void textNull() {
         DictionaryRequest request = new DictionaryRequest();
 
         request.setLang("ja");

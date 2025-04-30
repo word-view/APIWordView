@@ -39,7 +39,7 @@ public class PhrasesRequestTest extends RequestTest {
     }
 
     @Test
-    void keywordsEmpty() throws Exception {
+    void keywordsEmpty() {
         PhrasesRequest request = new PhrasesRequest();
 
         request.setPhraseLang("en");
@@ -52,7 +52,7 @@ public class PhrasesRequestTest extends RequestTest {
     }
 
     @Test
-    void keywordsEmptyString() throws Exception {
+    void keywordsEmptyString() {
         PhrasesRequest request = new PhrasesRequest();
 
         request.setPhraseLang("en");
@@ -67,7 +67,7 @@ public class PhrasesRequestTest extends RequestTest {
     }
 
     @Test
-    void keywordsEmptyStringAfterNonEmpty() throws Exception {
+    void keywordsEmptyStringAfterNonEmpty() {
         PhrasesRequest request = new PhrasesRequest();
 
         request.setPhraseLang("en");
@@ -87,7 +87,7 @@ public class PhrasesRequestTest extends RequestTest {
     }
 
     @Test
-    void invalidPhraseLang() throws Exception {
+    void invalidPhraseLang() {
         PhrasesRequest request = new PhrasesRequest();
 
         request.setPhraseLang("AaAaaA");
@@ -103,7 +103,7 @@ public class PhrasesRequestTest extends RequestTest {
     }
 
     @Test
-    void invalidWordsLang() throws Exception {
+    void invalidWordsLang() {
         PhrasesRequest request = new PhrasesRequest();
 
         request.setPhraseLang("ja");
