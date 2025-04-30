@@ -32,7 +32,7 @@ public class UserUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void fieldsEmpty() throws Exception {
+    void fieldsEmpty() {
         UserUpdateRequest request = new UserUpdateRequest();
 
         request.setUsername("");
@@ -41,7 +41,7 @@ public class UserUpdateRequestTest extends RequestTest {
     }
 
     @Test
-    void fieldsNull() throws Exception {
+    void fieldsNull() {
         assertValidationThrows(new UserUpdateRequest(), "Specify at least 1 field");
     }
 }

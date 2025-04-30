@@ -37,7 +37,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void usernameWithSpecialChars() throws Exception {
+	void usernameWithSpecialChars() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("asda@!#!@");
@@ -48,7 +48,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void usernameEmpty() throws Exception {
+	void usernameEmpty() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("");
@@ -59,7 +59,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void usernameNull() throws Exception {
+	void usernameNull() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setPassword("senha23213");
@@ -69,7 +69,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void emailInvalid() throws Exception {
+	void emailInvalid() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("Arthur");
@@ -80,7 +80,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void emailEmpty() throws Exception {
+	void emailEmpty() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("Arthur");
@@ -91,7 +91,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void emailNull() throws Exception {
+	void emailNull() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("Arthur");
@@ -101,7 +101,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void passwordEmpty() throws Exception {
+	void passwordEmpty() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("Arthur");
@@ -112,7 +112,7 @@ class UserRequestTest extends RequestTest {
 	}
 
 	@Test
-	void passwordNull() throws Exception {
+	void passwordNull() {
 		UserCreateRequest request = new UserCreateRequest();
 
 		request.setUsername("Arthur");

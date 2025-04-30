@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class RequestTest {
-    public static void assertThrows(SoftAssertionsProvider.ThrowingRunnable runnable, String expectedMessage) throws Exception {
+    public static void assertThrows(SoftAssertionsProvider.ThrowingRunnable runnable, String expectedMessage) {
         try {
             runnable.run();
         } catch (Exception exception) {
@@ -38,7 +38,7 @@ public abstract class RequestTest {
      * @param request The request to be validated.
      * @param exception The expected Exception.
      */
-    public void assertValidationThrows(Request request, Exception exception) throws Exception {
+    public void assertValidationThrows(Request request, Exception exception) {
         assertThrows(request::validate, exception.getMessage());
     }
 
@@ -46,7 +46,7 @@ public abstract class RequestTest {
      * Assert that the validation of the specified request throws the desired message.
      * @param request The request to be validated.
      */
-    public void assertValidationThrows(Request request, String message) throws Exception {
+    public void assertValidationThrows(Request request, String message) {
         assertThrows(request::validate, message);
     }
 
