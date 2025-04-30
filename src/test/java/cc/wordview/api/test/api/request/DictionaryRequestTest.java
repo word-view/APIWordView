@@ -21,54 +21,44 @@ import cc.wordview.api.request.dictionary.DictionaryRequest;
 import org.junit.jupiter.api.Test;
 
 import static cc.wordview.api.request.ExceptionTemplate.emptyOrNull;
-import static cc.wordview.api.test.api.request.TestException.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class DictionaryRequestTest {
+public class DictionaryRequestTest extends RequestTest {
     @Test
     void noException() {
-        assertDoesNotThrow(() -> {
-            DictionaryRequest request = new DictionaryRequest();
+        DictionaryRequest request = new DictionaryRequest();
 
-            request.setLang("en");
-            request.setText("Hello World!");
+        request.setLang("en");
+        request.setText("Hello World!");
 
-            request.validate();
-        });
+        assertValidationDoesNotThrow(request);
     }
 
     @Test
     void nonExistentLanguage() throws Exception {
-        assertThrows(() -> {
-            DictionaryRequest request = new DictionaryRequest();
+        DictionaryRequest request = new DictionaryRequest();
 
-            request.setLang("AAak");
-            request.setText("Hello World!");
+        request.setLang("AAak");
+        request.setText("Hello World!");
 
-            request.validate();
-        }, "Specified language was not found");
+        assertValidationThrows(request, "Specified language was not found");
     }
 
     @Test
     void textEmpty() throws Exception {
-        assertThrows(() -> {
-            DictionaryRequest request = new DictionaryRequest();
+        DictionaryRequest request = new DictionaryRequest();
 
-            request.setLang("ja");
-            request.setText("");
+        request.setLang("ja");
+        request.setText("");
 
-            request.validate();
-        }, emptyOrNull("text").getMessage());
+        assertValidationThrows(request, emptyOrNull("text"));
     }
 
     @Test
     void textNull() throws Exception {
-        assertThrows(() -> {
-            DictionaryRequest request = new DictionaryRequest();
+        DictionaryRequest request = new DictionaryRequest();
 
-            request.setLang("ja");
+        request.setLang("ja");
 
-            request.validate();
-        }, emptyOrNull("text").getMessage());
+        assertValidationThrows(request, emptyOrNull("text"));
     }
 }
