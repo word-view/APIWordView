@@ -18,6 +18,7 @@
 package cc.wordview.api.request.dictionary;
 
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.request.Request;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import lombok.Getter;
@@ -28,7 +29,7 @@ import static java.util.Objects.isNull;
 
 @Getter
 @Setter
-public class DictionaryRequest {
+public class DictionaryRequest implements Request {
     private String lang;
     private String text;
 

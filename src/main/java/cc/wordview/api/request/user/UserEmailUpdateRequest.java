@@ -19,6 +19,7 @@ package cc.wordview.api.request.user;
 
 
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.request.Request;
 import cc.wordview.api.request.RequestValidation;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +30,7 @@ import static java.util.Objects.isNull;
 
 @Getter
 @Setter
-public class UserEmailUpdateRequest {
+public class UserEmailUpdateRequest implements Request {
     private String oldEmail;
     private String newEmail;
     private String password;

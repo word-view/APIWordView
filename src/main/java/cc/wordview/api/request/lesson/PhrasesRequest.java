@@ -18,6 +18,7 @@
 package cc.wordview.api.request.lesson;
 
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.request.Request;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import lombok.Getter;
@@ -27,7 +28,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PhrasesRequest {
+public class PhrasesRequest implements Request {
     private String phraseLang;
     private String wordsLang;
     private List<String> keywords;
