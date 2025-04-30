@@ -23,13 +23,14 @@ import static java.util.Objects.isNull;
 
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.request.Request;
 import cc.wordview.api.request.RequestValidation;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserLoginRequest {
+public class UserLoginRequest implements Request {
 	private String email;
 	private String password;
 
@@ -44,7 +45,7 @@ public class UserLoginRequest {
 		return loginUser;
 	}
 
-	private void validate() throws RequestValidationException {
+	public void validate() throws RequestValidationException {
 		if (isNull(email) || email.isEmpty()) {
 			throw emptyOrNull("email");
 		}

@@ -27,10 +27,11 @@ import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.RequestValidation;
 import lombok.Getter;
 import lombok.Setter;
+import cc.wordview.api.request.Request;
 
 @Getter
 @Setter
-public class UserCreateRequest {
+public class UserCreateRequest implements Request {
 	private String username;
 	private String email;
 	private String password;
@@ -47,7 +48,7 @@ public class UserCreateRequest {
 		return newUser;
 	}
 
-	private void validate() throws RequestValidationException {
+	public void validate() throws RequestValidationException {
 		if (isNull(username) || username.isEmpty()) {
 			throw emptyOrNull("username");
 		}
