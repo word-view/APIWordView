@@ -17,42 +17,31 @@
 
 package cc.wordview.api.test.api.request;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import static cc.wordview.api.test.api.request.TestException.*;
-
 import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.UserUpdateRequest;
 
-public class UserUpdateRequestTest {
-        @Test
-        void updateUsername() throws Exception {
-                assertDoesNotThrow(() -> {
-                        UserUpdateRequest request = new UserUpdateRequest();
+public class UserUpdateRequestTest extends RequestTest {
+    @Test
+    void updateUsername() {
+        UserUpdateRequest request = new UserUpdateRequest();
 
-                        request.setUsername("arthur");
+        request.setUsername("arthur");
 
-                        request.toEntity();
-                });
-        }
+        assertValidationDoesNotThrow(request);
+    }
 
-        @Test
-        void fieldsEmpty() throws Exception {
-                assertThrows(() -> {
-                        UserUpdateRequest request = new UserUpdateRequest();
+    @Test
+    void fieldsEmpty() throws Exception {
+        UserUpdateRequest request = new UserUpdateRequest();
 
-                        request.setUsername("");
+        request.setUsername("");
 
-                        request.toEntity();
-                }, "Specify at least 1 field");
-        }
+        assertValidationThrows(request, "Specify at least 1 field");
+    }
 
-        @Test
-        void fieldsNull() throws Exception {
-                assertThrows(() -> {
-                        UserUpdateRequest request = new UserUpdateRequest();
-                        request.toEntity();
-                }, "Specify at least 1 field");
-        }
+    @Test
+    void fieldsNull() throws Exception {
+        assertValidationThrows(new UserUpdateRequest(), "Specify at least 1 field");
+    }
 }

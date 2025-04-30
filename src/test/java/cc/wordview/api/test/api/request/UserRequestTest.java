@@ -21,123 +21,103 @@ import org.junit.jupiter.api.Test;
 
 import cc.wordview.api.request.user.UserCreateRequest;
 
-import static cc.wordview.api.test.api.request.TestException.*;
 import static cc.wordview.api.request.ExceptionTemplate.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class UserRequestTest {
+class UserRequestTest extends RequestTest {
 
 	@Test
-	void noException() throws Exception {
-		assertDoesNotThrow(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+	void noException() {
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("arthur");
-			request.setPassword("senha23213");
-			request.setEmail("arthur@gmail.com");
+		request.setUsername("arthur");
+		request.setPassword("senha23213");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		});
+		assertValidationDoesNotThrow(request);
 	}
 
 	@Test
 	void usernameWithSpecialChars() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("asda@!#!@");
-			request.setPassword("senha23213");
-			request.setEmail("arthur@gmail.com");
+		request.setUsername("asda@!#!@");
+		request.setPassword("senha23213");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		}, specialChars("username").getMessage());
+		assertValidationThrows(request, specialChars("username"));
 	}
 
 	@Test
 	void usernameEmpty() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("");
-			request.setPassword("senha23213");
-			request.setEmail("arthur@gmail.com");
+		request.setUsername("");
+		request.setPassword("senha23213");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		}, emptyOrNull("username").getMessage());
+		assertValidationThrows(request, emptyOrNull("username"));
 	}
 
 	@Test
 	void usernameNull() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setPassword("senha23213");
-			request.setEmail("arthur@gmail.com");
+		request.setPassword("senha23213");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		}, emptyOrNull("username").getMessage());
+		assertValidationThrows(request, emptyOrNull("username"));
 	}
 
 	@Test
 	void emailInvalid() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("Arthur");
-			request.setPassword("senha23213");
-			request.setEmail("arthur@cmake.com");
+		request.setUsername("Arthur");
+		request.setPassword("senha23213");
+		request.setEmail("arthur@cmake.com");
 
-			request.toEntity();
-		}, invalid("email").getMessage());
+		assertValidationThrows(request, invalid("email"));
 	}
 
 	@Test
 	void emailEmpty() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("Arthur");
-			request.setPassword("senha23213");
-			request.setEmail("");
+		request.setUsername("Arthur");
+		request.setPassword("senha23213");
+		request.setEmail("");
 
-			request.toEntity();
-		}, emptyOrNull("email").getMessage());
+		assertValidationThrows(request, emptyOrNull("email"));
 	}
 
 	@Test
 	void emailNull() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("Arthur");
-			request.setPassword("senha23213");
+		request.setUsername("Arthur");
+		request.setPassword("senha23213");
 
-			request.toEntity();
-		}, emptyOrNull("email").getMessage());
+		assertValidationThrows(request, emptyOrNull("email"));
 	}
 
 	@Test
 	void passwordEmpty() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("Arthur");
-			request.setPassword("");
-			request.setEmail("arthur@gmail.com");
+		request.setUsername("Arthur");
+		request.setPassword("");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		}, emptyOrNull("password").getMessage());
+		assertValidationThrows(request, emptyOrNull("password"));
 	}
 
 	@Test
 	void passwordNull() throws Exception {
-		assertThrows(() -> {
-			UserCreateRequest request = new UserCreateRequest();
+		UserCreateRequest request = new UserCreateRequest();
 
-			request.setUsername("Arthur");
-			request.setEmail("arthur@gmail.com");
+		request.setUsername("Arthur");
+		request.setEmail("arthur@gmail.com");
 
-			request.toEntity();
-		}, emptyOrNull("password").getMessage());
+		assertValidationThrows(request, emptyOrNull("password"));
 	}
 }

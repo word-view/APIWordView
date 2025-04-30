@@ -18,8 +18,8 @@
 package cc.wordview.api.test.api.service.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static cc.wordview.api.test.api.request.TestException.*;
 
+import cc.wordview.api.test.api.request.RequestTest;
 import org.junit.Test;
 
 import cc.wordview.api.database.entity.User;
@@ -40,7 +40,7 @@ public class HashedPasswordTest {
 
         @Test
         public void nullEmail() throws Exception {
-                assertThrows(() -> {
+                RequestTest.assertThrows(() -> {
                         User mockUser = new User();
 
                         mockUser.setPassword("123456789");
@@ -51,7 +51,7 @@ public class HashedPasswordTest {
 
         @Test
         public void emptyEmail() throws Exception {
-                assertThrows(() -> {
+                RequestTest.assertThrows(() -> {
                         User mockUser = new User();
 
                         mockUser.setEmail("");
@@ -63,7 +63,7 @@ public class HashedPasswordTest {
 
         @Test
         public void nullPassword() throws Exception {
-                assertThrows(() -> {
+                RequestTest.assertThrows(() -> {
                         User mockUser = new User();
 
                         mockUser.setEmail("test@gmail.com");
@@ -74,7 +74,7 @@ public class HashedPasswordTest {
 
         @Test
         public void emptyPassword() throws Exception {
-                assertThrows(() -> {
+                RequestTest.assertThrows(() -> {
                         User mockUser = new User();
 
                         mockUser.setEmail("test@gmail.com");

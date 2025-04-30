@@ -22,130 +22,107 @@ import cc.wordview.api.request.user.UserEmailUpdateRequest;
 import org.junit.jupiter.api.Test;
 
 import static cc.wordview.api.request.ExceptionTemplate.emptyOrNull;
-import static cc.wordview.api.test.api.request.TestException.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class UserEmailUpdateRequestTest {
+public class UserEmailUpdateRequestTest extends RequestTest {
     @Test
-    void noException() throws Exception {
-        assertDoesNotThrow(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+    void noException() {
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@gmail.com");
-            request.setNewEmail("arthur.araujo@hotmail.com");
-            request.setPassword("password");
+        request.setOldEmail("arthur.araujo@gmail.com");
+        request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setPassword("password");
 
-            request.validate();
-        });
+        assertValidationDoesNotThrow(request);
     }
 
     @Test
     void emailsEqual() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@hotmail.com");
-            request.setNewEmail("arthur.araujo@hotmail.com");
-            request.setPassword("password");
+        request.setOldEmail("arthur.araujo@hotmail.com");
+        request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setPassword("password");
 
-            request.validate();
-        }, new RequestValidationException("Emails cannot be equal").getMessage());
+        assertValidationThrows(request, new RequestValidationException("Emails cannot be equal"));
     }
 
     @Test
     void oldEmailEmpty() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("");
-            request.setNewEmail("arthur.araujo@hotmail.com");
-            request.setPassword("password");
+        request.setOldEmail("");
+        request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setPassword("password");
 
-            request.validate();
-        }, emptyOrNull("oldEmail").getMessage());
+        assertValidationThrows(request, emptyOrNull("oldEmail"));
     }
 
     @Test
     void oldEmailNull() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setNewEmail("arthur.araujo@hotmail.com");
-            request.setPassword("password");
+        request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setPassword("password");
 
-            request.validate();
-        }, emptyOrNull("oldEmail").getMessage());
+        assertValidationThrows(request, emptyOrNull("oldEmail"));
     }
 
     @Test
     void newEmailEmpty() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@gmail.com");
-            request.setNewEmail("");
-            request.setPassword("password");
+        request.setOldEmail("arthur.araujo@gmail.com");
+        request.setNewEmail("");
+        request.setPassword("password");
 
-            request.validate();
-        }, emptyOrNull("newEmail").getMessage());
+        assertValidationThrows(request, emptyOrNull("newEmail"));
     }
 
     @Test
     void newEmailNull() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@gmail.com");
-            request.setPassword("password");
+        request.setOldEmail("arthur.araujo@gmail.com");
+        request.setPassword("password");
 
-            request.validate();
-        }, emptyOrNull("newEmail").getMessage());
+        assertValidationThrows(request, emptyOrNull("newEmail"));
     }
 
     @Test
     void passwordEmpty() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@gmail.com");
-            request.setNewEmail("arthur.araujo@hotmail.com");
-            request.setPassword("");
+        request.setOldEmail("arthur.araujo@gmail.com");
+        request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setPassword("");
 
-            request.validate();
-        }, emptyOrNull("password").getMessage());
+        assertValidationThrows(request, emptyOrNull("password"));
     }
 
     @Test
     void passwordNull() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("arthur.araujo@gmail.com");
-            request.setNewEmail("arthur.araujo@hotmail.com");
+        request.setOldEmail("arthur.araujo@gmail.com");
+        request.setNewEmail("arthur.araujo@hotmail.com");
 
-            request.validate();
-        }, emptyOrNull("password").getMessage());
+        assertValidationThrows(request, emptyOrNull("password"));
     }
 
 
     @Test
     void fieldsEmpty() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
+        UserEmailUpdateRequest request = new UserEmailUpdateRequest();
 
-            request.setOldEmail("");
-            request.setNewEmail("");
-            request.setPassword("");
+        request.setOldEmail("");
+        request.setNewEmail("");
+        request.setPassword("");
 
-            request.validate();
-        }, emptyOrNull("oldEmail").getMessage());
+        assertValidationThrows(request, emptyOrNull("oldEmail"));
     }
 
     @Test
     void fieldsNull() throws Exception {
-        assertThrows(() -> {
-            UserEmailUpdateRequest request = new UserEmailUpdateRequest();
-            request.validate();
-        }, emptyOrNull("oldEmail").getMessage());
+        assertValidationThrows(new UserEmailUpdateRequest(), emptyOrNull("oldEmail"));
     }
 }

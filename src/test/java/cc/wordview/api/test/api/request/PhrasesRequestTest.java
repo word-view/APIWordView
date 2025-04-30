@@ -22,114 +22,99 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static cc.wordview.api.test.api.request.TestException.*;
-
-public class PhrasesRequestTest {
+public class PhrasesRequestTest extends RequestTest {
     @Test
     void noException() {
-        assertDoesNotThrow(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("en");
-            request.setWordsLang("ja");
+        request.setPhraseLang("en");
+        request.setWordsLang("ja");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            keywords.add("a");
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("a");
 
-            request.setKeywords(keywords);
+        request.setKeywords(keywords);
 
-            request.validate();
-        });
+        assertValidationDoesNotThrow(request);
     }
 
     @Test
     void keywordsEmpty() throws Exception {
-        assertThrows(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("en");
-            request.setWordsLang("ja");
+        request.setPhraseLang("en");
+        request.setWordsLang("ja");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            request.setKeywords(keywords);
+        ArrayList<String> keywords = new ArrayList<>();
+        request.setKeywords(keywords);
 
-            request.validate();
-        }, "Specify at least 1 keyword");
+        assertValidationThrows(request, "Specify at least 1 keyword");
     }
 
     @Test
     void keywordsEmptyString() throws Exception {
-        assertThrows(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("en");
-            request.setWordsLang("ja");
+        request.setPhraseLang("en");
+        request.setWordsLang("ja");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            keywords.add("");
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("");
 
-            request.setKeywords(keywords);
+        request.setKeywords(keywords);
 
-            request.validate();
-        }, "One or more of the specified keywords are a empty string");
+        assertValidationThrows(request, "One or more of the specified keywords are a empty string");
     }
 
     @Test
     void keywordsEmptyStringAfterNonEmpty() throws Exception {
-        assertThrows(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("en");
-            request.setWordsLang("ja");
+        request.setPhraseLang("en");
+        request.setWordsLang("ja");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            keywords.add("a");
-            keywords.add("b");
-            keywords.add("c");
-            keywords.add("d");
-            keywords.add("");
-            keywords.add("e");
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("a");
+        keywords.add("b");
+        keywords.add("c");
+        keywords.add("d");
+        keywords.add("");
+        keywords.add("e");
 
-            request.setKeywords(keywords);
+        request.setKeywords(keywords);
 
-            request.validate();
-        }, "One or more of the specified keywords are a empty string");
+        assertValidationThrows(request, "One or more of the specified keywords are a empty string");
     }
 
     @Test
     void invalidPhraseLang() throws Exception {
-        assertThrows(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("AaAaaA");
-            request.setWordsLang("ja");
+        request.setPhraseLang("AaAaaA");
+        request.setWordsLang("ja");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            keywords.add("a");
-            keywords.add("b");
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("a");
+        keywords.add("b");
 
-            request.setKeywords(keywords);
+        request.setKeywords(keywords);
 
-            request.validate();
-        }, "Specified phrase language was not found");
+        assertValidationThrows(request, "Specified phrase language was not found");
     }
 
     @Test
     void invalidWordsLang() throws Exception {
-        assertThrows(() -> {
-            PhrasesRequest request = new PhrasesRequest();
+        PhrasesRequest request = new PhrasesRequest();
 
-            request.setPhraseLang("ja");
-            request.setWordsLang("AaAaaA");
+        request.setPhraseLang("ja");
+        request.setWordsLang("AaAaaA");
 
-            ArrayList<String> keywords = new ArrayList<>();
-            keywords.add("a");
-            keywords.add("b");
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("a");
+        keywords.add("b");
 
-            request.setKeywords(keywords);
+        request.setKeywords(keywords);
 
-            request.validate();
-        }, "Specified words language was not found");
+        assertValidationThrows(request, "Specified words language was not found");
     }
 }
