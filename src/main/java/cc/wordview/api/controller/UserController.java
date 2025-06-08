@@ -22,6 +22,7 @@ import static cc.wordview.api.controller.response.Response.ok;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.request.user.UserEmailUpdateRequest;
+import cc.wordview.api.response.user.NoCredentialsResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
@@ -66,7 +67,7 @@ public class UserController extends ServiceController<UserServiceInterface> {
 
 	@GetMapping("/me")
 	public ResponseEntity<?> getMe(HttpServletRequest request) {
-		return response(() -> ok(service.getMe(request)));
+		return response(() -> ok(new NoCredentialsResponse(service.getMe(request))));
 	}
 
 	@GetMapping("/{id}")
