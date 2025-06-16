@@ -17,7 +17,9 @@
 
 package cc.wordview.api.service;
 
+import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.repository.KnownWordsRepository;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
@@ -36,10 +38,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LessonService implements LessonServiceInterface {
         private static final Logger logger = LoggerFactory.getLogger(LessonService.class);
+
+        @Autowired
+        private KnownWordsRepository repository;
 
         @Autowired
         private WordViewResourceResolver resourceResolver;
@@ -67,6 +73,17 @@ public class LessonService implements LessonServiceInterface {
                 SimplePhrase chosen = ArrayUtil.random(availablePhrases);
 
                 return new Gson().toJson(chosen);
+        }
+
+        @Override
+        public KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException {
+                Optional<KnownWords> knownWords = repository.findByUserIdAndLang(userId, lang);
+
+                if (!knownWords.isPresent()) {
+                        throw new NoSuchEntryException("Unable to find known words for this language");
+                }
+
+                return knownWords.get();
         }
 
         @PostConstruct

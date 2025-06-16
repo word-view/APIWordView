@@ -15,14 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.repository;
 
 import cc.wordview.api.database.entity.KnownWords;
-import cc.wordview.api.exception.NoSuchEntryException;
+import org.springframework.data.repository.CrudRepository;
 
-import java.io.IOException;
+import java.util.Optional;
 
-public interface LessonServiceInterface {
-        String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
-        KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
+public interface KnownWordsRepository extends CrudRepository<KnownWords, Long>  {
+    Optional<KnownWords> findByUserIdAndLang(Long userId, String lang);
 }

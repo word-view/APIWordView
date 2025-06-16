@@ -17,6 +17,7 @@
 
 package cc.wordview.api.test.api.controller;
 
+import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -190,6 +191,31 @@ class LessonControllerTest extends ControllerTest {
         void getPhraseNonexistentWordsLanguage() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "aaaaaaaaaa", keywordsOf("hill")).toJson())
                         .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void getKnownWords() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=en", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("rain,world"));
+        }
+
+        @Test
+        void getKnownWordsInvalidLang() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=www", jwt)
+                        .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void getKnownWordsValidLangButNotKnown() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=pt", jwt)
+                        .andExpect(status().isNotFound());
         }
 
         private ArrayList<String> keywordsOf(String... words) {

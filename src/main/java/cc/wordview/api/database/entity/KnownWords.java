@@ -15,14 +15,32 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.database.entity;
 
-import cc.wordview.api.database.entity.KnownWords;
-import cc.wordview.api.exception.NoSuchEntryException;
+import jakarta.persistence.*;
+import lombok.Data;
 
-import java.io.IOException;
+import java.io.Serial;
+import java.io.Serializable;
 
-public interface LessonServiceInterface {
-        String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
-        KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
+@Entity
+@Data
+@Table(name = "known_words")
+public class KnownWords implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "lang")
+    private String lang;
+
+    @Column(name = "words")
+    private String words;
 }
