@@ -23,4 +23,12 @@ CREATE TABLE video_lyrics (
     lyrics_file varchar(128),
     time_offset int,
     PRIMARY KEY (id)
-)
+);
+
+CREATE TABLE known_words (
+    id bigint GENERATED ALWAYS AS IDENTITY,
+    user_id bigint,
+    lang varchar(64),
+    words varchar(5120),
+    PRIMARY KEY (id)
+);
