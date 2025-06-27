@@ -15,17 +15,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.test.api.controller.mockentity;
 
-import cc.wordview.api.database.entity.KnownWords;
-import cc.wordview.api.exception.NoSuchEntryException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
-public interface LessonServiceInterface {
-        String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
-        KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
-        Optional<KnownWords> optionalGetKnownWords(Long userId, String lang);
-        KnownWords insertKnownWords(KnownWords knownWords);
+@Data
+@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
+public class MockKnownWordsRequest extends MockEntity {
+    private String language;
+    private List<String> words;
 }

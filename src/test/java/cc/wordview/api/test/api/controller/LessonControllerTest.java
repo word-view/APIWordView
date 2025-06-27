@@ -18,10 +18,12 @@
 package cc.wordview.api.test.api.controller;
 
 import cc.wordview.api.test.api.MockValues;
+import cc.wordview.api.test.api.controller.mockentity.MockKnownWordsRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -216,6 +218,37 @@ class LessonControllerTest extends ControllerTest {
 
                 req.get("/lesson/words/known?lang=pt", jwt)
                         .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void insertNewKnownWords() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=ja", jwt)
+                        .andExpect(status().isNotFound());
+
+                req.post("/lesson/words/known", new MockKnownWordsRequest("ja", List.of("rain", "world")).toJson(), jwt)
+                        .andExpect(status().isOk());
+
+                req.get("/lesson/words/known?lang=ja", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("rain,world"));
+        }
+
+        @Test
+        void appendWordsToExistingKnownWords() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=en", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("rain,world"));
+
+                req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("umbrella", "clock")).toJson(), jwt)
+                        .andExpect(status().isOk());
+
+                req.get("/lesson/words/known?lang=en", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("umbrella,clock,rain,world"));
         }
 
         private ArrayList<String> keywordsOf(String... words) {

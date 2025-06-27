@@ -21,6 +21,7 @@ import cc.wordview.api.Application;
 import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.request.lesson.KnownWordsRequest;
 import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.response.PhrasesResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
@@ -31,6 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
@@ -73,6 +77,41 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
 
                         // the words will be split by ',' in the app itself
                         return ok(knownWords.getWords());
+                });
+        }
+
+        @PostMapping(path = "/words/known", consumes = "application/json")
+        public ResponseEntity<?> addKnownWords(HttpServletRequest req, @RequestBody KnownWordsRequest request) {
+                return response(() -> {
+                        User user = userService.getMe(req);
+                        Language language = Language.Companion.byTag(request.getLanguage());
+
+                        Optional<KnownWords> knownWordsOptional = service.optionalGetKnownWords(user.getId(), language.getTag());
+
+                        KnownWords knownWords = knownWordsOptional.orElseGet(KnownWords::new);
+
+                        knownWords.setUserId(user.getId());
+                        knownWords.setLang(language.getTag());
+
+                        List<String> words = new ArrayList<>();
+
+                        if (knownWords.getWords() != null) {
+                                words = Arrays.stream(knownWords.getWords().split(",")).toList();
+                        }
+
+                        List<String> requestWords = request.getWords();
+
+                        // this seems confusing because the existing `words` array cannot be modified
+                        // so here we need to modify the requested words to include the existing ones.
+                        // Not a real problem but a detail to note, in the end this inverts the order
+                        // of the saved array, this can be seen in the `LessonControllerTest.appendWordsToExistingKnownWords`.
+                        requestWords.addAll(words);
+
+                        knownWords.setWords(String.join(",", requestWords));
+
+                        service.insertKnownWords(knownWords);
+
+                        return ok();
                 });
         }
 }

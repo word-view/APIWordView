@@ -86,6 +86,16 @@ public class LessonService implements LessonServiceInterface {
                 return knownWords.get();
         }
 
+        @Override
+        public Optional<KnownWords> optionalGetKnownWords(Long userId, String lang) {
+                return repository.findByUserIdAndLang(userId, lang);
+        }
+
+        @Override
+        public KnownWords insertKnownWords(KnownWords entity) {
+                return repository.save(entity);
+        }
+
         @PostConstruct
         private void preloadPhrases() throws IOException {
                 String phrasesPath = resourceResolver.getPhrasesPath();
