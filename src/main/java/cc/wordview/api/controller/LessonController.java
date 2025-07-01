@@ -26,6 +26,7 @@ import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.response.PhrasesResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +108,9 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
                         // of the saved array, this can be seen in the `LessonControllerTest.appendWordsToExistingKnownWords`.
                         requestWords.addAll(words);
 
-                        knownWords.setWords(String.join(",", requestWords));
+                        ArrayList<String> wordsWithoutDuplicates = ArrayUtil.withoutDuplicates(requestWords);
+
+                        knownWords.setWords(String.join(",", wordsWithoutDuplicates));
 
                         service.insertKnownWords(knownWords);
 

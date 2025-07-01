@@ -251,6 +251,22 @@ class LessonControllerTest extends ControllerTest {
                         .andExpect(content().string("umbrella,clock,rain,world"));
         }
 
+        @Test
+        void appendRepeatedToKnownWords() throws Exception {
+                String jwt = MockValues.getUserJwt(mockMvc);
+
+                req.get("/lesson/words/known?lang=en", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("rain,world"));
+
+                req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("rain", "world")).toJson(), jwt)
+                        .andExpect(status().isOk());
+
+                req.get("/lesson/words/known?lang=en", jwt)
+                        .andExpect(status().isOk())
+                        .andExpect(content().string("rain,world"));
+        }
+
         private ArrayList<String> keywordsOf(String... words) {
                 return new ArrayList<>(Arrays.asList(words));
         }

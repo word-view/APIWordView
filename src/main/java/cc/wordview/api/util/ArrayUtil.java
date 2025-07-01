@@ -25,6 +25,12 @@ public class ArrayUtil {
                 return new ArrayList<>(set);
         }
 
+        public static <T> ArrayList<T> withoutDuplicates(List<T> list) {
+                Set<T> set = new HashSet<>(list);
+                return new ArrayList<>(set);
+        }
+
+
         public static <T> T random(ArrayList<T> list) {
                 if (list.isEmpty()) {
                         return null;
