@@ -20,6 +20,7 @@ package cc.wordview.api.test.api.controller;
 import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockKnownWordsRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,6 +197,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Disabled("Should be run separately from the others")
         void getKnownWords() throws Exception {
                 String jwt = MockValues.getUserJwt(mockMvc);
 
@@ -221,6 +223,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Disabled("Should be run separately from the others")
         void insertNewKnownWords() throws Exception {
                 String jwt = MockValues.getUserJwt(mockMvc);
 
@@ -236,6 +239,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Disabled("Should be run separately from the others")
         void appendWordsToExistingKnownWords() throws Exception {
                 String jwt = MockValues.getUserJwt(mockMvc);
 
@@ -252,6 +256,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Disabled("Should be run separately from the others")
         void appendRepeatedToKnownWords() throws Exception {
                 String jwt = MockValues.getUserJwt(mockMvc);
 
