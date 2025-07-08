@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestMethodOrder(OrderAnnotation.class)
@@ -60,12 +61,21 @@ class UserControllerTest extends ControllerTest {
 
 	@Test
 	@Order(5)
+	void getMeLessonTime() throws Exception {
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.get("/user/me/lesson_time", jwt)
+				.andExpect(status().isOk())
+				.andExpect(content().string("300000"));
+	}
+
+	@Test
+	@Order(6)
 	void getByInexistentId() throws Exception {
 		req.get("/user/64").andExpect(status().isNotFound());
 	}
 
 	@Test
-	@Order(6)
+	@Order(7)
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
@@ -73,7 +83,7 @@ class UserControllerTest extends ControllerTest {
 	}
 
 	@Test
-	@Order(7)
+	@Order(8)
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
@@ -81,7 +91,7 @@ class UserControllerTest extends ControllerTest {
 	}
 
 	@Test
-	@Order(8)
+	@Order(9)
 	void updateMeUsername() throws Exception {
 		String jwt = MockValues.getUserJwt(mockMvc);
 		req.put("/user/me", "{\"username\": \"uuu\"}", jwt).andExpect(status().isOk());

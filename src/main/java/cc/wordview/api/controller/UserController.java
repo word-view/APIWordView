@@ -100,6 +100,14 @@ public class UserController extends ServiceController<UserServiceInterface> {
 		});
 	}
 
+	@GetMapping("/me/lesson_time")
+	public ResponseEntity<?> lessonTime(HttpServletRequest req) {
+		return response(() -> {
+			User user = service.getMe(req);
+			return ok(user.getLessonTime());
+		});
+	}
+
 	@DeleteMapping("/me")
 	public ResponseEntity<?> delete(HttpServletRequest request) {
 		return response(() -> {
