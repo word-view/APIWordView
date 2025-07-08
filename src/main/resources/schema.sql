@@ -8,6 +8,7 @@ CREATE TABLE member (
     email varchar(255) UNIQUE,
     password varchar(255),
     role varchar(255),
+    lesson_time bigint DEFAULT 300000,
     PRIMARY KEY (id)
 );
 
