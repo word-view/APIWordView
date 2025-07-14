@@ -21,6 +21,7 @@ import static cc.wordview.api.controller.response.Response.created;
 import static cc.wordview.api.controller.response.Response.ok;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.user.UserEmailUpdateRequest;
 import cc.wordview.api.response.user.NoCredentialsResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,15 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import static cc.wordview.api.controller.response.ExceptionHandler.*;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.request.user.UserCreateRequest;
@@ -105,6 +98,23 @@ public class UserController extends ServiceController<UserServiceInterface> {
 		return response(() -> {
 			User user = service.getMe(req);
 			return ok(user.getLessonTime());
+		});
+	}
+
+	@PutMapping("/me/lesson_time")
+	public ResponseEntity<?> setLessonTime(HttpServletRequest req, @RequestParam Long time) {
+		return response(() -> {
+			User user = service.getMe(req);
+
+			if (time >= user.getLessonTime()) {
+				throw new RequestValidationException("time cannot be bigger or equal to the current time!");
+			}
+
+			user.setLessonTime(time);
+
+			service.insert(user);
+
+			return ok();
 		});
 	}
 

@@ -64,6 +64,17 @@ public class ControllerTestRequester {
         }
 
         /**
+         * Performs a PUT request in an API endpoint that uses JWT authentication.
+         * @param url The endpoint
+         * @param jwt The authentication token
+         * @return The result of the request
+         * @throws Exception If the request fails
+         */
+        public ResultActions put(String url, String jwt) throws Exception {
+                return mockMvc.perform(MockMvcRequestBuilders.put(API_PATH + url).header("Authorization", "Bearer " + jwt));
+        }
+
+        /**
          * Performs a DELETE request in an API endpoint that uses JWT authentication.
          * @param url The endpoint
          * @param jwt The authentication token

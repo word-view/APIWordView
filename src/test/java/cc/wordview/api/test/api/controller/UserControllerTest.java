@@ -70,12 +70,40 @@ class UserControllerTest extends ControllerTest {
 
 	@Test
 	@Order(6)
+	void setMeLessonTime() throws Exception {
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.put("/user/me/lesson_time?time=298000", jwt)
+				.andExpect(status().isOk());
+
+		req.get("/user/me/lesson_time", jwt)
+				.andExpect(status().isOk())
+				.andExpect(content().string("298000"));
+	}
+
+	@Test
+	@Order(7)
+	void setMeLessonTimeBigger() throws Exception {
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.put("/user/me/lesson_time?time=600000", jwt)
+				.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@Order(8)
+	void setMeLessonTimeEqual() throws Exception {
+		String jwt = MockValues.getUserJwt(mockMvc);
+		req.put("/user/me/lesson_time?time=300000", jwt)
+				.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@Order(9)
 	void getByInexistentId() throws Exception {
 		req.get("/user/64").andExpect(status().isNotFound());
 	}
 
 	@Test
-	@Order(7)
+	@Order(10)
 	void login() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "S_enha64");
 
@@ -83,7 +111,7 @@ class UserControllerTest extends ControllerTest {
 	}
 
 	@Test
-	@Order(8)
+	@Order(11)
 	void loginIncorrectCredentials() throws Exception {
 		MockUser user = new MockUser("arthur.araujo@gmail.com", "senha");
 
@@ -91,14 +119,14 @@ class UserControllerTest extends ControllerTest {
 	}
 
 	@Test
-	@Order(9)
+	@Order(12)
 	void updateMeUsername() throws Exception {
 		String jwt = MockValues.getUserJwt(mockMvc);
 		req.put("/user/me", "{\"username\": \"uuu\"}", jwt).andExpect(status().isOk());
 	}
 
 	@Test
-	@Order(10)
+	@Order(13)
 	void deleteMe() throws Exception {
 		String jwt = MockValues.getDisposableJwt(mockMvc);
 		req.delete("/user/me", jwt).andExpect(status().isOk());
