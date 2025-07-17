@@ -1,0 +1,17 @@
+[
+  {
+    "parent": "run",
+    "translations": [
+      { "ja": "走る" },
+      { "pt": "correr" },
+      { "en": "run" }
+    ]
+  },
+  {
+    "parent": "listen",
+    "translations": [
+      { "ja": "聞" },
+      { "en": "listen" }
+    ]
+  }
+]

@@ -23,10 +23,13 @@ import cc.wordview.api.repository.KnownWordsRepository;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
+import cc.wordview.api.service.util.SimpleTranslation;
+import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.WordViewResourceResolver;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -51,6 +55,7 @@ public class LessonService implements LessonServiceInterface {
         private WordViewResourceResolver resourceResolver;
 
         private final ArrayList<Phrase> phrases = new ArrayList<>();
+        private final ArrayList<Translation> translations = new ArrayList<>();
 
         @Override
         public String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException {
@@ -73,6 +78,32 @@ public class LessonService implements LessonServiceInterface {
                 SimplePhrase chosen = ArrayUtil.random(availablePhrases);
 
                 return new Gson().toJson(chosen);
+        }
+
+        @Override
+        public ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) {
+                ArrayList<SimpleTranslation> reqTranslations = new ArrayList<>();
+
+                for (Translation translation : translations) {
+                        String translatedWord = null;
+
+                        for (var aaa : translation.getTranslations()) {
+                                var tword = aaa.get(lang);
+                                if (tword != null) translatedWord = tword;
+                        }
+
+                        // it has no translations, skip
+                        if (translatedWord == null) continue;
+
+                        if (words.contains(translation.getParent())) {
+                                reqTranslations.add(new SimpleTranslation(
+                                        translation.getParent(),
+                                        translatedWord
+                                ));
+                        }
+                }
+
+                return reqTranslations;
         }
 
         @Override
@@ -105,9 +136,27 @@ public class LessonService implements LessonServiceInterface {
                 for (Path filePath : phraseFiles) {
                         String content = FileHelper.read(filePath.toFile());
 
-                        logger.info("Loading phrase file \"{}\"", filePath.getFileName().toString());
+                        logger.info("Loading phrase \"{}\"", filePath.getFileName().toString());
 
                         phrases.add(new Gson().fromJson(content, Phrase.class));
+                }
+        }
+
+        @PostConstruct
+        private void preloadTranslations() throws IOException {
+                String translationsPath = resourceResolver.getTranslationsPath();
+
+                List<Path> translationFiles = Files.list(Path.of(translationsPath)).toList();
+
+                for (Path filePath : translationFiles) {
+                        String content = FileHelper.read(filePath.toFile());
+
+                        logger.info("Loading translation \"{}\"", filePath.getFileName().toString());
+
+                        Type listType = new TypeToken<List<Translation>>(){}.getType();
+                        List<Translation> translationList = new Gson().fromJson(content, listType);
+
+                        translations.addAll(translationList);
                 }
         }
 }

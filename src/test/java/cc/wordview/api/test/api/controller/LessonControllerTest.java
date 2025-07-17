@@ -20,6 +20,7 @@ package cc.wordview.api.test.api.controller;
 import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockKnownWordsRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
+import cc.wordview.api.test.api.controller.mockentity.MockTranslationsRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -270,6 +271,75 @@ class LessonControllerTest extends ControllerTest {
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
                         .andExpect(content().string("rain,world"));
+        }
+
+        @Test
+        void getTranslation_Portuguese() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"correr\"}]"));
+        }
+
+        @Test
+        void getTranslationsOneWithout_Portuguese() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run", "listen")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"correr\"}]"));
+        }
+
+        @Test
+        void getTranslation_English() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"run\"}]"));
+        }
+
+        @Test
+        void get2Translations_English() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run", "listen")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"run\"},{\"parent\":\"listen\",\"translation\":\"listen\"}]"));
+        }
+
+        @Test
+        void getTranslation_Japanese() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"走る\"}]"));
+        }
+
+        @Test
+        void get2Translations_Japanese() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run", "listen")).toJson())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentType("application/json;charset=utf-8"))
+                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"走る\"},{\"parent\":\"listen\",\"translation\":\"聞\"}]"));
+        }
+
+        @Test
+        void getTranslation_UnknownLang() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("aaaaa", List.of("run")).toJson())
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
+        }
+
+        @Test
+        void getTranslation_EmptyWordsList() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of()).toJson())
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
+        }
+
+        @Test
+        void getTranslation_EmptyStringInWordsList() throws Exception {
+                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("")).toJson())
+                        .andExpect(status().isBadRequest())
+                        .andExpect(content().contentType("application/json;charset=utf-8"));
         }
 
         private ArrayList<String> keywordsOf(String... words) {
