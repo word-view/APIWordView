@@ -17,6 +17,7 @@
 
 package cc.wordview.api.response;
 
+import cc.wordview.api.service.util.SimpleTranslation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -25,6 +26,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 // TODO: Workaround for https://github.com/word-view/WordView-android/issues/93, should fix when its done
-public class PhrasesResponse {
-    private List<String> phrases;
+public class TranslationsResponse {
+    private List<SimpleTranslation> translations;
 }

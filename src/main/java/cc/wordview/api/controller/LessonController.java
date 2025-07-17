@@ -25,6 +25,7 @@ import cc.wordview.api.request.lesson.KnownWordsRequest;
 import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.request.lesson.TranslationsRequest;
 import cc.wordview.api.response.PhrasesResponse;
+import cc.wordview.api.response.TranslationsResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.service.util.SimpleTranslation;
@@ -77,7 +78,7 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
 
                         ArrayList<SimpleTranslation> translations = service.getTranslations(request.getLang(), request.getWords());
 
-                        return ok(translations);
+                        return ok(new TranslationsResponse(translations));
                 });
         }
 

@@ -278,7 +278,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"correr\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
         }
 
         @Test
@@ -286,7 +286,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"correr\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
         }
 
         @Test
@@ -294,7 +294,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"run\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"}]}"));
         }
 
         @Test
@@ -302,7 +302,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"run\"},{\"parent\":\"listen\",\"translation\":\"listen\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"},{\"parent\":\"listen\",\"translation\":\"listen\"}]}"));
         }
 
         @Test
@@ -310,7 +310,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"走る\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"}]}"));
         }
 
         @Test
@@ -318,7 +318,7 @@ class LessonControllerTest extends ControllerTest {
                 req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
                         .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("[{\"parent\":\"run\",\"translation\":\"走る\"},{\"parent\":\"listen\",\"translation\":\"聞\"}]"));
+                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"},{\"parent\":\"listen\",\"translation\":\"聞\"}]}"));
         }
 
         @Test
