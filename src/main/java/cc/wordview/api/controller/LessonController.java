@@ -23,9 +23,11 @@ import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.request.lesson.KnownWordsRequest;
 import cc.wordview.api.request.lesson.PhrasesRequest;
+import cc.wordview.api.request.lesson.TranslationsRequest;
 import cc.wordview.api.response.PhrasesResponse;
 import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,6 +67,17 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
                                 throw new NoSuchEntryException("Couldn't find any phrases matching these keywords");
 
                         return ok(new PhrasesResponse(phrases));
+                });
+        }
+
+        @PostMapping(path = "/translations", produces = "application/json;charset=utf-8", consumes = "application/json")
+        public ResponseEntity<?> getTranslations(@RequestBody TranslationsRequest request) {
+                return response(() -> {
+                        request.validate();
+
+                        ArrayList<SimpleTranslation> translations = service.getTranslations(request.getLang(), request.getWords());
+
+                        return ok(translations);
                 });
         }
 

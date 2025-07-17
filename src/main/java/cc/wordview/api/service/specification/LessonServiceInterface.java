@@ -19,12 +19,16 @@ package cc.wordview.api.service.specification;
 
 import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.service.util.SimpleTranslation;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface LessonServiceInterface {
         String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
+        ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) throws IOException, NoSuchEntryException;
         KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
         Optional<KnownWords> optionalGetKnownWords(Long userId, String lang);
         KnownWords insertKnownWords(KnownWords knownWords);
