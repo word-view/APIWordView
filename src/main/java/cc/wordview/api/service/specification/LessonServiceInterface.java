@@ -18,8 +18,10 @@
 package cc.wordview.api.service.specification;
 
 import cc.wordview.api.database.entity.KnownWords;
+import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.service.util.SimpleTranslation;
+import cc.wordview.gengolex.Language;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public interface LessonServiceInterface {
         ArrayList<String> getPhrases(String phraseLang, String wordsLang, List<String> keywords) throws IOException, NoSuchEntryException;
         ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) throws IOException, NoSuchEntryException;
         KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
-        Optional<KnownWords> optionalGetKnownWords(Long userId, String lang);
+        Optional<KnownWords> findKnownWords(Long userId, String lang);
+        void updateKnownWords(User user, Language language, List<String> wordsToAdd);
         KnownWords insertKnownWords(KnownWords knownWords);
 }

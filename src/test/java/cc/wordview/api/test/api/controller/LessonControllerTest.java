@@ -253,7 +253,7 @@ class LessonControllerTest extends ControllerTest {
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
-                        .andExpect(content().string("umbrella,clock,rain,world"));
+                        .andExpect(content().string("rain,world,umbrella,clock"));
         }
 
         @Test

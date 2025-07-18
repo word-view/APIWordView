@@ -18,6 +18,7 @@
 package cc.wordview.api.service;
 
 import cc.wordview.api.database.entity.KnownWords;
+import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.repository.KnownWordsRepository;
 import cc.wordview.api.service.specification.LessonServiceInterface;
@@ -28,6 +29,7 @@ import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.gengolex.Language;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import jakarta.annotation.PostConstruct;
@@ -41,6 +43,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,8 +138,30 @@ public class LessonService implements LessonServiceInterface {
         }
 
         @Override
-        public Optional<KnownWords> optionalGetKnownWords(Long userId, String lang) {
+        public Optional<KnownWords> findKnownWords(Long userId, String lang) {
                 return repository.findByUserIdAndLang(userId, lang);
+        }
+
+        @Override
+        public void updateKnownWords(User user, Language language, List<String> wordsToAdd) {
+                Optional<KnownWords> knownWordsOpt = findKnownWords(user.getId(), language.getTag());
+                KnownWords knownWords = knownWordsOpt.orElseGet(KnownWords::new);
+
+                knownWords.setUserId(user.getId());
+                knownWords.setLang(language.getTag());
+
+                String wordsKnownList = knownWords.getWords();
+
+                if (wordsKnownList != null) {
+                        List<String> alreadyKnownWords = Arrays.stream(knownWords.getWords().split(",")).toList();
+                        wordsToAdd.addAll(alreadyKnownWords);
+                }
+
+                ArrayList<String> wordsWithoutDuplicates = ArrayUtil.withoutDuplicates(wordsToAdd);
+
+                knownWords.setWords(String.join(",", wordsWithoutDuplicates));
+
+                insertKnownWords(knownWords);
         }
 
         @Override
