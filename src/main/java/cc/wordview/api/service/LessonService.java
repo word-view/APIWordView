@@ -143,7 +143,7 @@ public class LessonService implements LessonServiceInterface {
         }
 
         @Override
-        public void updateKnownWords(User user, Language language, List<String> wordsToAdd) {
+        public void addKnownWords(User user, Language language, List<String> wordsToAdd) {
                 Optional<KnownWords> knownWordsOpt = findKnownWords(user.getId(), language.getTag());
                 KnownWords knownWords = knownWordsOpt.orElseGet(KnownWords::new);
 
@@ -164,9 +164,8 @@ public class LessonService implements LessonServiceInterface {
                 insertKnownWords(knownWords);
         }
 
-        @Override
-        public KnownWords insertKnownWords(KnownWords entity) {
-                return repository.save(entity);
+        private void insertKnownWords(KnownWords entity) {
+                repository.save(entity);
         }
 
         @PostConstruct

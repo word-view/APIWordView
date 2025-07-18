@@ -94,7 +94,7 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
                         Language language = Language.Companion.byTag(request.getLanguage());
                         List<String> wordsToAdd = request.getWords();
 
-                        service.updateKnownWords(user, language, wordsToAdd);
+                        service.addKnownWords(user, language, wordsToAdd);
 
                         return ok();
                 });
