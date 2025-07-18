@@ -37,8 +37,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenProvider {
-	@Value("${security.jwt.token.expire-length:3600000}")
-	private long validityInMilliseconds = 3600000; // 1h
+	@Value("${security.jwt.token.expire-length:604800000}")
+	private long validityInMilliseconds = 604800000; // 7 days
 
 	@Autowired
 	private MyUserDetails myUserDetails;
@@ -80,7 +80,7 @@ public class JwtTokenProvider {
 			Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
-			throw new Exception("JWT Token inválido ou já expirou.");
+			throw new Exception("JWT token is invalid or has already expired.");
 		}
 	}
 
