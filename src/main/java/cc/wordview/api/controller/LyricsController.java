@@ -45,14 +45,18 @@ public class LyricsController extends ServiceController<LyricsService> {
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) {
                 return response(() -> {
-                        String lyrics = service.getLyrics(id, URLDecoder.decode(trackName), URLDecoder.decode(artistName), lang);
+                        String decodedTrackName =  URLDecoder.decode(trackName);
+                        String decodedArtistName =  URLDecoder.decode(artistName);
+
+                        String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang)
+                                // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
+                                .replace("\n", " ");
 
                         String dictionariesPath = resourceResolver.getDictionariesPath();
 
                         Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
 
-                        // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
-                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
+                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics));
 
                         return ok(new LyricsResponse(lyrics, words));
                 });
