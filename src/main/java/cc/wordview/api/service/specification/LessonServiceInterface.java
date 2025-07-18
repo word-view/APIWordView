@@ -28,6 +28,7 @@ import java.util.Optional;
 
 public interface LessonServiceInterface {
         String getPhrase(String phraseLang, String wordsLang, String keyword) throws IOException, NoSuchEntryException;
+        ArrayList<String> getPhrases(String phraseLang, String wordsLang, List<String> keywords) throws IOException, NoSuchEntryException;
         ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) throws IOException, NoSuchEntryException;
         KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException;
         Optional<KnownWords> optionalGetKnownWords(Long userId, String lang);

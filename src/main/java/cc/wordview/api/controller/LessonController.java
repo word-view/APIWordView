@@ -55,17 +55,11 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
                 return response(() -> {
                         request.validate();
 
-                        ArrayList<String> phrases = new ArrayList<>();
+                        String phraseLang = request.getPhraseLang();
+                        String wordsLang = request.getWordsLang();
+                        List<String> keywords = request.getKeywords();
 
-                        for (String keyword : request.getKeywords()) {
-                                try {
-                                        String phrase = service.getPhrase(request.getPhraseLang(), request.getWordsLang(), keyword);
-                                        phrases.add(phrase);
-                                } catch (NoSuchEntryException ignored) {}
-                        }
-
-                        if (phrases.isEmpty())
-                                throw new NoSuchEntryException("Couldn't find any phrases matching these keywords");
+                        ArrayList<String> phrases = service.getPhrases(phraseLang, wordsLang, keywords);
 
                         return ok(new PhrasesResponse(phrases));
                 });

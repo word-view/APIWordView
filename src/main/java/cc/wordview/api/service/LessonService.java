@@ -81,6 +81,23 @@ public class LessonService implements LessonServiceInterface {
         }
 
         @Override
+        public ArrayList<String> getPhrases(String phraseLang, String wordsLang, List<String> keywords) throws IOException, NoSuchEntryException {
+                ArrayList<String> phrases = new ArrayList<>();
+
+                for (String keyword : keywords) {
+                        try {
+                                String phrase = getPhrase(phraseLang, wordsLang, keyword);
+                                phrases.add(phrase);
+                        } catch (NoSuchEntryException ignored) {}
+                }
+
+                if (phrases.isEmpty())
+                        throw new NoSuchEntryException("Couldn't find any phrases matching these keywords");
+
+                return phrases;
+        }
+
+        @Override
         public ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) {
                 ArrayList<SimpleTranslation> reqTranslations = new ArrayList<>();
 
