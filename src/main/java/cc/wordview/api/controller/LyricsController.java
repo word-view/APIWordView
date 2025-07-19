@@ -48,15 +48,13 @@ public class LyricsController extends ServiceController<LyricsService> {
                         String decodedTrackName =  URLDecoder.decode(trackName);
                         String decodedArtistName =  URLDecoder.decode(artistName);
 
-                        String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang)
-                                // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
-                                .replace("\n", " ");
+                        String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang);
 
                         String dictionariesPath = resourceResolver.getDictionariesPath();
 
                         Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
 
-                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics));
+                        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
                         return ok(new LyricsResponse(lyrics, words));
                 });
