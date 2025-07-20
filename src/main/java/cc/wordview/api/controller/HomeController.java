@@ -64,6 +64,14 @@ public class HomeController {
                             "https://i.ytimg.com/vi_webp/HCTunqv1Xt4/maxresdefault.webp"
                     ).toJsonObject()
             );
+            editorsPickArray.add(
+                    new VideoEntry(
+                            "9NPv4q57on8",
+                            "Ano yume wo nazotte",
+                            "YOASOBI",
+                            "https://i.ytimg.com/vi_webp/9NPv4q57on8/maxresdefault.webp"
+                    ).toJsonObject()
+            );
 
             JsonObject responseObject = new JsonObject();
             responseObject.add("editors-pick", editorsPickArray);
