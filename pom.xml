@@ -118,7 +118,7 @@
         <dependency>
             <groupId>com.github.TeamNewPipe</groupId>
             <artifactId>NewPipeExtractor</artifactId>
-            <version>v0.24.4</version>
+            <version>v0.24.6</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
