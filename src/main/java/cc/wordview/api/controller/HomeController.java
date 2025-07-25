@@ -42,6 +42,14 @@ public class HomeController {
 
             editorsPickArray.add(
                     new VideoEntry(
+                        "6gluNoLVKiQ",
+                            "Eleanor Rigby (Remastered 2015)",
+                            "The Beatles",
+                            "https://i.ytimg.com/vi_webp/6gluNoLVKiQ/maxresdefault.webp"
+                    ).toJsonObject()
+            );
+            editorsPickArray.add(
+                    new VideoEntry(
                             "ZnUEeXpxBJ0",
                             "Aquarela",
                             "Toquinho",
