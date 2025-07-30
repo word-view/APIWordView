@@ -49,6 +49,9 @@ public class WordViewResourceResolver {
         @Value("${wordview.translations_path}")
         private String translationsPath;
 
+        @Value("${wordview.others_path}")
+        private String othersPath;
+
         @PostConstruct
         public void debugShowPaths() {
                 logger.info("""
@@ -58,8 +61,9 @@ public class WordViewResourceResolver {
                                         Lyrics Path: {}
                                         Phrases Path: {}
                                         Translations Path: {}
+                                        Others Path: {}
                                 """,
-                        dictionariesPath, imagesPath, lyricsPath, phrasesPath, translationsPath);
+                        dictionariesPath, imagesPath, lyricsPath, phrasesPath, translationsPath, othersPath);
         }
 
         public String getDictionariesPath() throws IOException {
@@ -80,6 +84,10 @@ public class WordViewResourceResolver {
 
         public String getTranslationsPath() throws IOException {
                 return resolvePathOrClasspath(translationsPath);
+        }
+
+        public String getOthersPath() throws IOException {
+                return resolvePathOrClasspath(othersPath);
         }
 
         /**
