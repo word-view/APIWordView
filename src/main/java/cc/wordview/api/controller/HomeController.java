@@ -18,15 +18,14 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import cc.wordview.api.util.WordViewResourceResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
@@ -35,71 +34,19 @@ import static cc.wordview.api.controller.response.Response.ok;
 @CrossOrigin(origins = Application.CORS_ORIGIN)
 @RequestMapping(path = Application.API_PATH + "/home")
 public class HomeController {
+    @Autowired
+    private WordViewResourceResolver resourceResolver;
+
     @GetMapping(produces = "application/json;charset=utf-8")
-    public ResponseEntity<?> getEditorsPick() {
+    public ResponseEntity<?> getHome() {
         return response(() -> {
-            JsonArray editorsPickArray = new JsonArray();
+            InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json");
 
-            editorsPickArray.add(
-                    new VideoEntry(
-                        "6gluNoLVKiQ",
-                            "Eleanor Rigby (Remastered 2015)",
-                            "The Beatles",
-                            "https://i.ytimg.com/vi_webp/6gluNoLVKiQ/maxresdefault.webp"
-                    ).toJsonObject()
-            );
-            editorsPickArray.add(
-                    new VideoEntry(
-                            "ZnUEeXpxBJ0",
-                            "Aquarela",
-                            "Toquinho",
-                            "https://i.ytimg.com/vi_webp/ZnUEeXpxBJ0/maxresdefault.webp"
-                    ).toJsonObject()
-            );
-            editorsPickArray.add(
-                    new VideoEntry(
-                            "ZpT9VCUS54s",
-                            "Suisei no parade",
-                            "majiko",
-                            "https://i.ytimg.com/vi_webp/ZpT9VCUS54s/maxresdefault.webp"
-                    ).toJsonObject()
-            );
-            editorsPickArray.add(
-                    new VideoEntry(
-                            "HCTunqv1Xt4",
-                            "When I'm Sixty Four",
-                            "The Beatles",
-                            "https://i.ytimg.com/vi_webp/HCTunqv1Xt4/maxresdefault.webp"
-                    ).toJsonObject()
-            );
-            editorsPickArray.add(
-                    new VideoEntry(
-                            "9NPv4q57on8",
-                            "Ano yume wo nazotte",
-                            "YOASOBI",
-                            "https://i.ytimg.com/vi_webp/9NPv4q57on8/maxresdefault.webp"
-                    ).toJsonObject()
-            );
+            String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
+                    .replace("\n", "");
 
-            JsonObject responseObject = new JsonObject();
-            responseObject.add("editors-pick", editorsPickArray);
 
-            return ok(responseObject.toString());
+            return ok(text.trim());
         });
-    }
-}
-
-@Getter
-@Setter
-@AllArgsConstructor
-class VideoEntry {
-    private String id;
-    private String title;
-    private String artist;
-    private String cover;
-
-    public JsonObject toJsonObject() {
-        String jsonString = new Gson().toJson(this);
-        return JsonParser.parseString(jsonString).getAsJsonObject();
     }
 }
