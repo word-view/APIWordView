@@ -36,6 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @RestController
 @CrossOrigin(origins = Application.CORS_ORIGIN)
@@ -61,13 +62,10 @@ public class ImageController {
         private void preloadImages() throws IOException {
                 String imagesPath = resourceResolver.getImagesPath();
 
-                try {
-                        Files.walk(Path.of(imagesPath))
-                                .filter(Files::isRegularFile)
+                try (Stream<Path> paths = Files.walk(Path.of(imagesPath))) {
+                        paths.filter(Files::isRegularFile)
                                 .forEach(file -> {
-                                        try {
-                                                InputStream stream = new FileInputStream(file.toString());
-
+                                        try (InputStream stream = new FileInputStream(file.toString())) {
                                                 String[] parts = file.toString().split("/");
                                                 String imageName = parts[parts.length - 1].replace(".png", "");
 
@@ -79,7 +77,7 @@ public class ImageController {
                                         }
                                 });
                 } catch (IOException e) {
-                        logger.error("Failed to read the images directory", e);
+                        logger.error("Failed to walk through directory: " + imagesPath, e);
                 }
         }
 }
