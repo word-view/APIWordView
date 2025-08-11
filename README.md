@@ -1,6 +1,11 @@
 # API WordView
 The backend of the WordView App
 
+# Running
+```sh
+  ./mvnw spring-boot:run
+```
+
 # Running (Docker)
 First, build the docker image
 ```sh
