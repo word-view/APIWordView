@@ -27,7 +27,7 @@ class DictionaryControllerTest extends ControllerTest {
     void getDictionary() throws Exception {
         req.post("/dictionary", "{\"lang\":\"ja\", \"text\": \"走る, 聞いて\"}")
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"dictionary\":[{\"parent\":\"listen\",\"word\":\"聞いて\",\"representable\":false,\"pronunciation\":null},{\"parent\":\"run\",\"word\":\"走る\",\"representable\":false,\"pronunciation\":null}]}"));
+                .andExpect(content().json("{\"dictionary\":[{\"parent\":\"listen\",\"word\":\"聞いて\",\"representable\":false},{\"parent\":\"run\",\"word\":\"走る\",\"representable\":false}]}"));
     }
 
     @Test
