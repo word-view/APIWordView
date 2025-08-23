@@ -74,7 +74,8 @@ public class ApiExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .code(status.value())
                 .status(status.name())
-                .errors(List.of(e.getMessage()))
+                .message(e.getMessage())
+                .exceptionName(e.getClass().getSimpleName())
                 .build();
 
         return new ResponseEntity<>(apiError, status);
