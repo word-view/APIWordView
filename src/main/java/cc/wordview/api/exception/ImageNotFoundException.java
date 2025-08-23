@@ -19,6 +19,6 @@ package cc.wordview.api.exception;
 
 public class ImageNotFoundException extends Exception {
     public ImageNotFoundException(String message) {
-        super("ImageNotFoundException: " + message);
+        super(message);
     }
 }
