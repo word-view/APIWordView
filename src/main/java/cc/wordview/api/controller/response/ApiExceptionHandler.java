@@ -17,13 +17,9 @@
 
 package cc.wordview.api.controller.response;
 
-import cc.wordview.api.exception.ImageNotFoundException;
-import cc.wordview.api.exception.IncorrectCredentialsException;
-import cc.wordview.api.exception.NoSuchEntryException;
-import cc.wordview.api.exception.RequestValidationException;
+import cc.wordview.api.exception.*;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
-import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,7 +31,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class ExceptionHandlerV2 {
+public class ApiExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> generic(Exception e) {
         return error(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -62,7 +58,7 @@ public class ExceptionHandlerV2 {
         return error(HttpStatus.NOT_FOUND, e);
     }
 
-    @ExceptionHandler(ValueInstantiationException.class)
+    @ExceptionHandler(ValueTakenException.class)
     public ResponseEntity<ApiError> forbidden(Exception e) {
         return error(HttpStatus.FORBIDDEN, e);
     }

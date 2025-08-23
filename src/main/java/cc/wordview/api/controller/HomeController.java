@@ -24,10 +24,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
@@ -38,14 +38,12 @@ public class HomeController {
     private WordViewResourceResolver resourceResolver;
 
     @GetMapping(produces = "application/json;charset=utf-8")
-    public ResponseEntity<?> getHome() {
-        return response(() -> {
-            try(InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json")) {
-                String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
-                        .replace("\n", "");
+    public ResponseEntity<?> getHome() throws IOException {
+        try(InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json")) {
+            String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
+                    .replace("\n", "");
 
-                return ok(text.trim());
-            }
-        });
+            return ok(text.trim());
+        }
     }
 }

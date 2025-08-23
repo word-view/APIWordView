@@ -24,15 +24,16 @@ import cc.wordview.api.response.DictionaryResponse;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.gengolex.Language;
+import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.word.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
@@ -43,8 +44,7 @@ public class DictionaryController {
     private WordViewResourceResolver resourceResolver;
 
     @PostMapping(produces = "application/json;charset=utf-8", consumes = "application/json")
-    public ResponseEntity<?> getLyrics(@RequestBody DictionaryRequest request) {
-        return response(() -> {
+    public ResponseEntity<?> getLyrics(@RequestBody DictionaryRequest request) throws RequestValidationException, IOException, LanguageNotFoundException {
             request.validate();
 
             String text = request.getText();
@@ -57,6 +57,5 @@ public class DictionaryController {
             ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(text.replace("\n", " ")));
 
             return ok(new DictionaryResponse(words));
-        });
     }
 }
