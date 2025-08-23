@@ -77,7 +77,7 @@ public class ImageController {
                                         }
                                 });
                 } catch (IOException e) {
-                        logger.error("Failed to walk through directory: " + imagesPath, e);
+                    logger.error("Failed to walk through directory: {}", imagesPath, e);
                 }
         }
 }
