@@ -20,6 +20,8 @@ package cc.wordview.api.controller;
 import cc.wordview.api.Application;
 import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.database.entity.User;
+import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.lesson.KnownWordsRequest;
 import cc.wordview.api.request.lesson.PhrasesRequest;
 import cc.wordview.api.request.lesson.TranslationsRequest;
@@ -29,14 +31,16 @@ import cc.wordview.api.service.specification.LessonServiceInterface;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.gengolex.Language;
+import cc.wordview.gengolex.LanguageNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
@@ -47,56 +51,48 @@ public class LessonController extends ServiceController<LessonServiceInterface> 
         private UserServiceInterface userService;
 
         @PostMapping(path = "/phrase", produces = "application/json;charset=utf-8", consumes = "application/json")
-        public ResponseEntity<?> getPhrase(@RequestBody PhrasesRequest request) {
-                return response(() -> {
-                        request.validate();
+        public ResponseEntity<?> getPhrase(@RequestBody PhrasesRequest request) throws RequestValidationException, NoSuchEntryException, IOException {
+                request.validate();
 
-                        String phraseLang = request.getPhraseLang();
-                        String wordsLang = request.getWordsLang();
-                        List<String> keywords = request.getKeywords();
+                String phraseLang = request.getPhraseLang();
+                String wordsLang = request.getWordsLang();
+                List<String> keywords = request.getKeywords();
 
-                        ArrayList<String> phrases = service.getPhrases(phraseLang, wordsLang, keywords);
+                ArrayList<String> phrases = service.getPhrases(phraseLang, wordsLang, keywords);
 
-                        return ok(new PhrasesResponse(phrases));
-                });
+                return ok(new PhrasesResponse(phrases));
         }
 
         @PostMapping(path = "/translations", produces = "application/json;charset=utf-8", consumes = "application/json")
-        public ResponseEntity<?> getTranslations(@RequestBody TranslationsRequest request) {
-                return response(() -> {
-                        request.validate();
+        public ResponseEntity<?> getTranslations(@RequestBody TranslationsRequest request) throws RequestValidationException, NoSuchEntryException, IOException {
+                request.validate();
 
-                        ArrayList<SimpleTranslation> translations = service.getTranslations(request.getLang(), request.getWords());
+                ArrayList<SimpleTranslation> translations = service.getTranslations(request.getLang(), request.getWords());
 
-                        return ok(new TranslationsResponse(translations));
-                });
+                return ok(new TranslationsResponse(translations));
         }
 
         @GetMapping(path = "/words/known")
-        public ResponseEntity<?> getKnownWords(HttpServletRequest request, @RequestParam String lang) {
-                return response(() -> {
-                        User user = userService.getMe(request);
-                        Language language = Language.Companion.byTag(lang);
+        public ResponseEntity<?> getKnownWords(HttpServletRequest request, @RequestParam String lang) throws NoSuchEntryException, LanguageNotFoundException {
+                User user = userService.getMe(request);
+                Language language = Language.Companion.byTag(lang);
 
-                        KnownWords knownWords = service.getKnownWords(user.getId(), language.getTag());
+                KnownWords knownWords = service.getKnownWords(user.getId(), language.getTag());
 
-                        // the words will be split by ',' in the app itself
-                        return ok(knownWords.getWords());
-                });
+                // the words will be split by ',' in the app itself
+                return ok(knownWords.getWords());
         }
 
         @PostMapping(path = "/words/known", consumes = "application/json")
-        public ResponseEntity<?> addKnownWords(HttpServletRequest req, @RequestBody KnownWordsRequest request) {
-                return response(() -> {
-                        request.validate();
+        public ResponseEntity<?> addKnownWords(HttpServletRequest req, @RequestBody KnownWordsRequest request) throws RequestValidationException, NoSuchEntryException, LanguageNotFoundException {
+                request.validate();
 
-                        User user = userService.getMe(req);
-                        Language language = Language.Companion.byTag(request.getLanguage());
-                        List<String> wordsToAdd = request.getWords();
+                User user = userService.getMe(req);
+                Language language = Language.Companion.byTag(request.getLanguage());
+                List<String> wordsToAdd = request.getWords();
 
-                        service.addKnownWords(user, language, wordsToAdd);
+                service.addKnownWords(user, language, wordsToAdd);
 
-                        return ok();
-                });
+                return ok();
         }
 }

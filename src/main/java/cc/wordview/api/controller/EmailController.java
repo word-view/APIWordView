@@ -27,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static cc.wordview.api.controller.response.ExceptionHandler.response;
 import static cc.wordview.api.controller.response.Response.badRequest;
 import static cc.wordview.api.controller.response.Response.ok;
 
@@ -42,19 +41,17 @@ public class EmailController extends ServiceController<EmailServiceInterface> {
         private EmailServiceInterface service;
 
         @GetMapping
-        public ResponseEntity<?> addEmail(@RequestParam String email) {
-                return response(() -> {
-                        if (RequestValidation.invalidEmail(email)) {
-                                return badRequest("Invalid email!");
-                        }
+        public ResponseEntity<?> addEmail(@RequestParam String email) throws Exception {
+                if (RequestValidation.invalidEmail(email)) {
+                        return badRequest("Invalid email!");
+                }
 
-                        Email emailEntity = new Email();
-                        emailEntity.setEmail(email);
-                        service.insert(emailEntity);
+                Email emailEntity = new Email();
+                emailEntity.setEmail(email);
+                service.insert(emailEntity);
 
-                        logger.info("A new email has arrived! (%s)".formatted(email));
+                logger.info("A new email has arrived! (%s)".formatted(email));
 
-                        return ok("OK!");
-                });
+                return ok("OK!");
         }
 }
