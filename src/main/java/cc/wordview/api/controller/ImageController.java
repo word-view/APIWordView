@@ -18,16 +18,15 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.exception.ImageNotFoundException;
 import cc.wordview.api.util.WordViewResourceResolver;
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -50,11 +49,11 @@ public class ImageController {
         private final Map<String, byte[]> images = new HashMap<>();
 
         @GetMapping(produces = MediaType.IMAGE_PNG_VALUE)
-        public @ResponseBody byte[] getImage(@RequestParam String parent) throws ResponseStatusException {
+        public @ResponseBody byte[] getImage(@RequestParam String parent) throws ImageNotFoundException {
                 byte[] image = images.get(parent);
 
                 if (image == null) {
-                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found");
+                        throw new ImageNotFoundException("Unable to find a image with this parent");
                 } else return image;
         }
 
