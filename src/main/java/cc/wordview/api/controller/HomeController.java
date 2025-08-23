@@ -40,13 +40,12 @@ public class HomeController {
     @GetMapping(produces = "application/json;charset=utf-8")
     public ResponseEntity<?> getHome() {
         return response(() -> {
-            InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json");
+            try(InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json")) {
+                String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
+                        .replace("\n", "");
 
-            String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
-                    .replace("\n", "");
-
-
-            return ok(text.trim());
+                return ok(text.trim());
+            }
         });
     }
 }
