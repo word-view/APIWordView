@@ -48,7 +48,7 @@ import java.util.Objects;
 public class LyricsService implements LyricsServiceInterface {
         private static final Logger logger = LoggerFactory.getLogger(LyricsService.class);
 
-        private static final StreamingService YTService;
+        private static StreamingService YTService;
 
         private final WordFind client = new WordFind();
 
@@ -59,20 +59,6 @@ public class LyricsService implements LyricsServiceInterface {
 
         @Autowired
         private VideoLyricsServiceInterface videoLyricsService;
-
-        static {
-                // initializing NewPipe here seems inappropriate, but I do it here anyway, so I don't have to initialize
-                // both in the Application class and the tests at the same time.
-                DownloaderImpl.init(null);
-                NewPipe.init(DownloaderImpl.getInstance());
-
-                try {
-                        YTService = NewPipe.getService(0);
-                } catch (ExtractionException e) {
-                        throw new RuntimeException(e);
-                }
-        }
-
 
         @Override
         public String getLyrics(String id, String trackName, String artistName, String langTag) throws IOException, LyricsNotFoundException {
@@ -125,6 +111,14 @@ public class LyricsService implements LyricsServiceInterface {
                 if (res != null) return res;
                 else
                         throw new LyricsNotFoundException("Could not find lyrics for %s".formatted(videoLyrics.getLyricsFile()));
+        }
+
+        @PostConstruct
+        private void initNewPipe() throws ExtractionException {
+                DownloaderImpl.init(null);
+                NewPipe.init(DownloaderImpl.getInstance());
+
+                YTService = NewPipe.getService(0);
         }
 
         @PostConstruct
