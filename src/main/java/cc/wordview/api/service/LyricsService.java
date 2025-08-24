@@ -64,13 +64,12 @@ public class LyricsService implements LyricsServiceInterface {
         public String getLyrics(String id, String trackName, String artistName, String langTag) throws IOException, LyricsNotFoundException {
                 String lyrics = getLyricsWordView(id);
 
-                if (lyrics == null) {
+                if (lyrics == null)
                     lyrics = getLyricsYT(id, langTag);
 
-                    if (lyrics == null) {
-                        lyrics = getLyricsExternal(trackName, artistName);
-                    }
-                }
+                if (lyrics == null)
+                    lyrics = getLyricsExternal(trackName, artistName);
+
 
                 if (Objects.equals(lyrics, "WEBVTT\n\n# This WEBVTT was converted from LRC and might contain errors\n\n")) {
                         throw new LyricsNotFoundException("Unable to find lyrics for %s".formatted(trackName));
