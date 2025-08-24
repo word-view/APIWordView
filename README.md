@@ -27,9 +27,7 @@ docker run -p 8080:8080 -t api-wordview
 # Running (JAR)
 Running from the jar is not recommended as i only deploy a new version when i update the server
 ```sh
-  # Compile the JAR
-  ./mvnw package
-
-  # Run either with --prod (production) or --dev
-  java -jar target/wordview-0.0.4-SNAPSHOT-exec.jar --prod
+  # Download from releases
+  # And run either with --prod (production) or --dev
+  java -jar ./wordview-0.0.4-SNAPSHOT-exec.jar --prod
 ```
