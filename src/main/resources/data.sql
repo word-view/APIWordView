@@ -15,6 +15,6 @@ INSERT INTO member (username, email, password, role) VALUES
 
 INSERT INTO email (email) VALUES ('mock.user@gmail.com');
 
-INSERT INTO known_words (user_id, lang, words) VALUES (3, 'en', 'rain,world');
+INSERT INTO known_words (user_id, lang, words) VALUES (5, 'en', 'rain,world');
 
 INSERT INTO video_lyrics (video_id, lyrics_file, time_offset) VALUES ('ZnUEeXpxBJ0', 'aquarela', 0);

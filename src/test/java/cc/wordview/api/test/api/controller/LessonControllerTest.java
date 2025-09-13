@@ -21,9 +21,8 @@ import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockKnownWordsRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockTranslationsRequest;
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +30,10 @@ import java.util.List;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Ignore
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LessonControllerTest extends ControllerTest {
         @Test
+        @Order(1)
         void getSinglePhrase() throws Exception {
                 // en -> ja
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘")).toJson())
@@ -103,6 +103,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(2)
         void getMultiplePhrases() throws Exception {
                 // en -> ja
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "雨", "空")).toJson())
@@ -133,6 +134,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(3)
         void getPhrasesOneMissing() throws Exception {
                 // en -> ja
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "ssssss", "空")).toJson())
@@ -163,6 +165,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(4)
         void getPhrasesAllMissing() throws Exception {
                 // en -> ja
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("aaaaa", "ssssss", "bbbbb")).toJson())
@@ -182,27 +185,30 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(5)
         void getPhraseNonexistentKeyword() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("aaaaaaaaaa")).toJson())
                         .andExpect(status().isNotFound());
         }
 
         @Test
+        @Order(6)
         void getPhraseNonexistentPhraseLanguage() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("aaaaaaaaaaaaa", "en", keywordsOf("hill")).toJson())
                         .andExpect(status().isBadRequest());
         }
 
         @Test
+        @Order(7)
         void getPhraseNonexistentWordsLanguage() throws Exception {
                 req.post("/lesson/phrase", new MockPhraseRequest("en", "aaaaaaaaaa", keywordsOf("hill")).toJson())
                         .andExpect(status().isBadRequest());
         }
 
         @Test
-        @Disabled("Should be run separately from the others")
+        @Order(8)
         void getKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
@@ -210,25 +216,27 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(9)
         void getKnownWordsInvalidLang() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=www", jwt)
                         .andExpect(status().isNotFound());
         }
 
         @Test
+        @Order(10)
         void getKnownWordsValidLangButNotKnown() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=pt", jwt)
                         .andExpect(status().isNotFound());
         }
 
         @Test
-        @Disabled("Should be run separately from the others")
+        @Order(11)
         void insertNewKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=ja", jwt)
                         .andExpect(status().isNotFound());
@@ -242,9 +250,9 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
-        @Disabled("Should be run separately from the others")
+        @Order(12)
         void appendWordsToExistingKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
@@ -259,23 +267,24 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
-        @Disabled("Should be run separately from the others")
+        @Order(13)
         void appendRepeatedToKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+                String jwt = MockValues.getAdmJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world"));
+                        .andExpect(content().string("rain,world,umbrella,clock"));
 
                 req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("rain", "world")).toJson(), jwt)
                         .andExpect(status().isOk());
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world"));
+                        .andExpect(content().string("rain,world,umbrella,clock"));
         }
 
         @Test
+        @Order(14)
         void getTranslation_Portuguese() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run")).toJson())
                         .andExpect(status().isOk())
@@ -284,6 +293,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(15)
         void getTranslationsOneWithout_Portuguese() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
@@ -292,6 +302,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(16)
         void getTranslation_English() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run")).toJson())
                         .andExpect(status().isOk())
@@ -300,6 +311,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(17)
         void get2Translations_English() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
@@ -308,6 +320,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(18)
         void getTranslation_Japanese() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run")).toJson())
                         .andExpect(status().isOk())
@@ -316,6 +329,7 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(19)
         void get2Translations_Japanese() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run", "listen")).toJson())
                         .andExpect(status().isOk())
@@ -324,18 +338,21 @@ class LessonControllerTest extends ControllerTest {
         }
 
         @Test
+        @Order(20)
         void getTranslation_UnknownLang() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("aaaaa", List.of("run")).toJson())
                         .andExpect(status().isBadRequest());
         }
 
         @Test
+        @Order(22)
         void getTranslation_EmptyWordsList() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of()).toJson())
                         .andExpect(status().isBadRequest());
         }
 
         @Test
+        @Order(23)
         void getTranslation_EmptyStringInWordsList() throws Exception {
                 req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("")).toJson())
                         .andExpect(status().isBadRequest());
