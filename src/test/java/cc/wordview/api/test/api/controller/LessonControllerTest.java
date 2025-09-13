@@ -208,7 +208,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(8)
         void getKnownWords() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
@@ -218,7 +218,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(9)
         void getKnownWordsInvalidLang() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=www", jwt)
                         .andExpect(status().isNotFound());
@@ -227,7 +227,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(10)
         void getKnownWordsValidLangButNotKnown() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=pt", jwt)
                         .andExpect(status().isNotFound());
@@ -236,7 +236,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(11)
         void insertNewKnownWords() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=ja", jwt)
                         .andExpect(status().isNotFound());
@@ -252,7 +252,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(12)
         void appendWordsToExistingKnownWords() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())
@@ -269,7 +269,7 @@ class LessonControllerTest extends ControllerTest {
         @Test
         @Order(13)
         void appendRepeatedToKnownWords() throws Exception {
-                String jwt = MockValues.getAdmJwt(mockMvc);
+                String jwt = MockValues.getUserJwt(mockMvc);
 
                 req.get("/lesson/words/known?lang=en", jwt)
                         .andExpect(status().isOk())

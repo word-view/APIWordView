@@ -18,15 +18,9 @@
         <module name="wordview" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="actanalyzer" target="1.8" />
-      <module name="newplans" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="actanalyzer" options="-parameters" />
-      <module name="newplans" options="-parameters" />
       <module name="wordview" options="-parameters" />
     </option>
   </component>

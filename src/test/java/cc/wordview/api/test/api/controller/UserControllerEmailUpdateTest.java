@@ -32,7 +32,7 @@ class UserControllerEmailUpdateTest extends ControllerTest {
     @Test
     @Order(1)
     void login() throws Exception {
-        MockUser user = new MockUser("mock.user@gmail.com", "S_enha64");
+        MockUser user = new MockUser("mock.disposable.email@gmail.com", "S_enha64");
 
         req.post("/user/login", user.toJson()).andExpect(status().isOk());
     }
@@ -40,8 +40,8 @@ class UserControllerEmailUpdateTest extends ControllerTest {
     @Test
     @Order(2)
     void updateExistingEmail() throws Exception {
-        String jwt = MockValues.getUserJwt(mockMvc);
-        MockEmailUpdateRequest request = new MockEmailUpdateRequest("mock.user@gmail.com", "mock.admin@gmail.com", "S_enha64");
+        String jwt = MockValues.getDisposableEmailJwt(mockMvc);
+        MockEmailUpdateRequest request = new MockEmailUpdateRequest("mock.disposable.email@gmail.com", "mock.admin@gmail.com", "S_enha64");
 
         req.put("/user/me/email", request.toJson(), jwt).andExpect(status().isForbidden());
     }
@@ -49,8 +49,8 @@ class UserControllerEmailUpdateTest extends ControllerTest {
     @Test
     @Order(3)
     void updateEmail() throws Exception {
-        String jwt = MockValues.getUserJwt(mockMvc);
-        MockEmailUpdateRequest request = new MockEmailUpdateRequest("mock.user@gmail.com", "new.email@gmail.com", "S_enha64");
+        String jwt = MockValues.getDisposableEmailJwt(mockMvc);
+        MockEmailUpdateRequest request = new MockEmailUpdateRequest("mock.disposable.email@gmail.com", "new.email@gmail.com", "S_enha64");
 
         req.put("/user/me/email", request.toJson(), jwt).andExpect(status().isOk());
     }
