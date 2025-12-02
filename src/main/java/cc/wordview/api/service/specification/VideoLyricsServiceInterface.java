@@ -20,6 +20,9 @@ package cc.wordview.api.service.specification;
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.exception.NoSuchEntryException;
 
+import java.util.ArrayList;
+
 public interface VideoLyricsServiceInterface extends ServiceInterface<VideoLyrics> {
         VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
+        ArrayList<String> listLyricsIds();
 }
