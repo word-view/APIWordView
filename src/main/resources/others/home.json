@@ -7,31 +7,36 @@
           "id": "6gluNoLVKiQ",
           "title": "Eleanor Rigby (Remastered 2015)",
           "artist": "The Beatles",
-          "cover": "https://i.ytimg.com/vi_webp/6gluNoLVKiQ/maxresdefault.webp"
+          "cover": "https://i.ytimg.com/vi_webp/6gluNoLVKiQ/maxresdefault.webp",
+          "duration": 132
         },
         {
           "id": "ZnUEeXpxBJ0",
           "title": "Aquarela",
           "artist": "Toquinho",
-          "cover": "https://i.ytimg.com/vi_webp/ZnUEeXpxBJ0/maxresdefault.webp"
+          "cover": "https://i.ytimg.com/vi_webp/ZnUEeXpxBJ0/maxresdefault.webp",
+          "duration": 252
         },
         {
           "id": "ZpT9VCUS54s",
           "title": "Suisei no parade",
           "artist": "majiko",
-          "cover": "https://i.ytimg.com/vi_webp/ZpT9VCUS54s/maxresdefault.webp"
+          "cover": "https://i.ytimg.com/vi_webp/ZpT9VCUS54s/maxresdefault.webp",
+          "duration": 261
         },
         {
           "id": "HCTunqv1Xt4",
           "title": "When I'm Sixty Four",
           "artist": "The Beatles",
-          "cover": "https://i.ytimg.com/vi_webp/HCTunqv1Xt4/maxresdefault.webp"
+          "cover": "https://i.ytimg.com/vi_webp/HCTunqv1Xt4/maxresdefault.webp",
+          "duration": 158
         },
         {
           "id": "9NPv4q57on8",
           "title": "Ano yume wo nazotte",
           "artist": "YOASOBI",
-          "cover": "https://i.ytimg.com/vi_webp/9NPv4q57on8/maxresdefault.webp"
+          "cover": "https://i.ytimg.com/vi_webp/9NPv4q57on8/maxresdefault.webp",
+          "duration": 240
         }
       ]
     }
