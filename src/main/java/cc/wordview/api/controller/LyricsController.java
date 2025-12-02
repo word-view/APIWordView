@@ -20,6 +20,7 @@ package cc.wordview.api.controller;
 import cc.wordview.api.Application;
 import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.LyricsService;
+import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.gengolex.Language;
@@ -44,6 +45,9 @@ public class LyricsController extends ServiceController<LyricsService> {
         @Autowired
         private WordViewResourceResolver resourceResolver;
 
+        @Autowired
+        private VideoLyricsServiceInterface videoLyricsService;
+
         @GetMapping(produces = "application/json;charset=utf-8")
         public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
                 String decodedTrackName =  URLDecoder.decode(trackName);
@@ -58,5 +62,11 @@ public class LyricsController extends ServiceController<LyricsService> {
                 ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
                 return ok(new LyricsResponse(lyrics, words));
+        }
+
+        @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
+        public ResponseEntity<?> getLyricsList() {
+                ArrayList<String> ids = videoLyricsService.listLyricsIds();
+                return ok(ids);
         }
 }

@@ -24,7 +24,10 @@ import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
+
+import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 @Service
 public class VideoLyricsService implements VideoLyricsServiceInterface {
@@ -43,6 +46,19 @@ public class VideoLyricsService implements VideoLyricsServiceInterface {
         }
 
         @Override
+        public ArrayList<String> listLyricsIds() {
+            Iterable<VideoLyrics> allLyrics = repository.findAll();
+            ArrayList<String> ids = new ArrayList<>();
+
+            for (VideoLyrics lyric : allLyrics) {
+                ids.add(lyric.getVideoId());
+            }
+
+            return ids;
+        }
+
+
+    @Override
         public VideoLyrics getById(Long id) {
                 throw new UnsupportedOperationException("getById is disabled for VideoLyricsService");
         }

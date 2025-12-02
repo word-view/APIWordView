@@ -63,5 +63,12 @@ class LyricsControllerTest extends ControllerTest {
                         URLEncoder.encode("aa")
                 )).andExpect(status().isNotFound());
         }
+
+        @Test
+        void getListOfLyricsIds() throws Exception {
+            req.get("/lyrics/list")
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=utf-8"));
+        }
 }
 
