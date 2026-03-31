@@ -19,7 +19,7 @@ package cc.wordview.api.runtime;
 
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class LyricsCache extends HashMapCacheManager<String> {
     private static final Logger logger = LoggerFactory.getLogger(LyricsCache.class);
 
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @Autowired
     private VideoLyricsServiceInterface videoLyricsService;

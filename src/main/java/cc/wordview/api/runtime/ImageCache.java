@@ -18,7 +18,7 @@
 package cc.wordview.api.runtime;
 
 import cc.wordview.api.exception.ImageNotFoundException;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class ImageCache extends HashMapCacheManager<byte[]> {
     private static final Logger logger = LoggerFactory.getLogger(ImageCache.class);
 
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @Override
     public void init() throws IOException {

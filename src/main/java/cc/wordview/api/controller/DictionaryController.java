@@ -22,7 +22,7 @@ import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.dictionary.DictionaryRequest;
 import cc.wordview.api.response.DictionaryResponse;
 import cc.wordview.api.util.ArrayUtil;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
@@ -41,7 +41,7 @@ import static cc.wordview.api.controller.response.Response.ok;
 @RequestMapping(path = Application.API_PATH + "/dictionary")
 public class DictionaryController {
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @PostMapping(produces = "application/json;charset=utf-8", consumes = "application/json")
     public ResponseEntity<?> getLyrics(@RequestBody DictionaryRequest request) throws RequestValidationException, IOException, LanguageNotFoundException {

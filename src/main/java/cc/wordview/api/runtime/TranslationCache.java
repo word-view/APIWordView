@@ -20,7 +20,7 @@ package cc.wordview.api.runtime;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.FileHelper;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class TranslationCache extends ArrayCacheManager<Translation> {
     private static final Logger logger = LoggerFactory.getLogger(TranslationCache.class);
 
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @Override
     public void init() throws IOException {

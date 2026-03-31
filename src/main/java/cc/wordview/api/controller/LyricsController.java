@@ -22,7 +22,7 @@ import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.LyricsService;
 import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.ArrayUtil;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
@@ -43,7 +43,7 @@ import static cc.wordview.api.controller.response.Response.ok;
 @RequestMapping(path = Application.API_PATH + "/lyrics")
 public class LyricsController extends ServiceController<LyricsService> {
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @Autowired
     private VideoLyricsServiceInterface videoLyricsService;

@@ -18,7 +18,7 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
-import cc.wordview.api.util.WordViewResourceResolver;
+import cc.wordview.api.util.ResourceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,7 +38,7 @@ import static cc.wordview.api.controller.response.Response.ok;
 @RequestMapping(path = Application.API_PATH + "/home")
 public class HomeController {
     @Autowired
-    private WordViewResourceResolver resourceResolver;
+    private ResourceResolver resourceResolver;
 
     @GetMapping(produces = "application/json;charset=utf-8")
     public ResponseEntity<?> getHome() throws IOException {

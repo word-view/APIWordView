@@ -28,8 +28,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class WordViewResourceResolver {
-    private static final Logger logger = LoggerFactory.getLogger(WordViewResourceResolver.class);
+public class ResourceResolver {
+    private static final Logger logger = LoggerFactory.getLogger(ResourceResolver.class);
 
     @Autowired
     private ResourceLoader resourceLoader;
