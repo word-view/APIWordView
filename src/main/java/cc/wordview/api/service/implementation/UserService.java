@@ -25,7 +25,7 @@ import cc.wordview.api.repository.UserRepository;
 import cc.wordview.api.response.user.NoCredentialsResponse;
 import cc.wordview.api.security.JwtTokenProvider;
 import cc.wordview.api.service.UserServiceInterface;
-import cc.wordview.api.service.util.HashedPassword;
+import cc.wordview.api.security.HashedPassword;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

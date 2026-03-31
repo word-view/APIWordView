@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.util;
+package cc.wordview.api.security;
 
 import cc.wordview.api.database.entity.User;
 import org.apache.commons.codec.binary.Hex;

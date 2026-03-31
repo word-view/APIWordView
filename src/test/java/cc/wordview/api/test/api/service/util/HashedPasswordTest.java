@@ -18,7 +18,7 @@
 package cc.wordview.api.test.api.service.util;
 
 import cc.wordview.api.database.entity.User;
-import cc.wordview.api.service.util.HashedPassword;
+import cc.wordview.api.security.HashedPassword;
 import cc.wordview.api.test.api.request.RequestTest;
 import org.junit.Test;
 
