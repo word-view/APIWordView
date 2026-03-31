@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service;
+package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.IncorrectCredentialsException;
@@ -24,7 +24,7 @@ import cc.wordview.api.exception.ValueTakenException;
 import cc.wordview.api.repository.UserRepository;
 import cc.wordview.api.response.user.NoCredentialsResponse;
 import cc.wordview.api.security.JwtTokenProvider;
-import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.service.UserServiceInterface;
 import cc.wordview.api.service.util.HashedPassword;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

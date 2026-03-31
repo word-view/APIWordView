@@ -19,8 +19,8 @@ package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.response.LyricsResponse;
-import cc.wordview.api.service.LyricsService;
-import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
+import cc.wordview.api.service.implementation.LyricsService;
+import cc.wordview.api.service.VideoLyricsServiceInterface;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.ResourceResolver;
 import cc.wordview.gengolex.Language;

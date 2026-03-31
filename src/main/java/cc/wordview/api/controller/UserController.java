@@ -28,7 +28,7 @@ import cc.wordview.api.request.user.UserEmailUpdateRequest;
 import cc.wordview.api.request.user.UserLoginRequest;
 import cc.wordview.api.request.user.UserUpdateRequest;
 import cc.wordview.api.response.user.NoCredentialsResponse;
-import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.service.UserServiceInterface;
 import cc.wordview.api.util.ClassMerger;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;

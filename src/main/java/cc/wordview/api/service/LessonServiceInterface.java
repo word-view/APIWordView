@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.service;
 
 import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.database.entity.User;

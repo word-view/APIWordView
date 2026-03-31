@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service;
+package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.database.entity.KnownWords;
 import cc.wordview.api.database.entity.User;
@@ -23,7 +23,7 @@ import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.repository.KnownWordsRepository;
 import cc.wordview.api.runtime.PhraseCache;
 import cc.wordview.api.runtime.TranslationCache;
-import cc.wordview.api.service.specification.LessonServiceInterface;
+import cc.wordview.api.service.LessonServiceInterface;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;

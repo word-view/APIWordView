@@ -15,12 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service;
+package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.repository.VideoLyricsRepository;
-import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
+import cc.wordview.api.service.VideoLyricsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
