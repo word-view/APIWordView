@@ -18,7 +18,7 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
-import cc.wordview.api.util.ResourceResolver;
+import cc.wordview.api.runtime.ResourceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

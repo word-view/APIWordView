@@ -22,7 +22,6 @@ import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
-import cc.wordview.api.util.ResourceResolver;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

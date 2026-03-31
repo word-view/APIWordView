@@ -18,7 +18,6 @@
 package cc.wordview.api.runtime;
 
 import cc.wordview.api.exception.ImageNotFoundException;
-import cc.wordview.api.util.ResourceResolver;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

@@ -22,7 +22,7 @@ import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.dictionary.DictionaryRequest;
 import cc.wordview.api.response.DictionaryResponse;
 import cc.wordview.api.util.ArrayUtil;
-import cc.wordview.api.util.ResourceResolver;
+import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;

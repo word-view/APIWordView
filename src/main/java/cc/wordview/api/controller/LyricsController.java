@@ -22,7 +22,7 @@ import cc.wordview.api.response.LyricsResponse;
 import cc.wordview.api.service.implementation.LyricsService;
 import cc.wordview.api.service.VideoLyricsServiceInterface;
 import cc.wordview.api.util.ArrayUtil;
-import cc.wordview.api.util.ResourceResolver;
+import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;

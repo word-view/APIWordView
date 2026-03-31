@@ -19,7 +19,7 @@ package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.runtime.LyricsCache;
 import cc.wordview.api.service.LyricsServiceInterface;
-import cc.wordview.api.util.DownloaderImpl;
+import cc.wordview.api.runtime.DownloaderImpl;
 import cc.wordview.wordfind.WordFind;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import jakarta.annotation.PostConstruct;

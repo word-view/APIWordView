@@ -20,7 +20,6 @@ package cc.wordview.api.runtime;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.FileHelper;
-import cc.wordview.api.util.ResourceResolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;

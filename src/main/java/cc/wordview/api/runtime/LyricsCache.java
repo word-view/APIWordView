@@ -19,7 +19,6 @@ package cc.wordview.api.runtime;
 
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.service.VideoLyricsServiceInterface;
-import cc.wordview.api.util.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
