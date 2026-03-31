@@ -45,17 +45,17 @@ public class DictionaryController {
 
     @PostMapping(produces = "application/json;charset=utf-8", consumes = "application/json")
     public ResponseEntity<?> getLyrics(@RequestBody DictionaryRequest request) throws RequestValidationException, IOException, LanguageNotFoundException {
-            request.validate();
+        request.validate();
 
-            String text = request.getText();
+        String text = request.getText();
 
-            String dictionariesPath = resourceResolver.getDictionariesPath();
+        String dictionariesPath = resourceResolver.getDictionariesPath();
 
-            Parser parser = new Parser(Language.Companion.byTag(request.getLang()), dictionariesPath);
+        Parser parser = new Parser(Language.Companion.byTag(request.getLang()), dictionariesPath);
 
-            // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
-            ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(text.replace("\n", " ")));
+        // Remove '\n' so the parser don't have issues with languages that separate words by whitespaces
+        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(text.replace("\n", " ")));
 
-            return ok(new DictionaryResponse(words));
+        return ok(new DictionaryResponse(words));
     }
 }

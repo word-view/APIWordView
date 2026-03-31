@@ -21,7 +21,10 @@ import cc.wordview.api.test.api.MockValues;
 import cc.wordview.api.test.api.controller.mockentity.MockKnownWordsRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockPhraseRequest;
 import cc.wordview.api.test.api.controller.mockentity.MockTranslationsRequest;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,333 +35,333 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LessonControllerTest extends ControllerTest {
-        @Test
-        @Order(1)
-        void getSinglePhrase() throws Exception {
-                // en -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\"]}"));
+    @Test
+    @Order(1)
+    void getSinglePhrase() throws Exception {
+        // en -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\"]}"));
 
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("雨")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\"]}"));
-
-
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
-
-                // pt -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\"]}"));
-
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("雨")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\"]}"));
-
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
-
-                // en -> pt
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\"]}"));
-
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("chovendo")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\"]}"));
-
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("céu")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"O\\\",\\\"céu\\\",\\\"e\\\",\\\"azul\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("雨")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\"]}"));
 
 
-                // pt -> en
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("hill")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"He\\\",\\\"is\\\",\\\"standing\\\",\\\"on\\\",\\\"the\\\",\\\"hill\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("raining")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\"]}"));
+        // pt -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\"]}"));
 
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sky")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
-        }
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("雨")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\"]}"));
 
-        @Test
-        @Order(2)
-        void getMultiplePhrases() throws Exception {
-                // en -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "雨", "空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
+        // en -> pt
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\"]}"));
 
-                // pt -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘", "雨", "空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("chovendo")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\"]}"));
 
-
-                // en -> pt
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha", "chovendo", "céu")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"O\\\",\\\"céu\\\",\\\"e\\\",\\\"azul\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("céu")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"O\\\",\\\"céu\\\",\\\"e\\\",\\\"azul\\\"]}\"]}"));
 
 
-                // pt -> en
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("hill", "raining", "sky")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"He\\\",\\\"is\\\",\\\"standing\\\",\\\"on\\\",\\\"the\\\",\\\"hill\\\"]}\",\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
-        }
+        // pt -> en
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("hill")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"He\\\",\\\"is\\\",\\\"standing\\\",\\\"on\\\",\\\"the\\\",\\\"hill\\\"]}\"]}"));
 
-        @Test
-        @Order(3)
-        void getPhrasesOneMissing() throws Exception {
-                // en -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "ssssss", "空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("raining")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\"]}"));
 
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sky")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
+    }
 
-                // pt -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘", "aaasdasd", "空")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
-
-
-                // en -> pt
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha", "chovendo", "dadasdasda")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\"]}"));
+    @Test
+    @Order(2)
+    void getMultiplePhrases() throws Exception {
+        // en -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "雨", "空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
 
-                // pt -> en
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sadasdasdasdas", "raining", "sky")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
-        }
+        // pt -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘", "雨", "空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"雨\\\",\\\"は\\\",\\\"降る\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
-        @Test
-        @Order(4)
-        void getPhrasesAllMissing() throws Exception {
-                // en -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("aaaaa", "ssssss", "bbbbb")).toJson())
-                        .andExpect(status().isNotFound());
 
-                // pt -> ja
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("aaaa", "aaasdasd", "bbbbb")).toJson())
-                        .andExpect(status().isNotFound());
+        // en -> pt
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha", "chovendo", "céu")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"O\\\",\\\"céu\\\",\\\"e\\\",\\\"azul\\\"]}\"]}"));
 
-                // en -> pt
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("aaaa", "sssss", "ddddd")).toJson())
-                        .andExpect(status().isNotFound());
 
-                // pt -> en
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sadasdasdasdas", "ssss", "dddddd")).toJson())
-                        .andExpect(status().isNotFound());
-        }
+        // pt -> en
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("hill", "raining", "sky")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"He\\\",\\\"is\\\",\\\"standing\\\",\\\"on\\\",\\\"the\\\",\\\"hill\\\"]}\",\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
+    }
 
-        @Test
-        @Order(5)
-        void getPhraseNonexistentKeyword() throws Exception {
-                req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("aaaaaaaaaa")).toJson())
-                        .andExpect(status().isNotFound());
-        }
+    @Test
+    @Order(3)
+    void getPhrasesOneMissing() throws Exception {
+        // en -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("丘", "ssssss", "空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"The sky is blue\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
-        @Test
-        @Order(6)
-        void getPhraseNonexistentPhraseLanguage() throws Exception {
-                req.post("/lesson/phrase", new MockPhraseRequest("aaaaaaaaaaaaa", "en", keywordsOf("hill")).toJson())
-                        .andExpect(status().isBadRequest());
-        }
 
-        @Test
-        @Order(7)
-        void getPhraseNonexistentWordsLanguage() throws Exception {
-                req.post("/lesson/phrase", new MockPhraseRequest("en", "aaaaaaaaaa", keywordsOf("hill")).toJson())
-                        .andExpect(status().isBadRequest());
-        }
+        // pt -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("丘", "aaasdasd", "空")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Ele está de pé na montanha\\\",\\\"words\\\":[\\\"彼\\\",\\\"は\\\",\\\"丘\\\",\\\"の\\\",\\\"上\\\",\\\"に\\\",\\\"立っている\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"空\\\",\\\"は\\\",\\\"青い\\\",\\\"です\\\"]}\"]}"));
 
-        @Test
-        @Order(8)
-        void getKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
 
-                req.get("/lesson/words/known?lang=en", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world"));
-        }
+        // en -> pt
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("montanha", "chovendo", "dadasdasda")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"He is standing on the hill\\\",\\\"words\\\":[\\\"Ele\\\",\\\"está\\\",\\\"de\\\",\\\"pé\\\",\\\"na\\\",\\\"montanha\\\"]}\",\"{\\\"phrase\\\":\\\"It\\\\u0027s raining\\\",\\\"words\\\":[\\\"Esta\\\",\\\"chovendo\\\"]}\"]}"));
 
-        @Test
-        @Order(9)
-        void getKnownWordsInvalidLang() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
 
-                req.get("/lesson/words/known?lang=www", jwt)
-                        .andExpect(status().isNotFound());
-        }
+        // pt -> en
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sadasdasdasdas", "raining", "sky")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"phrases\":[\"{\\\"phrase\\\":\\\"Esta chovendo\\\",\\\"words\\\":[\\\"It\\\\u0027s\\\",\\\"raining\\\"]}\",\"{\\\"phrase\\\":\\\"O céu e azul\\\",\\\"words\\\":[\\\"The\\\",\\\"sky\\\",\\\"is\\\",\\\"blue\\\"]}\"]}"));
+    }
 
-        @Test
-        @Order(10)
-        void getKnownWordsValidLangButNotKnown() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+    @Test
+    @Order(4)
+    void getPhrasesAllMissing() throws Exception {
+        // en -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "ja", keywordsOf("aaaaa", "ssssss", "bbbbb")).toJson())
+                .andExpect(status().isNotFound());
 
-                req.get("/lesson/words/known?lang=pt", jwt)
-                        .andExpect(status().isNotFound());
-        }
+        // pt -> ja
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "ja", keywordsOf("aaaa", "aaasdasd", "bbbbb")).toJson())
+                .andExpect(status().isNotFound());
 
-        @Test
-        @Order(11)
-        void insertNewKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+        // en -> pt
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "pt", keywordsOf("aaaa", "sssss", "ddddd")).toJson())
+                .andExpect(status().isNotFound());
 
-                req.get("/lesson/words/known?lang=ja", jwt)
-                        .andExpect(status().isNotFound());
+        // pt -> en
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("sadasdasdasdas", "ssss", "dddddd")).toJson())
+                .andExpect(status().isNotFound());
+    }
 
-                req.post("/lesson/words/known", new MockKnownWordsRequest("ja", List.of("rain", "world")).toJson(), jwt)
-                        .andExpect(status().isOk());
+    @Test
+    @Order(5)
+    void getPhraseNonexistentKeyword() throws Exception {
+        req.post("/lesson/phrase", new MockPhraseRequest("pt", "en", keywordsOf("aaaaaaaaaa")).toJson())
+                .andExpect(status().isNotFound());
+    }
 
-                req.get("/lesson/words/known?lang=ja", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world"));
-        }
+    @Test
+    @Order(6)
+    void getPhraseNonexistentPhraseLanguage() throws Exception {
+        req.post("/lesson/phrase", new MockPhraseRequest("aaaaaaaaaaaaa", "en", keywordsOf("hill")).toJson())
+                .andExpect(status().isBadRequest());
+    }
 
-        @Test
-        @Order(12)
-        void appendWordsToExistingKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+    @Test
+    @Order(7)
+    void getPhraseNonexistentWordsLanguage() throws Exception {
+        req.post("/lesson/phrase", new MockPhraseRequest("en", "aaaaaaaaaa", keywordsOf("hill")).toJson())
+                .andExpect(status().isBadRequest());
+    }
 
-                req.get("/lesson/words/known?lang=en", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world"));
+    @Test
+    @Order(8)
+    void getKnownWords() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-                req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("umbrella", "clock")).toJson(), jwt)
-                        .andExpect(status().isOk());
+        req.get("/lesson/words/known?lang=en", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world"));
+    }
 
-                req.get("/lesson/words/known?lang=en", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world,umbrella,clock"));
-        }
+    @Test
+    @Order(9)
+    void getKnownWordsInvalidLang() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-        @Test
-        @Order(13)
-        void appendRepeatedToKnownWords() throws Exception {
-                String jwt = MockValues.getUserJwt(mockMvc);
+        req.get("/lesson/words/known?lang=www", jwt)
+                .andExpect(status().isNotFound());
+    }
 
-                req.get("/lesson/words/known?lang=en", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world,umbrella,clock"));
+    @Test
+    @Order(10)
+    void getKnownWordsValidLangButNotKnown() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-                req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("rain", "world")).toJson(), jwt)
-                        .andExpect(status().isOk());
+        req.get("/lesson/words/known?lang=pt", jwt)
+                .andExpect(status().isNotFound());
+    }
 
-                req.get("/lesson/words/known?lang=en", jwt)
-                        .andExpect(status().isOk())
-                        .andExpect(content().string("rain,world,umbrella,clock"));
-        }
+    @Test
+    @Order(11)
+    void insertNewKnownWords() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-        @Test
-        @Order(14)
-        void getTranslation_Portuguese() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
-        }
+        req.get("/lesson/words/known?lang=ja", jwt)
+                .andExpect(status().isNotFound());
 
-        @Test
-        @Order(15)
-        void getTranslationsOneWithout_Portuguese() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run", "listen")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
-        }
+        req.post("/lesson/words/known", new MockKnownWordsRequest("ja", List.of("rain", "world")).toJson(), jwt)
+                .andExpect(status().isOk());
 
-        @Test
-        @Order(16)
-        void getTranslation_English() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"}]}"));
-        }
+        req.get("/lesson/words/known?lang=ja", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world"));
+    }
 
-        @Test
-        @Order(17)
-        void get2Translations_English() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run", "listen")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"},{\"parent\":\"listen\",\"translation\":\"listen\"}]}"));
-        }
+    @Test
+    @Order(12)
+    void appendWordsToExistingKnownWords() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-        @Test
-        @Order(18)
-        void getTranslation_Japanese() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"}]}"));
-        }
+        req.get("/lesson/words/known?lang=en", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world"));
 
-        @Test
-        @Order(19)
-        void get2Translations_Japanese() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run", "listen")).toJson())
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"))
-                        .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"},{\"parent\":\"listen\",\"translation\":\"聞\"}]}"));
-        }
+        req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("umbrella", "clock")).toJson(), jwt)
+                .andExpect(status().isOk());
 
-        @Test
-        @Order(20)
-        void getTranslation_UnknownLang() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("aaaaa", List.of("run")).toJson())
-                        .andExpect(status().isBadRequest());
-        }
+        req.get("/lesson/words/known?lang=en", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world,umbrella,clock"));
+    }
 
-        @Test
-        @Order(22)
-        void getTranslation_EmptyWordsList() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of()).toJson())
-                        .andExpect(status().isBadRequest());
-        }
+    @Test
+    @Order(13)
+    void appendRepeatedToKnownWords() throws Exception {
+        String jwt = MockValues.getUserJwt(mockMvc);
 
-        @Test
-        @Order(23)
-        void getTranslation_EmptyStringInWordsList() throws Exception {
-                req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("")).toJson())
-                        .andExpect(status().isBadRequest());
-        }
+        req.get("/lesson/words/known?lang=en", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world,umbrella,clock"));
 
-        private ArrayList<String> keywordsOf(String... words) {
-                return new ArrayList<>(Arrays.asList(words));
-        }
+        req.post("/lesson/words/known", new MockKnownWordsRequest("en", List.of("rain", "world")).toJson(), jwt)
+                .andExpect(status().isOk());
+
+        req.get("/lesson/words/known?lang=en", jwt)
+                .andExpect(status().isOk())
+                .andExpect(content().string("rain,world,umbrella,clock"));
+    }
+
+    @Test
+    @Order(14)
+    void getTranslation_Portuguese() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
+    }
+
+    @Test
+    @Order(15)
+    void getTranslationsOneWithout_Portuguese() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("run", "listen")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"correr\"}]}"));
+    }
+
+    @Test
+    @Order(16)
+    void getTranslation_English() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"}]}"));
+    }
+
+    @Test
+    @Order(17)
+    void get2Translations_English() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("en", List.of("run", "listen")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"run\"},{\"parent\":\"listen\",\"translation\":\"listen\"}]}"));
+    }
+
+    @Test
+    @Order(18)
+    void getTranslation_Japanese() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"}]}"));
+    }
+
+    @Test
+    @Order(19)
+    void get2Translations_Japanese() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("ja", List.of("run", "listen")).toJson())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"))
+                .andExpect(content().json("{\"translations\":[{\"parent\":\"run\",\"translation\":\"走る\"},{\"parent\":\"listen\",\"translation\":\"聞\"}]}"));
+    }
+
+    @Test
+    @Order(20)
+    void getTranslation_UnknownLang() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("aaaaa", List.of("run")).toJson())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(22)
+    void getTranslation_EmptyWordsList() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of()).toJson())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(23)
+    void getTranslation_EmptyStringInWordsList() throws Exception {
+        req.post("/lesson/translations", new MockTranslationsRequest("pt", List.of("")).toJson())
+                .andExpect(status().isBadRequest());
+    }
+
+    private ArrayList<String> keywordsOf(String... words) {
+        return new ArrayList<>(Arrays.asList(words));
+    }
 }

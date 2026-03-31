@@ -17,16 +17,6 @@
 
 package cc.wordview.api.service;
 
-import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
@@ -36,7 +26,15 @@ import cc.wordview.api.response.user.NoCredentialsResponse;
 import cc.wordview.api.security.JwtTokenProvider;
 import cc.wordview.api.service.specification.UserServiceInterface;
 import cc.wordview.api.service.util.HashedPassword;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

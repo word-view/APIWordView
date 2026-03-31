@@ -18,7 +18,7 @@
 package cc.wordview.api.exception;
 
 public class IncorrectCredentialsException extends Exception {
-	public IncorrectCredentialsException(String message) {
-		super(message);
-	}
+    public IncorrectCredentialsException(String message) {
+        super(message);
+    }
 }

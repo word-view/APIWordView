@@ -17,12 +17,11 @@
 
 package cc.wordview.api.repository;
 
-import java.util.Optional;
-
+import cc.wordview.api.database.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
-import cc.wordview.api.database.entity.User;
+import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

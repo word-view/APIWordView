@@ -21,11 +21,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 abstract public class ArrayCacheManager<T> {
-        protected final ArrayList<T> array = new ArrayList<>();
+    protected final ArrayList<T> array = new ArrayList<>();
 
-        /**
-         * Populates the array with the values that should be cached.
-         * Ideally should be run in a @PostConstruct
-         */
-        abstract public void init() throws IOException;
+    /**
+     * Populates the array with the values that should be cached.
+     * Ideally should be run in a @PostConstruct
+     */
+    abstract public void init() throws IOException;
 }

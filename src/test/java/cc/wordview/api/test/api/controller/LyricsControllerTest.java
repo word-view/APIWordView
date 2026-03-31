@@ -27,48 +27,48 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 class LyricsControllerTest extends ControllerTest {
-        @Test
-        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        void getLyrics() throws Exception {
-                req.get("/lyrics?id=1cGQotpn8r4&lang=ja&trackName=a&artistName=a")
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"));
-        }
+    @Test
+    @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+    void getLyrics() throws Exception {
+        req.get("/lyrics?id=1cGQotpn8r4&lang=ja&trackName=a&artistName=a")
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
 
-        @Test
+    @Test
 //        @Disabled("Does not make external request but don't seem to work on CI")
-        void getLyricsWordView() throws Exception {
-                req.get("/lyrics?id=ZnUEeXpxBJ0&lang=pt&trackName=aquarela&artistName=toquinho")
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"));
-        }
+    void getLyricsWordView() throws Exception {
+        req.get("/lyrics?id=ZnUEeXpxBJ0&lang=pt&trackName=aquarela&artistName=toquinho")
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
 
-        @Test
-        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        void getLyricsWordFind() throws Exception {
-                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
-                                URLEncoder.encode("終点の先が在るとするならば。"),
-                                URLEncoder.encode("ツユ")
-                        ))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentType("application/json;charset=utf-8"));
-        }
+    @Test
+    @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+    void getLyricsWordFind() throws Exception {
+        req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
+                        URLEncoder.encode("終点の先が在るとするならば。"),
+                        URLEncoder.encode("ツユ")
+                ))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
 
 
-        @Test
-        @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
-        void getLyricsNotFound() throws Exception {
-                req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
-                        URLEncoder.encode("a_song_that_doesnt_exist"),
-                        URLEncoder.encode("aa")
-                )).andExpect(status().isNotFound());
-        }
+    @Test
+    @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+    void getLyricsNotFound() throws Exception {
+        req.get("/lyrics?id=vcw5THyM7Jo&lang=ja&trackName=%s&artistName=%s".formatted(
+                URLEncoder.encode("a_song_that_doesnt_exist"),
+                URLEncoder.encode("aa")
+        )).andExpect(status().isNotFound());
+    }
 
-        @Test
-        void getListOfLyricsIds() throws Exception {
-            req.get("/lyrics/list")
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType("application/json;charset=utf-8"));
-        }
+    @Test
+    void getListOfLyricsIds() throws Exception {
+        req.get("/lyrics/list")
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
 }
 

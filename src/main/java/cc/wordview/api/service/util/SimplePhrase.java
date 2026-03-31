@@ -25,6 +25,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class SimplePhrase {
-        private String phrase;
-        private List<String> words;
+    private String phrase;
+    private List<String> words;
 }

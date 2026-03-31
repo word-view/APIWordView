@@ -35,7 +35,8 @@ public abstract class RequestTest {
 
     /**
      * Assert that the validation of the specified request throws the desired exception.
-     * @param request The request to be validated.
+     *
+     * @param request   The request to be validated.
      * @param exception The expected Exception.
      */
     public void assertValidationThrows(Request request, Exception exception) {
@@ -44,6 +45,7 @@ public abstract class RequestTest {
 
     /**
      * Assert that the validation of the specified request throws the desired message.
+     *
      * @param request The request to be validated.
      */
     public void assertValidationThrows(Request request, String message) {
@@ -52,6 +54,7 @@ public abstract class RequestTest {
 
     /**
      * Assert that the validation of the specified request will not throw any exceptions.
+     *
      * @param request The request to be validated
      */
     public void assertValidationDoesNotThrow(Request request) {

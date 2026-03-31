@@ -23,23 +23,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class Response {
-	public static <T> ResponseEntity<?> badRequest(@Nullable T body) {
-		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-	}
+    public static <T> ResponseEntity<?> badRequest(@Nullable T body) {
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
 
-	public static <T> ResponseEntity<?> created(@Nullable T body) {
-		return new ResponseEntity<>(body, HttpStatus.CREATED);
-	}
+    public static <T> ResponseEntity<?> created(@Nullable T body) {
+        return new ResponseEntity<>(body, HttpStatus.CREATED);
+    }
 
-	public static <T> ResponseEntity<?> ok(@Nullable T body) {
-		return new ResponseEntity<>(body, HttpStatus.OK);
-	}
+    public static <T> ResponseEntity<?> ok(@Nullable T body) {
+        return new ResponseEntity<>(body, HttpStatus.OK);
+    }
 
-	public static <T> ResponseEntity<?> ok() {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+    public static <T> ResponseEntity<?> ok() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-	public static ResponseEntity<?> created() {
-		return new ResponseEntity<>(HttpStatus.CREATED);
-	}
+    public static ResponseEntity<?> created() {
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

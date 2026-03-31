@@ -17,103 +17,100 @@
 
 package cc.wordview.api.controller;
 
-import static cc.wordview.api.controller.response.Response.created;
-import static cc.wordview.api.controller.response.Response.ok;
-
 import cc.wordview.api.Application;
+import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.IncorrectCredentialsException;
 import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.exception.ValueTakenException;
+import cc.wordview.api.request.user.UserCreateRequest;
 import cc.wordview.api.request.user.UserEmailUpdateRequest;
+import cc.wordview.api.request.user.UserLoginRequest;
+import cc.wordview.api.request.user.UserUpdateRequest;
 import cc.wordview.api.response.user.NoCredentialsResponse;
+import cc.wordview.api.service.specification.UserServiceInterface;
+import cc.wordview.api.util.ClassMerger;
 import jakarta.servlet.http.HttpServletRequest;
-
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import cc.wordview.api.database.entity.User;
-import cc.wordview.api.request.user.UserCreateRequest;
-import cc.wordview.api.request.user.UserLoginRequest;
-import cc.wordview.api.request.user.UserUpdateRequest;
-import cc.wordview.api.service.specification.UserServiceInterface;
-import cc.wordview.api.util.ClassMerger;
-
 import java.security.spec.InvalidKeySpecException;
+
+import static cc.wordview.api.controller.response.Response.created;
+import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
 @CrossOrigin(origins = Application.CORS_ORIGIN)
 @RequestMapping(path = Application.API_PATH + "/user")
 public class UserController extends ServiceController<UserServiceInterface> {
-	@PostMapping(path = "/register", consumes = "application/json")
-	public ResponseEntity<?> create(@RequestBody UserCreateRequest request) throws RequestValidationException, ValueTakenException, InvalidKeySpecException {
-		String jwtToken = service.register(request.toEntity());
-		return created(jwtToken);
-	}
+    @PostMapping(path = "/register", consumes = "application/json")
+    public ResponseEntity<?> create(@RequestBody UserCreateRequest request) throws RequestValidationException, ValueTakenException, InvalidKeySpecException {
+        String jwtToken = service.register(request.toEntity());
+        return created(jwtToken);
+    }
 
-	@PostMapping(path = "/login", consumes = "application/json")
-	public ResponseEntity<?> login(@RequestBody UserLoginRequest request) throws RequestValidationException, IncorrectCredentialsException, NoSuchEntryException, InvalidKeySpecException {
-		String jwtToken = service.login(request.toEntity());
-		return ok(jwtToken);
-	}
+    @PostMapping(path = "/login", consumes = "application/json")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest request) throws RequestValidationException, IncorrectCredentialsException, NoSuchEntryException, InvalidKeySpecException {
+        String jwtToken = service.login(request.toEntity());
+        return ok(jwtToken);
+    }
 
-	@GetMapping("/me")
-	public ResponseEntity<?> getMe(HttpServletRequest request) throws NoSuchEntryException {
-		return ok(new NoCredentialsResponse(service.getMe(request)));
-	}
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe(HttpServletRequest request) throws NoSuchEntryException {
+        return ok(new NoCredentialsResponse(service.getMe(request)));
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id) throws NoSuchEntryException {
-		return ok(service.getByIdWithoutCredentials(id));
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) throws NoSuchEntryException {
+        return ok(service.getByIdWithoutCredentials(id));
+    }
 
-	@PutMapping("/me")
-	public ResponseEntity<?> update(@RequestBody UserUpdateRequest request, HttpServletRequest req) throws Exception {
-		User user = service.getMe(req);
-		User userAlter = request.toEntity();
+    @PutMapping("/me")
+    public ResponseEntity<?> update(@RequestBody UserUpdateRequest request, HttpServletRequest req) throws Exception {
+        User user = service.getMe(req);
+        User userAlter = request.toEntity();
 
-		User merged = ClassMerger.merge(user, userAlter);
+        User merged = ClassMerger.merge(user, userAlter);
 
-		service.insert(merged);
+        service.insert(merged);
 
-		return ok();
-	}
+        return ok();
+    }
 
-	@PutMapping("/me/email")
-	public ResponseEntity<?> updateEmail(@RequestBody UserEmailUpdateRequest request, HttpServletRequest req) throws IncorrectCredentialsException, ValueTakenException, NoSuchEntryException, InvalidKeySpecException, RequestValidationException {
-		request.validate();
+    @PutMapping("/me/email")
+    public ResponseEntity<?> updateEmail(@RequestBody UserEmailUpdateRequest request, HttpServletRequest req) throws IncorrectCredentialsException, ValueTakenException, NoSuchEntryException, InvalidKeySpecException, RequestValidationException {
+        request.validate();
 
-		service.insertWithNewEmail(req, request.getNewEmail(), request.getOldEmail(), request.getPassword());
+        service.insertWithNewEmail(req, request.getNewEmail(), request.getOldEmail(), request.getPassword());
 
-		return ok();
-	}
+        return ok();
+    }
 
-	@GetMapping("/me/lesson_time")
-	public ResponseEntity<?> lessonTime(HttpServletRequest req) throws NoSuchEntryException {
-		User user = service.getMe(req);
-		return ok(user.getLessonTime());
-	}
+    @GetMapping("/me/lesson_time")
+    public ResponseEntity<?> lessonTime(HttpServletRequest req) throws NoSuchEntryException {
+        User user = service.getMe(req);
+        return ok(user.getLessonTime());
+    }
 
-	@PutMapping("/me/lesson_time")
-	public ResponseEntity<?> setLessonTime(HttpServletRequest req, @RequestParam Long time) throws Exception {
-		User user = service.getMe(req);
+    @PutMapping("/me/lesson_time")
+    public ResponseEntity<?> setLessonTime(HttpServletRequest req, @RequestParam Long time) throws Exception {
+        User user = service.getMe(req);
 
-		if (time >= user.getLessonTime()) {
-			throw new RequestValidationException("time cannot be bigger or equal to the current time!");
-		}
+        if (time >= user.getLessonTime()) {
+            throw new RequestValidationException("time cannot be bigger or equal to the current time!");
+        }
 
-		user.setLessonTime(time);
+        user.setLessonTime(time);
 
-		service.insert(user);
+        service.insert(user);
 
-		return ok();
-	}
+        return ok();
+    }
 
-	@DeleteMapping("/me")
-	public ResponseEntity<?> delete(HttpServletRequest request) throws NoSuchEntryException {
-		User user = service.getMe(request);
-		service.delete(user);
-		return ok();
-	}
+    @DeleteMapping("/me")
+    public ResponseEntity<?> delete(HttpServletRequest request) throws NoSuchEntryException {
+        User user = service.getMe(request);
+        service.delete(user);
+        return ok();
+    }
 }

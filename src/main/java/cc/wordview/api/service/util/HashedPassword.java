@@ -17,80 +17,78 @@
 
 package cc.wordview.api.service.util;
 
-import static java.util.Objects.isNull;
+import cc.wordview.api.database.entity.User;
+import org.apache.commons.codec.binary.Hex;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
-import org.apache.commons.codec.binary.Hex;
-
-import cc.wordview.api.database.entity.User;
+import static java.util.Objects.isNull;
 
 public class HashedPassword {
-	private String hashed;
+    private String hashed;
 
-	private String email;
+    private String email;
 
-	private String password;
+    private String password;
 
-	public HashedPassword(User entity) throws InvalidKeySpecException {
-		this.email = entity.getEmail();
-		this.password = entity.getPassword();
+    public HashedPassword(User entity) throws InvalidKeySpecException {
+        this.email = entity.getEmail();
+        this.password = entity.getPassword();
 
-		KeySpec hashSpecifications = getKeySpecifications();
+        KeySpec hashSpecifications = getKeySpecifications();
 
-		String generatedHashedPassword = generateHash("PBKDF2WithHmacSHA512", hashSpecifications);
+        String generatedHashedPassword = generateHash("PBKDF2WithHmacSHA512", hashSpecifications);
 
-		this.setHashedPassword(generatedHashedPassword);
-	}
+        this.setHashedPassword(generatedHashedPassword);
+    }
 
-	public HashedPassword(String email, String password) throws InvalidKeySpecException {
-		this.email = email;
-		this.password = password;
+    public HashedPassword(String email, String password) throws InvalidKeySpecException {
+        this.email = email;
+        this.password = password;
 
-		KeySpec hashSpecifications = getKeySpecifications();
+        KeySpec hashSpecifications = getKeySpecifications();
 
-		String generatedHashedPassword = generateHash("PBKDF2WithHmacSHA512", hashSpecifications);
+        String generatedHashedPassword = generateHash("PBKDF2WithHmacSHA512", hashSpecifications);
 
-		this.setHashedPassword(generatedHashedPassword);
-	}
+        this.setHashedPassword(generatedHashedPassword);
+    }
 
-	private PBEKeySpec getKeySpecifications() throws InvalidKeySpecException {
-		if (isNull(email) || isNull(password))
-			throw new InvalidKeySpecException("Neither email or password should be null");
+    private PBEKeySpec getKeySpecifications() throws InvalidKeySpecException {
+        if (isNull(email) || isNull(password))
+            throw new InvalidKeySpecException("Neither email or password should be null");
 
-		if (email.isEmpty() || password.isEmpty())
-			throw new InvalidKeySpecException("Neither email or password should be empty");
+        if (email.isEmpty() || password.isEmpty())
+            throw new InvalidKeySpecException("Neither email or password should be empty");
 
-		byte[] salt = (email + password).getBytes();
+        byte[] salt = (email + password).getBytes();
 
-		return new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-	}
+        return new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+    }
 
-	private String generateHash(String algorithm, KeySpec hashSpecifications) {
-		try {
-			SecretKeyFactory sKFactory = SecretKeyFactory.getInstance(algorithm);
+    private String generateHash(String algorithm, KeySpec hashSpecifications) {
+        try {
+            SecretKeyFactory sKFactory = SecretKeyFactory.getInstance(algorithm);
 
-			byte[] hashedPassword = sKFactory.generateSecret(hashSpecifications).getEncoded();
+            byte[] hashedPassword = sKFactory.generateSecret(hashSpecifications).getEncoded();
 
-			return Hex.encodeHexString(hashedPassword);
+            return Hex.encodeHexString(hashedPassword);
 
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			e.printStackTrace();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 
-	public String getValue() {
-		return hashed;
-	}
+    public String getValue() {
+        return hashed;
+    }
 
-	public void setHashedPassword(String hashedPassword) {
-		this.hashed = hashedPassword;
-	}
+    public void setHashedPassword(String hashedPassword) {
+        this.hashed = hashedPassword;
+    }
 }

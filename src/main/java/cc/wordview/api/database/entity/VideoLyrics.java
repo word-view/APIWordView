@@ -27,20 +27,20 @@ import java.io.Serializable;
 @Data
 @Table(name = "video_lyrics")
 public class VideoLyrics implements Serializable {
-        @Serial
-        private static final long serialVersionUID = 1854932248236429655L;
+    @Serial
+    private static final long serialVersionUID = 1854932248236429655L;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id")
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-        @Column(name = "video_id", unique = true)
-        private String videoId;
+    @Column(name = "video_id", unique = true)
+    private String videoId;
 
-        @Column(name = "lyrics_file")
-        private String lyricsFile;
+    @Column(name = "lyrics_file")
+    private String lyricsFile;
 
-        @Column(name = "time_offset")
-        private int offset;
+    @Column(name = "time_offset")
+    private int offset;
 }

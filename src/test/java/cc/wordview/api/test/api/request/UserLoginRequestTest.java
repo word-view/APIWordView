@@ -17,11 +17,11 @@
 
 package cc.wordview.api.test.api.request;
 
-import static cc.wordview.api.request.ExceptionTemplate.*;
-
+import cc.wordview.api.request.user.UserLoginRequest;
 import org.junit.jupiter.api.Test;
 
-import cc.wordview.api.request.user.UserLoginRequest;
+import static cc.wordview.api.request.ExceptionTemplate.emptyOrNull;
+import static cc.wordview.api.request.ExceptionTemplate.invalid;
 
 public class UserLoginRequestTest extends RequestTest {
     @Test

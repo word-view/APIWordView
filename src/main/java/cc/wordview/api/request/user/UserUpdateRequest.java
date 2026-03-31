@@ -17,35 +17,35 @@
 
 package cc.wordview.api.request.user;
 
-import static java.util.Objects.isNull;
-
 import cc.wordview.api.database.entity.User;
 import cc.wordview.api.exception.RequestValidationException;
 import cc.wordview.api.request.Request;
 import lombok.Getter;
 import lombok.Setter;
 
+import static java.util.Objects.isNull;
+
 @Getter
 @Setter
 public class UserUpdateRequest implements Request {
-        private String username;
+    private String username;
 
-        public User toEntity() throws RequestValidationException {
-                this.validate();
+    public User toEntity() throws RequestValidationException {
+        this.validate();
 
-                User user = new User();
+        User user = new User();
 
-                user.setUsername(username);
+        user.setUsername(username);
 
-                return user;
+        return user;
+    }
+
+    public void validate() throws RequestValidationException {
+        if (!isNull(username)) {
+            if (!username.isEmpty())
+                return;
         }
 
-        public void validate() throws RequestValidationException {
-                if (!isNull(username)) {
-                        if (!username.isEmpty())
-                                return;
-                }
-
-                throw new RequestValidationException("Specify at least 1 field");
-        }
+        throw new RequestValidationException("Specify at least 1 field");
+    }
 }

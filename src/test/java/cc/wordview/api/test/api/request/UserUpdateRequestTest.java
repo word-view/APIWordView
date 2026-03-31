@@ -17,9 +17,8 @@
 
 package cc.wordview.api.test.api.request;
 
-import org.junit.jupiter.api.Test;
-
 import cc.wordview.api.request.user.UserUpdateRequest;
+import org.junit.jupiter.api.Test;
 
 public class UserUpdateRequestTest extends RequestTest {
     @Test

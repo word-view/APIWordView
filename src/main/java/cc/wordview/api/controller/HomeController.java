@@ -21,7 +21,10 @@ import cc.wordview.api.Application;
 import cc.wordview.api.util.WordViewResourceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,7 +42,7 @@ public class HomeController {
 
     @GetMapping(produces = "application/json;charset=utf-8")
     public ResponseEntity<?> getHome() throws IOException {
-        try(InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json")) {
+        try (InputStream homeFile = new FileInputStream(resourceResolver.getOthersPath() + "/home.json")) {
             String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
                     .replace("\n", "");
 

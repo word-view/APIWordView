@@ -29,79 +29,80 @@ import java.io.IOException;
 
 @Component
 public class WordViewResourceResolver {
-        private static final Logger logger = LoggerFactory.getLogger(WordViewResourceResolver.class);
+    private static final Logger logger = LoggerFactory.getLogger(WordViewResourceResolver.class);
 
-        @Autowired
-        private ResourceLoader resourceLoader;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
-        @Value("${wordview.dictionaries_path}")
-        private String dictionariesPath;
+    @Value("${wordview.dictionaries_path}")
+    private String dictionariesPath;
 
-        @Value("${wordview.images_path}")
-        private String imagesPath;
+    @Value("${wordview.images_path}")
+    private String imagesPath;
 
-        @Value("${wordview.lyrics_path}")
-        private String lyricsPath;
+    @Value("${wordview.lyrics_path}")
+    private String lyricsPath;
 
-        @Value("${wordview.phrases_path}")
-        private String phrasesPath;
+    @Value("${wordview.phrases_path}")
+    private String phrasesPath;
 
-        @Value("${wordview.translations_path}")
-        private String translationsPath;
+    @Value("${wordview.translations_path}")
+    private String translationsPath;
 
-        @Value("${wordview.others_path}")
-        private String othersPath;
+    @Value("${wordview.others_path}")
+    private String othersPath;
 
-        @PostConstruct
-        public void debugShowPaths() {
-                logger.info("""
-                                Initialized with paths:
-                                        Dictionaries Path: {}
-                                        Images Path: {}
-                                        Lyrics Path: {}
-                                        Phrases Path: {}
-                                        Translations Path: {}
-                                        Others Path: {}
-                                """,
-                        dictionariesPath, imagesPath, lyricsPath, phrasesPath, translationsPath, othersPath);
+    @PostConstruct
+    public void debugShowPaths() {
+        logger.info("""
+                        Initialized with paths:
+                                Dictionaries Path: {}
+                                Images Path: {}
+                                Lyrics Path: {}
+                                Phrases Path: {}
+                                Translations Path: {}
+                                Others Path: {}
+                        """,
+                dictionariesPath, imagesPath, lyricsPath, phrasesPath, translationsPath, othersPath);
+    }
+
+    public String getDictionariesPath() throws IOException {
+        return resolvePathOrClasspath(dictionariesPath);
+    }
+
+    public String getImagesPath() throws IOException {
+        return resolvePathOrClasspath(imagesPath);
+    }
+
+    public String getLyricsPath() throws IOException {
+        return resolvePathOrClasspath(lyricsPath);
+    }
+
+    public String getPhrasesPath() throws IOException {
+        return resolvePathOrClasspath(phrasesPath);
+    }
+
+    public String getTranslationsPath() throws IOException {
+        return resolvePathOrClasspath(translationsPath);
+    }
+
+    public String getOthersPath() throws IOException {
+        return resolvePathOrClasspath(othersPath);
+    }
+
+    /**
+     * Checks if the path is at the classpath, and if so return the full URI
+     * if it's a simple path it returns the path itself
+     *
+     * @param path The path loaded from the .properties file
+     */
+    private String resolvePathOrClasspath(String path) throws IOException {
+        String actualPath = path;
+
+        if (path.startsWith("classpath:")) {
+            actualPath = resourceLoader.getResource(path).getURI().getPath();
         }
 
-        public String getDictionariesPath() throws IOException {
-                return resolvePathOrClasspath(dictionariesPath);
-        }
-
-        public String getImagesPath() throws IOException {
-                return resolvePathOrClasspath(imagesPath);
-        }
-
-        public String getLyricsPath() throws IOException {
-                return resolvePathOrClasspath(lyricsPath);
-        }
-
-        public String getPhrasesPath() throws IOException {
-                return resolvePathOrClasspath(phrasesPath);
-        }
-
-        public String getTranslationsPath() throws IOException {
-                return resolvePathOrClasspath(translationsPath);
-        }
-
-        public String getOthersPath() throws IOException {
-                return resolvePathOrClasspath(othersPath);
-        }
-
-        /**
-         * Checks if the path is at the classpath, and if so return the full URI
-         * if it's a simple path it returns the path itself
-         * @param path The path loaded from the .properties file
-         */
-        private String resolvePathOrClasspath(String path) throws IOException {
-                String actualPath = path;
-
-                if (path.startsWith("classpath:")) {
-                        actualPath = resourceLoader.getResource(path).getURI().getPath();
-                }
-
-                return actualPath;
-        }
+        return actualPath;
+    }
 }

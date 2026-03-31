@@ -20,22 +20,22 @@ package cc.wordview.api.util;
 import java.util.*;
 
 public class ArrayUtil {
-        public static <T> ArrayList<T> withoutDuplicates(ArrayList<T> list) {
-                Set<T> set = new HashSet<>(list);
-                return new ArrayList<>(set);
-        }
+    public static <T> ArrayList<T> withoutDuplicates(ArrayList<T> list) {
+        Set<T> set = new HashSet<>(list);
+        return new ArrayList<>(set);
+    }
 
-        public static <T> ArrayList<T> withoutDuplicates(List<T> list) {
-                Set<T> set = new HashSet<>(list);
-                return new ArrayList<>(set);
-        }
+    public static <T> ArrayList<T> withoutDuplicates(List<T> list) {
+        Set<T> set = new HashSet<>(list);
+        return new ArrayList<>(set);
+    }
 
 
-        public static <T> T random(ArrayList<T> list) {
-                if (list.isEmpty()) {
-                        return null;
-                }
-                Random random = new Random();
-                return list.get(random.nextInt(list.size()));
+    public static <T> T random(ArrayList<T> list) {
+        if (list.isEmpty()) {
+            return null;
         }
+        Random random = new Random();
+        return list.get(random.nextInt(list.size()));
+    }
 }

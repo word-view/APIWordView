@@ -22,6 +22,7 @@ import cc.wordview.api.exception.RequestValidationException;
 public interface Request {
     /**
      * Performs multiple checks to assure that the request is valid.
+     *
      * @throws RequestValidationException if the request is not valid.
      */
     void validate() throws RequestValidationException;

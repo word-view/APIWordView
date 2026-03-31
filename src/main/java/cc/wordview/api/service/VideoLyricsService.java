@@ -28,50 +28,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
-
 @Service
 public class VideoLyricsService implements VideoLyricsServiceInterface {
-        @Autowired
-        private VideoLyricsRepository repository;
+    @Autowired
+    private VideoLyricsRepository repository;
 
-        @Override
-        public VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException {
-                Optional<VideoLyrics> videoLyrics = repository.findByVideoId(videoId);
+    @Override
+    public VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException {
+        Optional<VideoLyrics> videoLyrics = repository.findByVideoId(videoId);
 
-                if (!videoLyrics.isPresent()) {
-                        throw new NoSuchEntryException("Unable to find any lyrics with this videoId");
-                }
-
-                return videoLyrics.get();
+        if (!videoLyrics.isPresent()) {
+            throw new NoSuchEntryException("Unable to find any lyrics with this videoId");
         }
 
-        @Override
-        public ArrayList<String> listLyricsIds() {
-            Iterable<VideoLyrics> allLyrics = repository.findAll();
-            ArrayList<String> ids = new ArrayList<>();
+        return videoLyrics.get();
+    }
 
-            for (VideoLyrics lyric : allLyrics) {
-                ids.add(lyric.getVideoId());
-            }
+    @Override
+    public ArrayList<String> listLyricsIds() {
+        Iterable<VideoLyrics> allLyrics = repository.findAll();
+        ArrayList<String> ids = new ArrayList<>();
 
-            return ids;
+        for (VideoLyrics lyric : allLyrics) {
+            ids.add(lyric.getVideoId());
         }
 
-        @Override
-        public List<VideoLyrics> getAll() {
-            return (List<VideoLyrics>) repository.findAll();
-        }
+        return ids;
+    }
+
+    @Override
+    public List<VideoLyrics> getAll() {
+        return (List<VideoLyrics>) repository.findAll();
+    }
 
 
     @Override
-        public VideoLyrics getById(Long id) {
-                throw new UnsupportedOperationException("getById is disabled for VideoLyricsService");
-        }
+    public VideoLyrics getById(Long id) {
+        throw new UnsupportedOperationException("getById is disabled for VideoLyricsService");
+    }
 
-        @Override
-        public VideoLyrics insert(VideoLyrics entity) {
-                // They should be manually added to the sql
-                throw new UnsupportedOperationException("insert is disabled for VideoLyricsService");
-        }
+    @Override
+    public VideoLyrics insert(VideoLyrics entity) {
+        // They should be manually added to the sql
+        throw new UnsupportedOperationException("insert is disabled for VideoLyricsService");
+    }
 }

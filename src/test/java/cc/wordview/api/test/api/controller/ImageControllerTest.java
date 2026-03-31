@@ -24,15 +24,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ImageControllerTest extends ControllerTest {
-        @Test
-        void existentImage() throws Exception {
-                req.get("/image?parent=tear")
-                        .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE));
-        }
+    @Test
+    void existentImage() throws Exception {
+        req.get("/image?parent=tear")
+                .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE));
+    }
 
-        @Test
-        void inexistentImage() throws Exception {
-                req.get("/image?parent=aaaaa")
-                        .andExpect(status().is4xxClientError());
-        }
+    @Test
+    void inexistentImage() throws Exception {
+        req.get("/image?parent=aaaaa")
+                .andExpect(status().is4xxClientError());
+    }
 }

@@ -24,6 +24,6 @@ import java.util.Map;
 
 @Data
 public class Phrase {
-        private Map<String, String> phrases;
-        private List<Map<String, List<String>>> words;
+    private Map<String, String> phrases;
+    private List<Map<String, List<String>>> words;
 }

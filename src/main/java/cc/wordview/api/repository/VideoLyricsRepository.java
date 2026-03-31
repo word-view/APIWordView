@@ -23,5 +23,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface VideoLyricsRepository extends CrudRepository<VideoLyrics, Long> {
-        Optional<VideoLyrics> findByVideoId(String videoId);
+    Optional<VideoLyrics> findByVideoId(String videoId);
 }

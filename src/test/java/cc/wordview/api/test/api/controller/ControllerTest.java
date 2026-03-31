@@ -29,13 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @ActiveProfiles("dev")
 public abstract class ControllerTest {
-        @Autowired
-        protected MockMvc mockMvc;
+    @Autowired
+    protected MockMvc mockMvc;
 
-        protected final ControllerTestRequester req = new ControllerTestRequester();
+    protected final ControllerTestRequester req = new ControllerTestRequester();
 
-        @BeforeEach
-        public final void setup() {
-                req.setMockMvc(mockMvc);
-        }
+    @BeforeEach
+    public final void setup() {
+        req.setMockMvc(mockMvc);
+    }
 }

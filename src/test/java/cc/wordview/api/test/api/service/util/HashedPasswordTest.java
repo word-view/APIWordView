@@ -17,70 +17,69 @@
 
 package cc.wordview.api.test.api.service.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import cc.wordview.api.database.entity.User;
+import cc.wordview.api.service.util.HashedPassword;
 import cc.wordview.api.test.api.request.RequestTest;
 import org.junit.Test;
 
-import cc.wordview.api.database.entity.User;
-import cc.wordview.api.service.util.HashedPassword;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HashedPasswordTest {
-        @Test
-        public void hashPassword() throws Exception {
-                User mockUser = new User();
+    @Test
+    public void hashPassword() throws Exception {
+        User mockUser = new User();
 
-                mockUser.setEmail("test@gmail.com");
-                mockUser.setPassword("123456789");
+        mockUser.setEmail("test@gmail.com");
+        mockUser.setPassword("123456789");
 
-                HashedPassword password = new HashedPassword(mockUser);
+        HashedPassword password = new HashedPassword(mockUser);
 
-                assertEquals("ff13706a956c3ac97560f7ba6e1f0a0d", password.getValue());
-        }
+        assertEquals("ff13706a956c3ac97560f7ba6e1f0a0d", password.getValue());
+    }
 
-        @Test
-        public void nullEmail() throws Exception {
-                RequestTest.assertThrows(() -> {
-                        User mockUser = new User();
+    @Test
+    public void nullEmail() throws Exception {
+        RequestTest.assertThrows(() -> {
+            User mockUser = new User();
 
-                        mockUser.setPassword("123456789");
+            mockUser.setPassword("123456789");
 
-                        new HashedPassword(mockUser);
-                }, "Neither email or password should be null");
-        }
+            new HashedPassword(mockUser);
+        }, "Neither email or password should be null");
+    }
 
-        @Test
-        public void emptyEmail() throws Exception {
-                RequestTest.assertThrows(() -> {
-                        User mockUser = new User();
+    @Test
+    public void emptyEmail() throws Exception {
+        RequestTest.assertThrows(() -> {
+            User mockUser = new User();
 
-                        mockUser.setEmail("");
-                        mockUser.setPassword("123456789");
+            mockUser.setEmail("");
+            mockUser.setPassword("123456789");
 
-                        new HashedPassword(mockUser);
-                }, "Neither email or password should be empty");
-        }
+            new HashedPassword(mockUser);
+        }, "Neither email or password should be empty");
+    }
 
-        @Test
-        public void nullPassword() throws Exception {
-                RequestTest.assertThrows(() -> {
-                        User mockUser = new User();
+    @Test
+    public void nullPassword() throws Exception {
+        RequestTest.assertThrows(() -> {
+            User mockUser = new User();
 
-                        mockUser.setEmail("test@gmail.com");
+            mockUser.setEmail("test@gmail.com");
 
-                        new HashedPassword(mockUser);
-                }, "Neither email or password should be null");
-        }
+            new HashedPassword(mockUser);
+        }, "Neither email or password should be null");
+    }
 
-        @Test
-        public void emptyPassword() throws Exception {
-                RequestTest.assertThrows(() -> {
-                        User mockUser = new User();
+    @Test
+    public void emptyPassword() throws Exception {
+        RequestTest.assertThrows(() -> {
+            User mockUser = new User();
 
-                        mockUser.setEmail("test@gmail.com");
-                        mockUser.setPassword("");
+            mockUser.setEmail("test@gmail.com");
+            mockUser.setPassword("");
 
-                        new HashedPassword(mockUser);
-                }, "Neither email or password should be empty");
-        }
+            new HashedPassword(mockUser);
+        }, "Neither email or password should be empty");
+    }
 }

@@ -42,31 +42,31 @@ import static cc.wordview.api.controller.response.Response.ok;
 @CrossOrigin(origins = Application.CORS_ORIGIN)
 @RequestMapping(path = Application.API_PATH + "/lyrics")
 public class LyricsController extends ServiceController<LyricsService> {
-        @Autowired
-        private WordViewResourceResolver resourceResolver;
+    @Autowired
+    private WordViewResourceResolver resourceResolver;
 
-        @Autowired
-        private VideoLyricsServiceInterface videoLyricsService;
+    @Autowired
+    private VideoLyricsServiceInterface videoLyricsService;
 
-        @GetMapping(produces = "application/json;charset=utf-8")
-        public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
-                String decodedTrackName =  URLDecoder.decode(trackName);
-                String decodedArtistName =  URLDecoder.decode(artistName);
+    @GetMapping(produces = "application/json;charset=utf-8")
+    public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
+        String decodedTrackName = URLDecoder.decode(trackName);
+        String decodedArtistName = URLDecoder.decode(artistName);
 
-                String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang);
+        String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang);
 
-                String dictionariesPath = resourceResolver.getDictionariesPath();
+        String dictionariesPath = resourceResolver.getDictionariesPath();
 
-                Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
+        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
 
-                ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
+        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
-                return ok(new LyricsResponse(lyrics, words));
-        }
+        return ok(new LyricsResponse(lyrics, words));
+    }
 
-        @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
-        public ResponseEntity<?> getLyricsList() {
-                ArrayList<String> ids = videoLyricsService.listLyricsIds();
-                return ok(ids);
-        }
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
+    public ResponseEntity<?> getLyricsList() {
+        ArrayList<String> ids = videoLyricsService.listLyricsIds();
+        return ok(ids);
+    }
 }

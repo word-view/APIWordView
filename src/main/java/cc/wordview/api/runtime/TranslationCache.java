@@ -51,7 +51,8 @@ public class TranslationCache extends ArrayCacheManager<Translation> {
         for (Path filePath : translationFiles) {
             String content = FileHelper.read(filePath.toFile());
 
-            Type listType = new TypeToken<List<Translation>>() {}.getType();
+            Type listType = new TypeToken<List<Translation>>() {
+            }.getType();
             List<Translation> translationList = new Gson().fromJson(content, listType);
 
             array.addAll(translationList);

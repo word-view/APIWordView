@@ -22,6 +22,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface KnownWordsRepository extends CrudRepository<KnownWords, Long>  {
+public interface KnownWordsRepository extends CrudRepository<KnownWords, Long> {
     Optional<KnownWords> findByUserIdAndLang(Long userId, String lang);
 }

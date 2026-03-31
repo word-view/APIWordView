@@ -22,16 +22,16 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class FileHelper {
-        public static String read(File file) throws FileNotFoundException {
-                StringBuilder fileContent = new StringBuilder();
+    public static String read(File file) throws FileNotFoundException {
+        StringBuilder fileContent = new StringBuilder();
 
-                Scanner reader = new Scanner(file);
+        Scanner reader = new Scanner(file);
 
-                while (reader.hasNextLine())
-                        fileContent.append(reader.nextLine());
+        while (reader.hasNextLine())
+            fileContent.append(reader.nextLine());
 
-                reader.close();
+        reader.close();
 
-                return fileContent.toString();
-        }
+        return fileContent.toString();
+    }
 }

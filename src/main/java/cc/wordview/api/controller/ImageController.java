@@ -32,16 +32,16 @@ import java.io.IOException;
 @CrossOrigin(origins = Application.CORS_ORIGIN)
 @RequestMapping(path = Application.API_PATH + "/image")
 public class ImageController {
-        @Autowired
-        private ImageCache cache;
+    @Autowired
+    private ImageCache cache;
 
-        @GetMapping(produces = MediaType.IMAGE_PNG_VALUE)
-        public @ResponseBody byte[] getImage(@RequestParam String parent) throws ImageNotFoundException {
-            return cache.get(parent);
-        }
+    @GetMapping(produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getImage(@RequestParam String parent) throws ImageNotFoundException {
+        return cache.get(parent);
+    }
 
-        @PostConstruct
-        private void preloadImages() throws IOException {
-                cache.init();
-        }
+    @PostConstruct
+    private void preloadImages() throws IOException {
+        cache.init();
+    }
 }

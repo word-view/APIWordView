@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface VideoLyricsServiceInterface extends ServiceInterface<VideoLyrics> {
-        VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
-        ArrayList<String> listLyricsIds();
-        List<VideoLyrics> getAll();
+    VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
+
+    ArrayList<String> listLyricsIds();
+
+    List<VideoLyrics> getAll();
 }

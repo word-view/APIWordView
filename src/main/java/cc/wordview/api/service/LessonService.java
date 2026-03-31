@@ -39,75 +39,75 @@ import java.util.Optional;
 
 @Service
 public class LessonService implements LessonServiceInterface {
-        @Autowired
-        private KnownWordsRepository repository;
+    @Autowired
+    private KnownWordsRepository repository;
 
-        @Autowired
-        private PhraseCache phraseCache;
+    @Autowired
+    private PhraseCache phraseCache;
 
-        @Autowired
-        private TranslationCache translationCache;
+    @Autowired
+    private TranslationCache translationCache;
 
-        @Override
-        public String getPhrase(String phraseLang, String wordsLang, String keyword) throws NoSuchEntryException {
-                return phraseCache.getRandomPhrase(phraseLang, wordsLang, keyword);
+    @Override
+    public String getPhrase(String phraseLang, String wordsLang, String keyword) throws NoSuchEntryException {
+        return phraseCache.getRandomPhrase(phraseLang, wordsLang, keyword);
+    }
+
+    @Override
+    public ArrayList<String> getPhrases(String phraseLang, String wordsLang, List<String> keywords) throws NoSuchEntryException {
+        return phraseCache.getMultiplePhrases(phraseLang, wordsLang, keywords);
+    }
+
+    @Override
+    public ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) {
+        return translationCache.getTranslations(lang, words);
+    }
+
+    @Override
+    public KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException {
+        Optional<KnownWords> knownWords = repository.findByUserIdAndLang(userId, lang);
+
+        if (!knownWords.isPresent()) {
+            throw new NoSuchEntryException("Unable to find known words for this language");
         }
 
-        @Override
-        public ArrayList<String> getPhrases(String phraseLang, String wordsLang, List<String> keywords) throws NoSuchEntryException {
-               return phraseCache.getMultiplePhrases(phraseLang, wordsLang, keywords);
+        return knownWords.get();
+    }
+
+    @Override
+    public Optional<KnownWords> findKnownWords(Long userId, String lang) {
+        return repository.findByUserIdAndLang(userId, lang);
+    }
+
+    @Override
+    public void addKnownWords(User user, Language language, List<String> wordsToAdd) {
+        Optional<KnownWords> knownWordsOpt = findKnownWords(user.getId(), language.getTag());
+        KnownWords knownWords = knownWordsOpt.orElseGet(KnownWords::new);
+
+        knownWords.setUserId(user.getId());
+        knownWords.setLang(language.getTag());
+
+        String wordsKnownList = knownWords.getWords();
+
+        if (wordsKnownList != null) {
+            List<String> alreadyKnownWords = Arrays.stream(knownWords.getWords().split(",")).toList();
+            wordsToAdd.addAll(alreadyKnownWords);
         }
 
-        @Override
-        public ArrayList<SimpleTranslation> getTranslations(String lang, List<String> words) {
-                return translationCache.getTranslations(lang, words);
-        }
+        ArrayList<String> wordsWithoutDuplicates = ArrayUtil.withoutDuplicates(wordsToAdd);
 
-        @Override
-        public KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException {
-                Optional<KnownWords> knownWords = repository.findByUserIdAndLang(userId, lang);
+        knownWords.setWords(String.join(",", wordsWithoutDuplicates));
 
-                if (!knownWords.isPresent()) {
-                        throw new NoSuchEntryException("Unable to find known words for this language");
-                }
+        insertKnownWords(knownWords);
+    }
 
-                return knownWords.get();
-        }
+    private void insertKnownWords(KnownWords entity) {
+        repository.save(entity);
+    }
 
-        @Override
-        public Optional<KnownWords> findKnownWords(Long userId, String lang) {
-                return repository.findByUserIdAndLang(userId, lang);
-        }
-
-        @Override
-        public void addKnownWords(User user, Language language, List<String> wordsToAdd) {
-                Optional<KnownWords> knownWordsOpt = findKnownWords(user.getId(), language.getTag());
-                KnownWords knownWords = knownWordsOpt.orElseGet(KnownWords::new);
-
-                knownWords.setUserId(user.getId());
-                knownWords.setLang(language.getTag());
-
-                String wordsKnownList = knownWords.getWords();
-
-                if (wordsKnownList != null) {
-                        List<String> alreadyKnownWords = Arrays.stream(knownWords.getWords().split(",")).toList();
-                        wordsToAdd.addAll(alreadyKnownWords);
-                }
-
-                ArrayList<String> wordsWithoutDuplicates = ArrayUtil.withoutDuplicates(wordsToAdd);
-
-                knownWords.setWords(String.join(",", wordsWithoutDuplicates));
-
-                insertKnownWords(knownWords);
-        }
-
-        private void insertKnownWords(KnownWords entity) {
-                repository.save(entity);
-        }
-
-        @PostConstruct
-        private void preload() throws IOException {
-                phraseCache.init();
-                translationCache.init();
-        }
+    @PostConstruct
+    private void preload() throws IOException {
+        phraseCache.init();
+        translationCache.init();
+    }
 }
