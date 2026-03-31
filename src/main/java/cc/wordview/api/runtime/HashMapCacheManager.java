@@ -15,16 +15,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.runtime;
 
-import cc.wordview.api.database.entity.VideoLyrics;
-import cc.wordview.api.exception.NoSuchEntryException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.ArrayList;
-import java.util.List;
+abstract public class HashMapCacheManager<T> {
+    protected final Map<String, T> map = new HashMap<>();
 
-public interface VideoLyricsServiceInterface extends ServiceInterface<VideoLyrics> {
-        VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
-        ArrayList<String> listLyricsIds();
-        List<VideoLyrics> getAll();
+    /**
+     * Populates the map with the values that should be cached.
+     * Ideally should be run in a @PostConstruct
+     */
+    abstract public void init() throws IOException;
+
+    /**
+     * Retrieves the value from the map using the key
+     *
+     * @param key the key to the value
+     */
+    public T get(String key) {
+        return map.get(key);
+    }
 }

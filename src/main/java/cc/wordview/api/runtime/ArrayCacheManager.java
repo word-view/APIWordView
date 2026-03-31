@@ -15,16 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service.specification;
+package cc.wordview.api.runtime;
 
-import cc.wordview.api.database.entity.VideoLyrics;
-import cc.wordview.api.exception.NoSuchEntryException;
-
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public interface VideoLyricsServiceInterface extends ServiceInterface<VideoLyrics> {
-        VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
-        ArrayList<String> listLyricsIds();
-        List<VideoLyrics> getAll();
+abstract public class ArrayCacheManager<T> {
+        protected final ArrayList<T> array = new ArrayList<>();
+
+        /**
+         * Populates the array with the values that should be cached.
+         * Ideally should be run in a @PostConstruct
+         */
+        abstract public void init() throws IOException;
 }
