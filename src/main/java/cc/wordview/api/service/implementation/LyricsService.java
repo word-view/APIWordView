@@ -88,9 +88,6 @@ public class LyricsService implements LyricsServiceInterface {
 
     @PostConstruct
     private void initNewPipe() throws ExtractionException {
-        DownloaderImpl.init(null);
-        NewPipe.init(DownloaderImpl.getInstance());
-
         YTService = NewPipe.getService(0);
     }
 

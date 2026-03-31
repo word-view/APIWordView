@@ -17,8 +17,10 @@
 
 package cc.wordview.api;
 
+import cc.wordview.api.runtime.DownloaderImpl;
 import cc.wordview.gengolex.languages.japanese.JapaneseKanjiStrategy;
 import cc.wordview.gengolex.languages.japanese.JapaneseTokenizer;
+import org.schabi.newpipe.extractor.NewPipe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -44,6 +46,9 @@ public class Application {
             System.setProperty("spring.profiles.active", "dev");
 
         dealWithJar();
+
+        DownloaderImpl.init(null);
+        NewPipe.init(DownloaderImpl.getInstance());
 
         JapaneseTokenizer.INSTANCE.setKanjiStrategy(JapaneseKanjiStrategy.PREFER_PARENT);
         SpringApplication.run(Application.class, args);
