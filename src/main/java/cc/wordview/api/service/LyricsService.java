@@ -46,7 +46,7 @@ public class LyricsService implements LyricsServiceInterface {
 
         @Override
         public String getLyrics(String id, String trackName, String artistName, String langTag) throws IOException, LyricsNotFoundException {
-                String lyrics = getLyricsWordView(id);
+                String lyrics = cache.get(id);
 
                 if (lyrics == null)
                     lyrics = getLyricsYT(id, langTag);
@@ -59,6 +59,7 @@ public class LyricsService implements LyricsServiceInterface {
                         throw new LyricsNotFoundException("Unable to find lyrics for %s".formatted(trackName));
                 }
 
+                cache.put(id, lyrics);
                 return lyrics;
         }
 
@@ -83,10 +84,6 @@ public class LyricsService implements LyricsServiceInterface {
                 }
 
                 return null;
-        }
-
-        private String getLyricsWordView(String id) {
-            return cache.get(id);
         }
 
         @PostConstruct

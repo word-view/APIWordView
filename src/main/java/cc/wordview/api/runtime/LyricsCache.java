@@ -75,4 +75,12 @@ public class LyricsCache extends HashMapCacheManager<String> {
             logger.error("Failed to read the lyrics path", e);
         }
     }
+
+    public void put(String id, String lyrics) {
+        if (map.containsKey(id))
+            return;
+
+        logger.info("Adding {} to cache, there are now {} lyrics", id, map.size() + 1);
+        map.put(id, lyrics);
+    }
 }
