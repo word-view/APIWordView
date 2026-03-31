@@ -1,0 +1,40 @@
+/*
+ * Copyright (c) 2025 Arthur Araujo
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package cc.wordview.api.runtime;
+
+import java.util.HashMap;
+import java.util.Map;
+
+abstract public class HashMapCacheManager<T> {
+    protected final Map<String, T> map = new HashMap<>();
+
+    /**
+     * Populates the map with the values that should be cached.
+     * Ideally should be run in a @PostConstruct
+     */
+    abstract public void init();
+
+    /**
+     * Retrieves the value from the map using the key
+     *
+     * @param key the key to the value
+     */
+    public T get(String key) {
+        return map.get(key);
+    }
+}

@@ -19,10 +19,10 @@ package cc.wordview.api.service;
 
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.runtime.LyricsCache;
 import cc.wordview.api.service.specification.LyricsServiceInterface;
 import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
-import cc.wordview.api.util.WordViewResourceResolver;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
 import jakarta.annotation.PostConstruct;
@@ -38,24 +38,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
 public class LyricsService implements LyricsServiceInterface {
-        private static final Logger logger = LoggerFactory.getLogger(LyricsService.class);
-
         private static StreamingService YTService;
 
         private final WordFind client = new WordFind();
 
-        private final Map<String, String> lyrics = new HashMap<>();
-
         @Autowired
-        private WordViewResourceResolver resourceResolver;
+        private LyricsCache cache;
 
         @Autowired
         private VideoLyricsServiceInterface videoLyricsService;
@@ -109,7 +101,7 @@ public class LyricsService implements LyricsServiceInterface {
             } catch (NoSuchEntryException ignored) {}
 
             if (videoLyrics == null) return null;
-            else return lyrics.get(videoLyrics.getLyricsFile() + ".vtt");
+            else return cache.get(videoLyrics.getLyricsFile());
         }
 
         @PostConstruct
@@ -122,22 +114,7 @@ public class LyricsService implements LyricsServiceInterface {
 
         @PostConstruct
         private void preloadLyrics() throws IOException {
-                String lyricsPath = resourceResolver.getLyricsPath();
-
-                try {
-                        Files.walk(Path.of(lyricsPath))
-                                .filter(Files::isRegularFile)
-                                .forEach(file -> {
-                                        try {
-                                                lyrics.put(file.getFileName().toString(), Files.readString(file));
-                                                logger.info("Loading lyrics file \"{}\"", file.getFileName().toString());
-                                        } catch (IOException e) {
-                                                logger.error("Failed to read lyrics file", e);
-                                        }
-                                });
-                } catch (IOException e) {
-                        logger.error("Failed to read the lyrics directory", e);
-                }
+                cache.init();
         }
 
         @Override
