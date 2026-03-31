@@ -40,9 +40,8 @@ public class ImageCache extends HashMapCacheManager<byte[]> {
     @Autowired
     private WordViewResourceResolver resourceResolver;
 
-    @SneakyThrows(IOException.class)
     @Override
-    public void init() {
+    public void init() throws IOException {
         String imagesPath = resourceResolver.getImagesPath();
         Path filepath = Path.of(imagesPath);
 

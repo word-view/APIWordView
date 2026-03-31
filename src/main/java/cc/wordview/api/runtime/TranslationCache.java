@@ -23,7 +23,6 @@ import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.WordViewResourceResolver;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,8 @@ public class TranslationCache extends ArrayCacheManager<Translation> {
     @Autowired
     private WordViewResourceResolver resourceResolver;
 
-    @SneakyThrows(IOException.class)
     @Override
-    public void init() {
+    public void init() throws IOException {
         String translationsPath = resourceResolver.getTranslationsPath();
 
         List<Path> translationFiles = Files.list(Path.of(translationsPath)).toList();

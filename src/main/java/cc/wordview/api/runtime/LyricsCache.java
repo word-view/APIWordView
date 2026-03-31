@@ -20,7 +20,6 @@ package cc.wordview.api.runtime;
 import cc.wordview.api.database.entity.VideoLyrics;
 import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.WordViewResourceResolver;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,8 @@ public class LyricsCache extends HashMapCacheManager<String> {
     @Autowired
     private VideoLyricsServiceInterface videoLyricsService;
 
-    @SneakyThrows(IOException.class)
     @Override
-    public void init() {
+    public void init() throws IOException {
         String lyricsPath = resourceResolver.getLyricsPath();
         Path filepath = Path.of(lyricsPath);
 

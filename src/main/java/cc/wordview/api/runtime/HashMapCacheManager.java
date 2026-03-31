@@ -17,6 +17,7 @@
 
 package cc.wordview.api.runtime;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ abstract public class HashMapCacheManager<T> {
      * Populates the map with the values that should be cached.
      * Ideally should be run in a @PostConstruct
      */
-    abstract public void init();
+    abstract public void init() throws IOException;
 
     /**
      * Retrieves the value from the map using the key

@@ -24,7 +24,6 @@ import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.util.FileHelper;
 import cc.wordview.api.util.WordViewResourceResolver;
 import com.google.gson.Gson;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,8 @@ public class PhraseCache extends ArrayCacheManager<Phrase> {
     @Autowired
     private WordViewResourceResolver resourceResolver;
 
-    @SneakyThrows(IOException.class)
     @Override
-    public void init() {
+    public void init() throws IOException {
         String phrasesPath = resourceResolver.getPhrasesPath();
         List<Path> phraseFiles = Files.list(Path.of(phrasesPath)).toList();
 
