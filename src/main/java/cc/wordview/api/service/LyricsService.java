@@ -17,11 +17,8 @@
 
 package cc.wordview.api.service;
 
-import cc.wordview.api.database.entity.VideoLyrics;
-import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.runtime.LyricsCache;
 import cc.wordview.api.service.specification.LyricsServiceInterface;
-import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.DownloaderImpl;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import cc.wordview.wordfind.WordFind;
@@ -31,8 +28,6 @@ import org.schabi.newpipe.extractor.StreamingService;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.schabi.newpipe.extractor.stream.StreamInfo;
 import org.schabi.newpipe.extractor.stream.SubtitlesStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -48,9 +43,6 @@ public class LyricsService implements LyricsServiceInterface {
 
         @Autowired
         private LyricsCache cache;
-
-        @Autowired
-        private VideoLyricsServiceInterface videoLyricsService;
 
         @Override
         public String getLyrics(String id, String trackName, String artistName, String langTag) throws IOException, LyricsNotFoundException {
@@ -94,14 +86,7 @@ public class LyricsService implements LyricsServiceInterface {
         }
 
         private String getLyricsWordView(String id) {
-            VideoLyrics videoLyrics = null;
-
-            try {
-                videoLyrics = videoLyricsService.getByVideoId(id);
-            } catch (NoSuchEntryException ignored) {}
-
-            if (videoLyrics == null) return null;
-            else return cache.get(videoLyrics.getLyricsFile());
+            return cache.get(id);
         }
 
         @PostConstruct

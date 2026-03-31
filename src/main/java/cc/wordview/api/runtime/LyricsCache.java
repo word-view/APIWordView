@@ -17,6 +17,8 @@
 
 package cc.wordview.api.runtime;
 
+import cc.wordview.api.database.entity.VideoLyrics;
+import cc.wordview.api.service.specification.VideoLyricsServiceInterface;
 import cc.wordview.api.util.WordViewResourceResolver;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -27,6 +29,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class LyricsCache extends HashMapCacheManager<String> {
@@ -35,31 +40,39 @@ public class LyricsCache extends HashMapCacheManager<String> {
     @Autowired
     private WordViewResourceResolver resourceResolver;
 
+    @Autowired
+    private VideoLyricsServiceInterface videoLyricsService;
+
     @SneakyThrows(IOException.class)
     @Override
     public void init() {
         String lyricsPath = resourceResolver.getLyricsPath();
         Path filepath = Path.of(lyricsPath);
 
+        Map<String, String> fileToContent = new HashMap<>();
+
         try {
             Files.walk(filepath)
                     .filter(Files::isRegularFile)
                     .forEach(file -> {
                         try {
-                            map.put(file.getFileName().toString(), Files.readString(file));
+                            fileToContent.put(file.getFileName().toString(), Files.readString(file));
                         } catch (IOException e) {
                             logger.error("Failed to read lyrics file, ignoring this file", e);
                         }
                     });
 
+
+            List<VideoLyrics> videoLyrics = videoLyricsService.getAll();
+
+            for (var videoLyric : videoLyrics) {
+                String content = fileToContent.get(videoLyric.getLyricsFile() + ".vtt");
+                map.put(videoLyric.getVideoId(), content);
+            }
+
             logger.info("Preloaded {} lyrics", map.size());
         } catch (IOException e) {
             logger.error("Failed to read the lyrics path", e);
         }
-    }
-
-    @Override
-    public String get(String key) {
-        return super.get(key + ".vtt");
     }
 }

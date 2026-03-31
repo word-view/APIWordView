@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
@@ -55,6 +56,11 @@ public class VideoLyricsService implements VideoLyricsServiceInterface {
             }
 
             return ids;
+        }
+
+        @Override
+        public List<VideoLyrics> getAll() {
+            return (List<VideoLyrics>) repository.findAll();
         }
 
 
