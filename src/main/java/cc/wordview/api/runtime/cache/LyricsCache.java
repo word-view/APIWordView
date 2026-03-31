@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Component
 public class LyricsCache extends HashMapCacheManager<String> {
@@ -49,9 +50,8 @@ public class LyricsCache extends HashMapCacheManager<String> {
 
         Map<String, String> fileToContent = new HashMap<>();
 
-        try {
-            Files.walk(filepath)
-                    .filter(Files::isRegularFile)
+        try (Stream<Path> paths = Files.walk(filepath)) {
+            paths.filter(Files::isRegularFile)
                     .forEach(file -> {
                         try {
                             fileToContent.put(file.getFileName().toString(), Files.readString(file));
@@ -59,7 +59,6 @@ public class LyricsCache extends HashMapCacheManager<String> {
                             logger.error("Failed to read lyrics file, ignoring this file", e);
                         }
                     });
-
 
             List<VideoLyrics> videoLyrics = videoLyricsService.getAll();
 
