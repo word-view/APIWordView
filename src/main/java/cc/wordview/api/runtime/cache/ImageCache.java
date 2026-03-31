@@ -15,9 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.runtime;
+package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.exception.ImageNotFoundException;
+import cc.wordview.api.runtime.ResourceResolver;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

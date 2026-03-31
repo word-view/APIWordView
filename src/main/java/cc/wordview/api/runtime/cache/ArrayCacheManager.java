@@ -15,27 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.runtime;
+package cc.wordview.api.runtime.cache;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
-abstract public class HashMapCacheManager<T> {
-    protected final Map<String, T> map = new HashMap<>();
+abstract public class ArrayCacheManager<T> {
+    protected final ArrayList<T> array = new ArrayList<>();
 
     /**
-     * Populates the map with the values that should be cached.
+     * Populates the array with the values that should be cached.
      * Ideally should be run in a @PostConstruct
      */
     abstract public void init() throws IOException;
-
-    /**
-     * Retrieves the value from the map using the key
-     *
-     * @param key the key to the value
-     */
-    public T get(String key) {
-        return map.get(key);
-    }
 }

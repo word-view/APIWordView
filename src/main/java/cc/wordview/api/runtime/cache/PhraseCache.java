@@ -15,9 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.runtime;
+package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.exception.NoSuchEntryException;
+import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
 import cc.wordview.api.util.ArrayUtil;

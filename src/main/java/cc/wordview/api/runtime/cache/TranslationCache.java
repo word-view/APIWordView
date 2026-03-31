@@ -15,8 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.runtime;
+package cc.wordview.api.runtime.cache;
 
+import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.FileHelper;

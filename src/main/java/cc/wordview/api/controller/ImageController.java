@@ -19,7 +19,7 @@ package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.exception.ImageNotFoundException;
-import cc.wordview.api.runtime.ImageCache;
+import cc.wordview.api.runtime.cache.ImageCache;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
