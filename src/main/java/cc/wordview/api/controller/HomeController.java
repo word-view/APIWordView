@@ -18,9 +18,12 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
+import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.runtime.ResourceResolver;
+import cc.wordview.api.runtime.cache.FeedCache;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,15 +40,23 @@ import static cc.wordview.api.controller.response.Response.ok;
 @RequestMapping(path = Application.API_PATH + "/home")
 public class HomeController {
     @Autowired
-    private ResourceResolver resourceResolver;
+    private FeedCache cache;
 
     @GetMapping(produces = "application/json;charset=utf-8")
-    public ResponseEntity<?> getHome() throws IOException {
-        try (InputStream homeFile = new FileInputStream(resourceResolver.getFeedsPath() + "/home.json")) {
-            String text = new String(homeFile.readAllBytes(), StandardCharsets.UTF_8)
-                    .replace("\n", "");
+    public ResponseEntity<?> getHome(@RequestParam String learnLang) throws LanguageNotFoundException, NoSuchEntryException {
+        // Make gengolex itself check if the tag is valid
+        Language.Companion.byTag(learnLang);
+        var home = cache.get(learnLang);
 
-            return ok(text.trim());
+        if (home == null) {
+            throw new NoSuchEntryException("Unable to find a feed for this language");
         }
+
+        return ok(home);
+    }
+
+    @PostConstruct
+    private void initializeFeeds() throws IOException {
+        cache.init();
     }
 }
