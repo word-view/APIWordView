@@ -22,6 +22,7 @@ import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -41,7 +42,10 @@ public class ApiExceptionHandler {
         return error(HttpStatus.UNAUTHORIZED, e);
     }
 
-    @ExceptionHandler(RequestValidationException.class)
+    @ExceptionHandler({
+            RequestValidationException.class,
+            MissingServletRequestParameterException.class
+    })
     public ResponseEntity<ApiError> badRequest(Exception e) {
         return error(HttpStatus.BAD_REQUEST, e);
     }
