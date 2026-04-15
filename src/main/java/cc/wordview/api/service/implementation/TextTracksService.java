@@ -18,8 +18,7 @@
 package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.runtime.cache.LyricsCache;
-import cc.wordview.api.service.LyricsServiceInterface;
-import cc.wordview.api.runtime.DownloaderImpl;
+import cc.wordview.api.service.TextTracksServiceInterface;
 import cc.wordview.wordfind.WordFind;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import jakarta.annotation.PostConstruct;
@@ -36,7 +35,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Service
-public class LyricsService implements LyricsServiceInterface {
+public class TextTracksService implements TextTracksServiceInterface {
     private static StreamingService YTService;
 
     private final WordFind client = new WordFind();

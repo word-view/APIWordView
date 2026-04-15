@@ -22,7 +22,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 
 import java.io.IOException;
 
-public interface LyricsServiceInterface {
+public interface TextTracksServiceInterface {
     /**
      * Retrieves the lyrics for a track
      *

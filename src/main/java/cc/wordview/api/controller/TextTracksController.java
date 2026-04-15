@@ -19,7 +19,7 @@ package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
 import cc.wordview.api.response.LyricsResponse;
-import cc.wordview.api.service.implementation.LyricsService;
+import cc.wordview.api.service.implementation.TextTracksService;
 import cc.wordview.api.service.VideoLyricsServiceInterface;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.api.runtime.ResourceResolver;
@@ -40,15 +40,15 @@ import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
 @CrossOrigin(origins = Application.CORS_ORIGIN)
-@RequestMapping(path = Application.API_PATH + "/lyrics")
-public class LyricsController extends ServiceController<LyricsService> {
+@RequestMapping(path = Application.API_PATH + "/text-tracks")
+public class TextTracksController extends ServiceController<TextTracksService> {
     @Autowired
     private ResourceResolver resourceResolver;
 
     @Autowired
     private VideoLyricsServiceInterface videoLyricsService;
 
-    @GetMapping(produces = "application/json;charset=utf-8")
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics")
     public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
         String decodedTrackName = URLDecoder.decode(trackName);
         String decodedArtistName = URLDecoder.decode(artistName);
@@ -64,7 +64,7 @@ public class LyricsController extends ServiceController<LyricsService> {
         return ok(new LyricsResponse(lyrics, words));
     }
 
-    @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics/list")
     public ResponseEntity<?> getLyricsList() {
         ArrayList<String> ids = videoLyricsService.listLyricsIds();
         return ok(ids);
