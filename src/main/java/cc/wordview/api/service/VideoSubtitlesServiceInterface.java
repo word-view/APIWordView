@@ -18,15 +18,9 @@
 package cc.wordview.api.service;
 
 import cc.wordview.api.database.entity.VideoSubtitles;
-import cc.wordview.api.exception.NoSuchEntryException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface VideoSubtitlesServiceInterface extends ServiceInterface<VideoSubtitles> {
-    VideoSubtitles getByVideoId(String videoId) throws NoSuchEntryException;
-
-    ArrayList<String> listLyricsIds();
-
     List<VideoSubtitles> getAll();
 }

@@ -24,38 +24,13 @@ import cc.wordview.api.service.VideoSubtitlesServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VideoSubtitlesService implements VideoSubtitlesServiceInterface {
     @Autowired
     private VideoSubtitlesRepository repository;
 
-
-    @Override
-    public VideoSubtitles getByVideoId(String videoId) throws NoSuchEntryException {
-        Optional<VideoSubtitles> videoSubtitle = repository.findByVideoId(videoId);
-
-        if (!videoSubtitle.isPresent()) {
-            throw new NoSuchEntryException("Unable to find any subtitles with this videoId");
-        }
-
-        return videoSubtitle.get();
-    }
-
-    @Override
-    public ArrayList<String> listLyricsIds() {
-        Iterable<VideoSubtitles> allSubtitles = repository.findAll();
-        ArrayList<String> ids = new ArrayList<>();
-
-        for (VideoSubtitles subtitle : allSubtitles) {
-            ids.add(subtitle.getVideoId());
-        }
-
-        return ids;
-    }
 
     @Override
     public List<VideoSubtitles> getAll() {

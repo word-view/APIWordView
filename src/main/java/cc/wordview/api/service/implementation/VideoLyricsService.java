@@ -18,7 +18,6 @@
 package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.database.entity.VideoLyrics;
-import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.repository.VideoLyricsRepository;
 import cc.wordview.api.service.VideoLyricsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,23 +25,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VideoLyricsService implements VideoLyricsServiceInterface {
     @Autowired
     private VideoLyricsRepository repository;
-
-    @Override
-    public VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException {
-        Optional<VideoLyrics> videoLyrics = repository.findByVideoId(videoId);
-
-        if (!videoLyrics.isPresent()) {
-            throw new NoSuchEntryException("Unable to find any lyrics with this videoId");
-        }
-
-        return videoLyrics.get();
-    }
 
     @Override
     public ArrayList<String> listLyricsIds() {
