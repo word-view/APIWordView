@@ -56,11 +56,7 @@ public class TextTracksController extends ServiceController<TextTracksService> {
 
         String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang);
 
-        String dictionariesPath = resourceResolver.getDictionariesPath();
-
-        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
-
-        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
+        ArrayList<Word> words = getContainingWords(lyrics, lang);
 
         return ok(new TextTrackResponse(lyrics, words));
     }
@@ -74,13 +70,16 @@ public class TextTracksController extends ServiceController<TextTracksService> {
     @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitles")
     public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws ExtractionException, IOException, LanguageNotFoundException {
         String subtitle = service.getSubtitle(id, lang);
+        ArrayList<Word> words = getContainingWords(subtitle, lang);
 
+        return ok(new TextTrackResponse(subtitle, words));
+    }
+
+    private ArrayList<Word> getContainingWords(String vttFile, String lang) throws IOException, LanguageNotFoundException {
         String dictionariesPath = resourceResolver.getDictionariesPath();
 
         Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
 
-        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(subtitle.replace("\n", " ")));
-
-        return ok(new TextTrackResponse(subtitle, words));
+        return ArrayUtil.withoutDuplicates(parser.findWords(vttFile.replace("\n", " ")));
     }
 }
