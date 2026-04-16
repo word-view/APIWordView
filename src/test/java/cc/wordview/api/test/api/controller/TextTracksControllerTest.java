@@ -36,7 +36,7 @@ class TextTracksControllerTest extends ControllerTest {
     }
 
     @Test
-//        @Disabled("Does not make external request but don't seem to work on CI")
+        @Disabled("Does not make external request but don't seem to work on CI")
     void getLyricsWordView() throws Exception {
         req.get("/text-tracks/lyrics?id=ZnUEeXpxBJ0&lang=pt&trackName=aquarela&artistName=toquinho")
                 .andExpect(status().isOk())
@@ -67,6 +67,21 @@ class TextTracksControllerTest extends ControllerTest {
     @Test
     void getListOfLyricsIds() throws Exception {
         req.get("/text-tracks/lyrics/list")
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
+
+    @Test
+    @Disabled("Makes a external request, only run this when ABSOLUTELY NECESSARY")
+    void getSubtitlesYouTube() throws Exception {
+        req.get("/text-tracks/subtitles?id=eCipMjo1vSI&lang=ja")
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=utf-8"));
+    }
+
+    @Test
+    void getSubtitlesWordView() throws Exception {
+        req.get("/text-tracks/subtitles?id=K9Ydi94yT94&lang=ja")
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=utf-8"));
     }

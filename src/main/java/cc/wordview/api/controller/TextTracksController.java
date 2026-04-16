@@ -18,16 +18,17 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
-import cc.wordview.api.response.LyricsResponse;
-import cc.wordview.api.service.implementation.TextTracksService;
-import cc.wordview.api.service.VideoLyricsServiceInterface;
-import cc.wordview.api.util.ArrayUtil;
+import cc.wordview.api.response.TextTrackResponse;
 import cc.wordview.api.runtime.ResourceResolver;
+import cc.wordview.api.service.VideoLyricsServiceInterface;
+import cc.wordview.api.service.implementation.TextTracksService;
+import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.word.Word;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
+import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,12 +62,25 @@ public class TextTracksController extends ServiceController<TextTracksService> {
 
         ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
 
-        return ok(new LyricsResponse(lyrics, words));
+        return ok(new TextTrackResponse(lyrics, words));
     }
 
     @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics/list")
     public ResponseEntity<?> getLyricsList() {
         ArrayList<String> ids = videoLyricsService.listLyricsIds();
         return ok(ids);
+    }
+
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitles")
+    public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws ExtractionException, IOException, LanguageNotFoundException {
+        String subtitle = service.getSubtitle(id, lang);
+
+        String dictionariesPath = resourceResolver.getDictionariesPath();
+
+        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
+
+        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(subtitle.replace("\n", " ")));
+
+        return ok(new TextTrackResponse(subtitle, words));
     }
 }
