@@ -28,7 +28,6 @@ import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
 import cc.wordview.gengolex.word.Word;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
-import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,7 +67,7 @@ public class TextTracksController extends ServiceController<TextTracksService> {
     }
 
     @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitles")
-    public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws ExtractionException, IOException, LanguageNotFoundException {
+    public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws IOException, LanguageNotFoundException {
         String subtitle = service.getSubtitle(id, lang);
         ArrayList<Word> words = getContainingWords(subtitle, lang);
 
