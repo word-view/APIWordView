@@ -55,7 +55,8 @@ public class ApiExceptionHandler {
             FileNotFoundException.class,
             LyricsNotFoundException.class,
             LanguageNotFoundException.class,
-            ImageNotFoundException.class
+            ImageNotFoundException.class,
+            SubtitleNotFoundException.class
     })
     public ResponseEntity<ApiError> notFound(Exception e) {
         return error(HttpStatus.NOT_FOUND, e);
