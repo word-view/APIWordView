@@ -22,6 +22,7 @@ import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface TextTracksServiceInterface {
     /**
@@ -59,5 +60,10 @@ public interface TextTracksServiceInterface {
      * @throws LyricsNotFoundException if no lyrics are found for the provided track and artist.
      */
     String getLyricsExternal(String trackName, String artistName) throws IOException, LyricsNotFoundException;
+
+    /**
+     * Retrieves a list of the tracks currently provided by the API.
+     */
+    List<String> listAvailableTracks();
 }
 

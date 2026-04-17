@@ -17,9 +17,9 @@
 
 package cc.wordview.api.service.implementation;
 
+import cc.wordview.api.database.entity.TextTrack;
 import cc.wordview.api.exception.SubtitleNotFoundException;
-import cc.wordview.api.runtime.cache.LyricsCache;
-import cc.wordview.api.runtime.cache.SubtitlesCache;
+import cc.wordview.api.repository.TextTracksRepository;
 import cc.wordview.api.runtime.cache.TextTrackCache;
 import cc.wordview.api.service.TextTracksServiceInterface;
 import cc.wordview.wordfind.WordFind;
@@ -37,6 +37,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -48,6 +50,9 @@ public class TextTracksService implements TextTracksServiceInterface {
 
     @Autowired
     private TextTrackCache cache;
+
+    @Autowired
+    private TextTracksRepository repository;
 
     @Override
     public String getLyrics(String id, String trackName, String artistName, String langTag) throws LyricsNotFoundException {
@@ -120,5 +125,17 @@ public class TextTracksService implements TextTracksServiceInterface {
     @Override
     public String getLyricsExternal(String trackName, String artistName) throws LyricsNotFoundException {
         return client.find(trackName, artistName, true, null, null);
+    }
+
+    @Override
+    public List<String> listAvailableTracks() {
+        Iterable<TextTrack> tracks = repository.findAll();
+        ArrayList<String> ids = new ArrayList<>();
+
+        for (TextTrack track : tracks) {
+            ids.add(track.getVideoId());
+        }
+
+        return ids;
     }
 }

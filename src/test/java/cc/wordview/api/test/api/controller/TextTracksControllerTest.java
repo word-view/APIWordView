@@ -66,7 +66,7 @@ class TextTracksControllerTest extends ControllerTest {
 
     @Test
     void getListOfLyricsIds() throws Exception {
-        req.get("/text-tracks/lyrics/list")
+        req.get("/text-tracks/list")
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=utf-8"));
     }

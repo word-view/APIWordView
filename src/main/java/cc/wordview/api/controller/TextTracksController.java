@@ -20,7 +20,6 @@ package cc.wordview.api.controller;
 import cc.wordview.api.Application;
 import cc.wordview.api.response.TextTrackResponse;
 import cc.wordview.api.runtime.ResourceResolver;
-import cc.wordview.api.service.VideoLyricsServiceInterface;
 import cc.wordview.api.service.implementation.TextTracksService;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
@@ -35,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import static cc.wordview.api.controller.response.Response.ok;
 
@@ -44,9 +44,6 @@ import static cc.wordview.api.controller.response.Response.ok;
 public class TextTracksController extends ServiceController<TextTracksService> {
     @Autowired
     private ResourceResolver resourceResolver;
-
-    @Autowired
-    private VideoLyricsServiceInterface videoLyricsService;
 
     @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics")
     public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
@@ -60,9 +57,9 @@ public class TextTracksController extends ServiceController<TextTracksService> {
         return ok(new TextTrackResponse(lyrics, words));
     }
 
-    @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics/list")
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
     public ResponseEntity<?> getLyricsList() {
-        ArrayList<String> ids = videoLyricsService.listLyricsIds();
+        List<String> ids = service.listAvailableTracks();
         return ok(ids);
     }
 

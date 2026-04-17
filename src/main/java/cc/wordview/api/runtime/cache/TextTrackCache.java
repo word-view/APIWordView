@@ -18,10 +18,8 @@
 package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.database.entity.TextTrack;
-import cc.wordview.api.database.entity.VideoSubtitles;
 import cc.wordview.api.repository.TextTracksRepository;
 import cc.wordview.api.runtime.ResourceResolver;
-import cc.wordview.api.service.VideoSubtitlesServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
