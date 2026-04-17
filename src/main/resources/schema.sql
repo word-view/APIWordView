@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS member CASCADE;
 DROP TABLE IF EXISTS email CASCADE;
-DROP TABLE IF EXISTS video_lyrics CASCADE;
+DROP TABLE IF EXISTS text_tracks CASCADE;
 
 CREATE TABLE member
 (
@@ -20,21 +20,11 @@ CREATE TABLE email
     PRIMARY KEY (id)
 );
 
-CREATE TABLE video_lyrics
+CREATE TABLE text_tracks
 (
     id          bigint GENERATED ALWAYS AS IDENTITY,
     video_id    varchar(12) UNIQUE,
-    lyrics_file varchar(128),
-    time_offset int,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE video_subtitles
-(
-    id          bigint GENERATED ALWAYS AS IDENTITY,
-    video_id    varchar(12) UNIQUE,
-    subtitle_file varchar(128),
-    time_offset int,
+    file        varchar(128),
     PRIMARY KEY (id)
 );
 

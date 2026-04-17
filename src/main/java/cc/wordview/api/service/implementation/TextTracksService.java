@@ -20,6 +20,7 @@ package cc.wordview.api.service.implementation;
 import cc.wordview.api.exception.SubtitleNotFoundException;
 import cc.wordview.api.runtime.cache.LyricsCache;
 import cc.wordview.api.runtime.cache.SubtitlesCache;
+import cc.wordview.api.runtime.cache.TextTrackCache;
 import cc.wordview.api.service.TextTracksServiceInterface;
 import cc.wordview.wordfind.WordFind;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
@@ -46,14 +47,11 @@ public class TextTracksService implements TextTracksServiceInterface {
     private final WordFind client = new WordFind();
 
     @Autowired
-    private LyricsCache lyricsCache;
-
-    @Autowired
-    private SubtitlesCache subtitlesCache;
+    private TextTrackCache cache;
 
     @Override
     public String getLyrics(String id, String trackName, String artistName, String langTag) throws LyricsNotFoundException {
-        String lyrics = lyricsCache.get(id);
+        String lyrics = cache.get(id);
 
         if (lyrics == null) {
             lyrics = getYouTubeSubtitle(id, langTag);
@@ -67,13 +65,13 @@ public class TextTracksService implements TextTracksServiceInterface {
             throw new LyricsNotFoundException("Unable to find lyrics for %s".formatted(trackName));
         }
 
-        lyricsCache.put(id, lyrics);
+        cache.put(id, lyrics);
         return lyrics;
     }
 
     @Override
     public String getSubtitle(String id, String langTag) throws SubtitleNotFoundException {
-        String subtitle = subtitlesCache.get(id);
+        String subtitle = cache.get(id);
 
         if (subtitle == null) {
             subtitle = getYouTubeSubtitle(id, langTag);
@@ -83,7 +81,7 @@ public class TextTracksService implements TextTracksServiceInterface {
             throw new SubtitleNotFoundException("Unable to find any subtitles for the video %s".formatted(id));
         }
 
-        subtitlesCache.put(id, subtitle);
+        cache.put(id, subtitle);
 
         return subtitle;
     }
@@ -116,8 +114,7 @@ public class TextTracksService implements TextTracksServiceInterface {
 
     @PostConstruct
     private void preloadLyrics() throws IOException {
-        lyricsCache.init();
-        subtitlesCache.init();
+        cache.init();
     }
 
     @Override

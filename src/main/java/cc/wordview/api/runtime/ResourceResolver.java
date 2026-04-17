@@ -46,6 +46,9 @@ public class ResourceResolver {
     @Value("${wordview.subtitles_path}")
     private String subtitlesPath;
 
+    @Value("${wordview.text_tracks_path}")
+    private String textTracksPath;
+
     @Value("${wordview.phrases_path}")
     private String phrasesPath;
 
@@ -63,11 +66,12 @@ public class ResourceResolver {
                                 Images Path: {}
                                 Lyrics Path: {}
                                 Subtitles Path: {}
+                                Text Tracks Path: {}
                                 Phrases Path: {}
                                 Translations Path: {}
                                 Feeds Path: {}
                         """,
-                dictionariesPath, imagesPath, lyricsPath, subtitlesPath, phrasesPath, translationsPath, feedsPath);
+                dictionariesPath, imagesPath, lyricsPath, subtitlesPath, textTracksPath, phrasesPath, translationsPath, feedsPath);
     }
 
     public String getDictionariesPath() throws IOException {
@@ -84,6 +88,10 @@ public class ResourceResolver {
 
     public String getSubtitlesPath() throws IOException {
         return resolvePathOrClasspath(subtitlesPath);
+    }
+
+    public String getTextTracksPath() throws IOException {
+        return resolvePathOrClasspath(textTracksPath);
     }
 
     public String getPhrasesPath() throws IOException {

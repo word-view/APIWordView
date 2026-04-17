@@ -22,8 +22,8 @@ VALUES ('mock.user@gmail.com');
 INSERT INTO known_words (user_id, lang, words)
 VALUES (3, 'en', 'rain,world');
 
-INSERT INTO video_lyrics (video_id, lyrics_file, time_offset)
-VALUES ('ZnUEeXpxBJ0', 'aquarela', 0);
+INSERT INTO text_tracks (video_id, file)
+VALUES ('ZnUEeXpxBJ0', 'lyrics/aquarela.vtt');
 
-INSERT INTO video_subtitles (video_id, subtitle_file, time_offset)
-VALUES ('K9Ydi94yT94', 'uma_wo_kakudaisuru_ge-mu', 0);
+INSERT INTO text_tracks (video_id, file)
+VALUES ('K9Ydi94yT94', 'subtitles/uma_wo_kakudaisuru_ge-mu.vtt');

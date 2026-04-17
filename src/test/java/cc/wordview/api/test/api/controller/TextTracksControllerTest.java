@@ -36,7 +36,7 @@ class TextTracksControllerTest extends ControllerTest {
     }
 
     @Test
-        @Disabled("Does not make external request but don't seem to work on CI")
+//        @Disabled("Does not make external request but don't seem to work on CI")
     void getLyricsWordView() throws Exception {
         req.get("/text-tracks/lyrics?id=ZnUEeXpxBJ0&lang=pt&trackName=aquarela&artistName=toquinho")
                 .andExpect(status().isOk())
@@ -80,6 +80,7 @@ class TextTracksControllerTest extends ControllerTest {
     }
 
     @Test
+    @Disabled("Disabled until https://github.com/word-view/APIWordView/issues/50 is fixed")
     void getSubtitlesWordView() throws Exception {
         req.get("/text-tracks/subtitles?id=K9Ydi94yT94&lang=ja")
                 .andExpect(status().isOk())
