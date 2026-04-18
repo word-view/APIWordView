@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS email CASCADE;
 DROP TABLE IF EXISTS text_tracks CASCADE;
 DROP TABLE IF EXISTS known_words CASCADE;
 
@@ -14,18 +13,11 @@ CREATE TABLE users
     PRIMARY KEY (id)
 );
 
-CREATE TABLE email
-(
-    id    bigint GENERATED ALWAYS AS IDENTITY,
-    email varchar(255) UNIQUE,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE text_tracks
 (
-    id          bigint GENERATED ALWAYS AS IDENTITY,
-    video_id    varchar(12) UNIQUE,
-    file        varchar(128),
+    id       bigint GENERATED ALWAYS AS IDENTITY,
+    video_id varchar(12) UNIQUE,
+    file     varchar(128),
     PRIMARY KEY (id)
 );
 

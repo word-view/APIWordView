@@ -16,9 +16,6 @@ VALUES ('mock.disposable.email', 'mock.disposable.email@gmail.com', '407c8797b41
 INSERT INTO users (username, email, password, role)
 VALUES ('mock.admin', 'mock.admin@gmail.com', '061cf224cffe1951e32ffaa1c414544a', 'ADMIN');
 
-INSERT INTO email (email)
-VALUES ('mock.user@gmail.com');
-
 INSERT INTO known_words (user_id, lang, words)
 VALUES (3, 'en', 'rain,world');
 
