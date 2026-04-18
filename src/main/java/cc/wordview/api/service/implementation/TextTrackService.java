@@ -19,9 +19,9 @@ package cc.wordview.api.service.implementation;
 
 import cc.wordview.api.database.entity.TextTrack;
 import cc.wordview.api.exception.SubtitleNotFoundException;
-import cc.wordview.api.repository.TextTracksRepository;
+import cc.wordview.api.repository.TextTrackRepository;
 import cc.wordview.api.runtime.cache.TextTrackCache;
-import cc.wordview.api.service.TextTracksServiceInterface;
+import cc.wordview.api.service.TextTrackServiceInterface;
 import cc.wordview.wordfind.WordFind;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import jakarta.annotation.PostConstruct;
@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class TextTracksService implements TextTracksServiceInterface {
-    private static final Logger logger = LoggerFactory.getLogger(TextTracksService.class);
+public class TextTrackService implements TextTrackServiceInterface {
+    private static final Logger logger = LoggerFactory.getLogger(TextTrackService.class);
     private static StreamingService YTService;
 
     private final WordFind client = new WordFind();
@@ -52,7 +52,7 @@ public class TextTracksService implements TextTracksServiceInterface {
     private TextTrackCache cache;
 
     @Autowired
-    private TextTracksRepository repository;
+    private TextTrackRepository repository;
 
     @Override
     public String getLyrics(String id, String trackName, String artistName, String langTag) throws LyricsNotFoundException {

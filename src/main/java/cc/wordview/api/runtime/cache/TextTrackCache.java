@@ -18,7 +18,7 @@
 package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.database.entity.TextTrack;
-import cc.wordview.api.repository.TextTracksRepository;
+import cc.wordview.api.repository.TextTrackRepository;
 import cc.wordview.api.runtime.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class TextTrackCache extends HashMapCacheManager<String> {
     private ResourceResolver resourceResolver;
 
     @Autowired
-    private TextTracksRepository repository;
+    private TextTrackRepository repository;
 
     @Override
     public void init() throws IOException {

@@ -22,6 +22,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface TextTracksRepository extends CrudRepository<TextTrack, Long> {
+public interface TextTrackRepository extends CrudRepository<TextTrack, Long> {
     Optional<TextTrack> findByVideoId(String videoId);
 }

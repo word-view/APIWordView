@@ -20,7 +20,7 @@ package cc.wordview.api.controller;
 import cc.wordview.api.Application;
 import cc.wordview.api.response.TextTrackResponse;
 import cc.wordview.api.runtime.ResourceResolver;
-import cc.wordview.api.service.implementation.TextTracksService;
+import cc.wordview.api.service.implementation.TextTrackService;
 import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
@@ -40,8 +40,8 @@ import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
 @CrossOrigin(origins = Application.CORS_ORIGIN)
-@RequestMapping(path = Application.API_PATH + "/text-tracks")
-public class TextTracksController extends ServiceController<TextTracksService> {
+@RequestMapping(path = Application.API_PATH + "/text-track")
+public class TextTrackController extends ServiceController<TextTrackService> {
     @Autowired
     private ResourceResolver resourceResolver;
 
@@ -63,7 +63,7 @@ public class TextTracksController extends ServiceController<TextTracksService> {
         return ok(ids);
     }
 
-    @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitles")
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitle")
     public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws IOException, LanguageNotFoundException {
         String subtitle = service.getSubtitle(id, lang);
         ArrayList<Word> words = getContainingWords(subtitle, lang);

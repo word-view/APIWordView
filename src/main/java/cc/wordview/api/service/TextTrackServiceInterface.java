@@ -24,7 +24,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 import java.io.IOException;
 import java.util.List;
 
-public interface TextTracksServiceInterface {
+public interface TextTrackServiceInterface {
     /**
      * Retrieves the lyrics for a track
      *
