@@ -15,17 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.response;
+package cc.wordview.api.database.entity;
 
-import cc.wordview.gengolex.word.Word;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
+import java.io.Serial;
+import java.io.Serializable;
 
+@Entity
 @Data
-@AllArgsConstructor
-public class LyricsResponse {
-    private String lyrics;
-    private List<Word> dictionary;
+@Table(name = "text_tracks")
+public class TextTrack implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1854932248236429655L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "video_id", unique = true)
+    private String videoId;
+
+    @Column(name = "file")
+    private String file;
 }

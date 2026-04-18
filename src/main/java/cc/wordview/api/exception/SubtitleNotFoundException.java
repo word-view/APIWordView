@@ -15,18 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.service;
+package cc.wordview.api.exception;
 
-import cc.wordview.api.database.entity.VideoLyrics;
-import cc.wordview.api.exception.NoSuchEntryException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public interface VideoLyricsServiceInterface extends ServiceInterface<VideoLyrics> {
-    VideoLyrics getByVideoId(String videoId) throws NoSuchEntryException;
-
-    ArrayList<String> listLyricsIds();
-
-    List<VideoLyrics> getAll();
+public class SubtitleNotFoundException extends RuntimeException {
+    public SubtitleNotFoundException(String message) {
+        super(message);
+    }
 }

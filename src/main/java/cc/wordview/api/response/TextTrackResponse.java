@@ -15,13 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.repository;
+package cc.wordview.api.response;
 
-import cc.wordview.api.database.entity.VideoLyrics;
-import org.springframework.data.repository.CrudRepository;
+import cc.wordview.gengolex.word.Word;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface VideoLyricsRepository extends CrudRepository<VideoLyrics, Long> {
-    Optional<VideoLyrics> findByVideoId(String videoId);
+@Data
+@AllArgsConstructor
+public class TextTrackResponse {
+    private String textTrack;
+    private List<Word> dictionary;
 }

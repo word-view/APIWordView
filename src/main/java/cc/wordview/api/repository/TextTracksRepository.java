@@ -15,32 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package cc.wordview.api.database.entity;
+package cc.wordview.api.repository;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import cc.wordview.api.database.entity.TextTrack;
+import org.springframework.data.repository.CrudRepository;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.Optional;
 
-@Entity
-@Data
-@Table(name = "video_lyrics")
-public class VideoLyrics implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1854932248236429655L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    @Column(name = "video_id", unique = true)
-    private String videoId;
-
-    @Column(name = "lyrics_file")
-    private String lyricsFile;
-
-    @Column(name = "time_offset")
-    private int offset;
+public interface TextTracksRepository extends CrudRepository<TextTrack, Long> {
+    Optional<TextTrack> findByVideoId(String videoId);
 }

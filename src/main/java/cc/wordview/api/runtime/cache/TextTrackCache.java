@@ -17,9 +17,9 @@
 
 package cc.wordview.api.runtime.cache;
 
-import cc.wordview.api.database.entity.VideoLyrics;
+import cc.wordview.api.database.entity.TextTrack;
+import cc.wordview.api.repository.TextTracksRepository;
 import cc.wordview.api.runtime.ResourceResolver;
-import cc.wordview.api.service.VideoLyricsServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,50 +34,48 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Component
-public class LyricsCache extends HashMapCacheManager<String> {
-    private static final Logger logger = LoggerFactory.getLogger(LyricsCache.class);
+public class TextTrackCache extends HashMapCacheManager<String> {
+    private static final Logger logger = LoggerFactory.getLogger(TextTrackCache.class);
 
     @Autowired
     private ResourceResolver resourceResolver;
 
     @Autowired
-    private VideoLyricsServiceInterface videoLyricsService;
+    private TextTracksRepository repository;
 
     @Override
     public void init() throws IOException {
-        String lyricsPath = resourceResolver.getLyricsPath();
-        Path filepath = Path.of(lyricsPath);
+        String subtitlesPath = resourceResolver.getTextTracksPath();
+        Path filepath = Path.of(subtitlesPath);
 
         Map<String, String> fileToContent = new HashMap<>();
 
         try (Stream<Path> paths = Files.walk(filepath)) {
-            paths.filter(Files::isRegularFile)
-                    .forEach(file -> {
-                        try {
-                            fileToContent.put(file.getFileName().toString(), Files.readString(file));
-                        } catch (IOException e) {
-                            logger.error("Failed to read lyrics file, ignoring this file", e);
-                        }
-                    });
+            paths.filter(Files::isRegularFile).forEach(file -> {
+                try {
+                    fileToContent.put(file.getFileName().toString(), Files.readString(file));
+                } catch (IOException e) {
+                    logger.error("Failed to read subtitle file, ignoring this file", e);
+                }
+            });
 
-            List<VideoLyrics> videoLyrics = videoLyricsService.getAll();
+            List<TextTrack> textTracks = (List<TextTrack>) repository.findAll();
 
-            for (var videoLyric : videoLyrics) {
-                String content = fileToContent.get(videoLyric.getLyricsFile() + ".vtt");
-                map.put(videoLyric.getVideoId(), content);
+            for (var subtitle : textTracks) {
+                String content = fileToContent.get(subtitle.getFile());
+                map.put(subtitle.getVideoId(), content);
             }
 
-            logger.info("Preloaded {} lyrics", map.size());
+            logger.info("Preloaded {} text tracks", map.size());
         } catch (IOException e) {
-            logger.error("Failed to read the lyrics path", e);
+            logger.error("Failed to read the text tracks path", e);
         }
     }
 
-    public void put(String id, String lyrics) {
+    public void put(String id, String subtitle) {
         if (map.containsKey(id))
             return;
-
-        logger.info("Adding {} to cache, there are now {} lyrics", id, map.size() + 1);
-        map.put(id, lyrics);
+        logger.info("Adding {} to cache, there are now {} text tracks", id, map.size() + 1);
+        map.put(id, subtitle);
     }
 }

@@ -17,12 +17,14 @@
 
 package cc.wordview.api.service;
 
+import cc.wordview.api.exception.SubtitleNotFoundException;
 import cc.wordview.wordfind.exception.LyricsNotFoundException;
 import org.schabi.newpipe.extractor.exceptions.ExtractionException;
 
 import java.io.IOException;
+import java.util.List;
 
-public interface LyricsServiceInterface {
+public interface TextTracksServiceInterface {
     /**
      * Retrieves the lyrics for a track
      *
@@ -38,6 +40,17 @@ public interface LyricsServiceInterface {
     String getLyrics(String id, String trackName, String artistName, String langTag) throws ExtractionException, IOException, LyricsNotFoundException;
 
     /**
+     *  Retrieves the subtitles for the track given the `id`
+     * @param id the YouTube id of the video.
+     * @param langTag the language the subtitle should be in.
+     * @return the subtitles formatted in VTT.
+     * @throws ExtractionException if subtitle extraction from YouTube fails.
+     * @throws IOException if reading subtitles from disk fails.
+     * @throws SubtitleNotFoundException if no valid subtitles are found.
+     */
+    String getSubtitle(String id, String langTag) throws ExtractionException, IOException, SubtitleNotFoundException;
+
+    /**
      * Attempts to retrieve lyrics for the given track and artist from an external provider from WordFind.
      *
      * @param trackName  the name of the track to search lyrics for.
@@ -47,5 +60,10 @@ public interface LyricsServiceInterface {
      * @throws LyricsNotFoundException if no lyrics are found for the provided track and artist.
      */
     String getLyricsExternal(String trackName, String artistName) throws IOException, LyricsNotFoundException;
+
+    /**
+     * Retrieves a list of the tracks currently provided by the API.
+     */
+    List<String> listAvailableTracks();
 }
 

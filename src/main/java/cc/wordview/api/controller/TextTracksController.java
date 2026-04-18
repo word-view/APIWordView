@@ -18,11 +18,10 @@
 package cc.wordview.api.controller;
 
 import cc.wordview.api.Application;
-import cc.wordview.api.response.LyricsResponse;
-import cc.wordview.api.service.implementation.LyricsService;
-import cc.wordview.api.service.VideoLyricsServiceInterface;
-import cc.wordview.api.util.ArrayUtil;
+import cc.wordview.api.response.TextTrackResponse;
 import cc.wordview.api.runtime.ResourceResolver;
+import cc.wordview.api.service.implementation.TextTracksService;
+import cc.wordview.api.util.ArrayUtil;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import cc.wordview.gengolex.Parser;
@@ -35,38 +34,48 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import static cc.wordview.api.controller.response.Response.ok;
 
 @RestController
 @CrossOrigin(origins = Application.CORS_ORIGIN)
-@RequestMapping(path = Application.API_PATH + "/lyrics")
-public class LyricsController extends ServiceController<LyricsService> {
+@RequestMapping(path = Application.API_PATH + "/text-tracks")
+public class TextTracksController extends ServiceController<TextTracksService> {
     @Autowired
     private ResourceResolver resourceResolver;
 
-    @Autowired
-    private VideoLyricsServiceInterface videoLyricsService;
-
-    @GetMapping(produces = "application/json;charset=utf-8")
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/lyrics")
     public ResponseEntity<?> getLyrics(@RequestParam String id, @RequestParam String lang, @RequestParam String trackName, @RequestParam String artistName) throws IOException, LyricsNotFoundException, LanguageNotFoundException {
         String decodedTrackName = URLDecoder.decode(trackName);
         String decodedArtistName = URLDecoder.decode(artistName);
 
         String lyrics = service.getLyrics(id, decodedTrackName, decodedArtistName, lang);
 
-        String dictionariesPath = resourceResolver.getDictionariesPath();
+        ArrayList<Word> words = getContainingWords(lyrics, lang);
 
-        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
-
-        ArrayList<Word> words = ArrayUtil.withoutDuplicates(parser.findWords(lyrics.replace("\n", " ")));
-
-        return ok(new LyricsResponse(lyrics, words));
+        return ok(new TextTrackResponse(lyrics, words));
     }
 
     @GetMapping(produces = "application/json;charset=utf-8", path = "/list")
     public ResponseEntity<?> getLyricsList() {
-        ArrayList<String> ids = videoLyricsService.listLyricsIds();
+        List<String> ids = service.listAvailableTracks();
         return ok(ids);
+    }
+
+    @GetMapping(produces = "application/json;charset=utf-8", path = "/subtitles")
+    public ResponseEntity<?> getSubtitle(@RequestParam String id, @RequestParam String lang) throws IOException, LanguageNotFoundException {
+        String subtitle = service.getSubtitle(id, lang);
+        ArrayList<Word> words = getContainingWords(subtitle, lang);
+
+        return ok(new TextTrackResponse(subtitle, words));
+    }
+
+    private ArrayList<Word> getContainingWords(String vttFile, String lang) throws IOException, LanguageNotFoundException {
+        String dictionariesPath = resourceResolver.getDictionariesPath();
+
+        Parser parser = new Parser(Language.Companion.byTag(lang), dictionariesPath);
+
+        return ArrayUtil.withoutDuplicates(parser.findWords(vttFile.replace("\n", " ")));
     }
 }
