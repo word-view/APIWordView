@@ -38,7 +38,7 @@ public class MyUserDetails implements UserDetailsService {
         Optional<User> userOpt = userRepository.findByEmail(username);
 
         if (!userOpt.isPresent()) {
-            throw new UsernameNotFoundException("Nenhum usuario encontrado com o email especificado.");
+            throw new UsernameNotFoundException("Unable to find any user with the specified email");
         }
 
         User user = userOpt.get();
