@@ -22,6 +22,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -49,4 +50,12 @@ public class User implements Serializable {
 
     @Column(name = "lesson_time")
     private Long lessonTime;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 }

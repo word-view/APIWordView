@@ -22,6 +22,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
 @Data
@@ -40,4 +41,12 @@ public class TextTrack implements Serializable {
 
     @Column(name = "file")
     private String file;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Instant createdAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
+    private Instant updatedAt;
 }

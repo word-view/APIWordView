@@ -9,15 +9,19 @@ CREATE TABLE users
     email       varchar(255) UNIQUE,
     password    varchar(255),
     role        varchar(255),
-    lesson_time bigint DEFAULT 300000,
+    lesson_time bigint                   DEFAULT 300000,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE text_tracks
 (
-    id       bigint GENERATED ALWAYS AS IDENTITY,
-    video_id varchar(12) UNIQUE,
-    file     varchar(128),
+    id         bigint GENERATED ALWAYS AS IDENTITY,
+    video_id   varchar(12) UNIQUE,
+    file       varchar(128),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 

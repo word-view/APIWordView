@@ -21,16 +21,22 @@ import cc.wordview.api.database.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 public class NoCredentialsResponse {
     public Long id;
     public String username;
     public String email;
+    public Instant createdAt;
+    public Instant updatedAt;
 
     public NoCredentialsResponse(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
+        this.createdAt = user.getCreatedAt();
+        this.updatedAt = user.getUpdatedAt();
     }
 }
