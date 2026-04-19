@@ -70,7 +70,7 @@ public class UserService implements UserServiceInterface {
     public User getById(Long id) throws NoSuchEntryException {
         Optional<User> user = repository.findById(id);
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new NoSuchEntryException("Unable to find a user with this id");
         }
 
@@ -85,7 +85,7 @@ public class UserService implements UserServiceInterface {
     public User getByEmail(String email) throws NoSuchEntryException {
         Optional<User> user = repository.findByEmail(email);
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new NoSuchEntryException("Unable to find a user with this email");
         }
 
@@ -116,7 +116,7 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public User insert(User entity) throws ValueTakenException {
+    public User insert(User entity) {
         return repository.save(entity);
     }
 

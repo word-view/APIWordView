@@ -67,7 +67,7 @@ public class LessonService implements LessonServiceInterface {
     public KnownWords getKnownWords(Long userId, String lang) throws NoSuchEntryException {
         Optional<KnownWords> knownWords = repository.findByUserIdAndLang(userId, lang);
 
-        if (!knownWords.isPresent()) {
+        if (knownWords.isEmpty()) {
             throw new NoSuchEntryException("Unable to find known words for this language");
         }
 
