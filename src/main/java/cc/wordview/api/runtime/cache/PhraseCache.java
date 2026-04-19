@@ -21,7 +21,6 @@ import cc.wordview.api.exception.NoSuchEntryException;
 import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
 import cc.wordview.api.util.ArrayUtil;
-import cc.wordview.api.util.FileHelper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class PhraseCache extends ArrayCacheManager<Phrase> {
@@ -40,11 +40,13 @@ public class PhraseCache extends ArrayCacheManager<Phrase> {
     @Override
     public void init() throws IOException {
         String phrasesPath = resourceResolver.getPhrasesPath();
-        List<Path> phraseFiles = Files.list(Path.of(phrasesPath)).toList();
+        Path path = Path.of(phrasesPath);
 
-        for (Path filePath : phraseFiles) {
-            String content = FileHelper.read(filePath.toFile());
-            array.add(new Gson().fromJson(content, Phrase.class));
+        try (Stream<Path> stream = Files.list(path)) {
+            for (Path filePath : stream.toList()) {
+                String content = Files.readString(filePath);
+                array.add(new Gson().fromJson(content, Phrase.class));
+            }
         }
 
         logger.info("Preloaded {} phrases", array.size());

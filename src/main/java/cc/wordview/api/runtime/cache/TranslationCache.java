@@ -40,17 +40,17 @@ public class TranslationCache extends ArrayCacheManager<Translation> {
     @Override
     public void init() throws IOException {
         String translationsPath = resourceResolver.getTranslationsPath();
+        Path path = Path.of(translationsPath);
 
-        List<Path> translationFiles = Files.list(Path.of(translationsPath)).toList();
+        try (var stream = Files.list(path)) {
+            for (Path filePath : stream.toList()) {
+                String content = Files.readString(filePath);
 
-        for (Path filePath : translationFiles) {
-            String content = FileHelper.read(filePath.toFile());
+                Type listType = new TypeToken<List<Translation>>() {}.getType();
+                List<Translation> translationList = new Gson().fromJson(content, listType);
 
-            Type listType = new TypeToken<List<Translation>>() {
-            }.getType();
-            List<Translation> translationList = new Gson().fromJson(content, listType);
-
-            array.addAll(translationList);
+                array.addAll(translationList);
+            }
         }
 
         logger.info("Preloaded {} translations", array.size());
