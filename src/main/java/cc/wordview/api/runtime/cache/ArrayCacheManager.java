@@ -17,10 +17,16 @@
 
 package cc.wordview.api.runtime.cache;
 
+import cc.wordview.api.runtime.ResourceResolver;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 abstract public class ArrayCacheManager<T> {
+    @Autowired
+    protected ResourceResolver resourceResolver;
+
     protected final ArrayList<T> array = new ArrayList<>();
 
     /**

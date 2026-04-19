@@ -18,12 +18,10 @@
 package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.exception.ImageNotFoundException;
-import cc.wordview.api.runtime.ResourceResolver;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
@@ -36,9 +34,6 @@ import java.util.stream.Stream;
 @Component
 public class ImageCache extends HashMapCacheManager<byte[]> {
     private static final Logger logger = LoggerFactory.getLogger(ImageCache.class);
-
-    @Autowired
-    private ResourceResolver resourceResolver;
 
     @Override
     public void init() throws IOException {

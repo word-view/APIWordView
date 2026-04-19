@@ -17,7 +17,6 @@
 
 package cc.wordview.api.runtime.cache;
 
-import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.api.service.util.SimpleTranslation;
 import cc.wordview.api.service.util.Translation;
 import cc.wordview.api.util.FileHelper;
@@ -25,7 +24,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -38,9 +36,6 @@ import java.util.List;
 @Component
 public class TranslationCache extends ArrayCacheManager<Translation> {
     private static final Logger logger = LoggerFactory.getLogger(TranslationCache.class);
-
-    @Autowired
-    private ResourceResolver resourceResolver;
 
     @Override
     public void init() throws IOException {

@@ -18,7 +18,6 @@
 package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.exception.NoSuchEntryException;
-import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.api.service.util.Phrase;
 import cc.wordview.api.service.util.SimplePhrase;
 import cc.wordview.api.util.ArrayUtil;
@@ -26,7 +25,6 @@ import cc.wordview.api.util.FileHelper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -38,9 +36,6 @@ import java.util.List;
 @Component
 public class PhraseCache extends ArrayCacheManager<Phrase> {
     private static final Logger logger = LoggerFactory.getLogger(PhraseCache.class);
-
-    @Autowired
-    private ResourceResolver resourceResolver;
 
     @Override
     public void init() throws IOException {

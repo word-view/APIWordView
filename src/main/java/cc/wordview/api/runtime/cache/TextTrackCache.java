@@ -19,7 +19,6 @@ package cc.wordview.api.runtime.cache;
 
 import cc.wordview.api.database.entity.TextTrack;
 import cc.wordview.api.repository.TextTrackRepository;
-import cc.wordview.api.runtime.ResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,6 @@ import java.util.stream.Stream;
 @Component
 public class TextTrackCache extends HashMapCacheManager<String> {
     private static final Logger logger = LoggerFactory.getLogger(TextTrackCache.class);
-
-    @Autowired
-    private ResourceResolver resourceResolver;
 
     @Autowired
     private TextTrackRepository repository;

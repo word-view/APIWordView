@@ -17,13 +17,11 @@
 
 package cc.wordview.api.runtime.cache;
 
-import cc.wordview.api.runtime.ResourceResolver;
 import cc.wordview.gengolex.Language;
 import cc.wordview.gengolex.LanguageNotFoundException;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
@@ -35,9 +33,6 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class FeedCache extends HashMapCacheManager<String> {
     private static final Logger logger = LoggerFactory.getLogger(FeedCache.class);
-
-    @Autowired
-    private ResourceResolver resourceResolver;
 
     // This won't throw language not found, just quiet the compiler here
     @SneakyThrows(LanguageNotFoundException.class)

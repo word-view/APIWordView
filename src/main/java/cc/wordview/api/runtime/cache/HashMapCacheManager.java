@@ -17,11 +17,17 @@
 
 package cc.wordview.api.runtime.cache;
 
+import cc.wordview.api.runtime.ResourceResolver;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 abstract public class HashMapCacheManager<T> {
+    @Autowired
+    protected ResourceResolver resourceResolver;
+
     protected final Map<String, T> map = new HashMap<>();
 
     /**
